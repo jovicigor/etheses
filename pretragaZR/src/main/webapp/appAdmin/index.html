@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="aplikacija">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Admin</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../app/lib/css/bootstrap.min.css" rel="stylesheet">
+        <!--JQUERY UI -->
+        <link rel="stylesheet" href="../app/lib/jquery-ui-1.11.4/jquery-ui.min.css">
+        <!-- Custom Fonts -->
+        <link href="../app/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- Datatables --> 
+        <link type="text/css" href="../app/lib/css/jquery.datatables1.10.min.css">
+        <link type="text/css" rel="stylesheet" href="../app/lib/css/angular-datatables.css">
+        <!-- Custom CSS -->
+        <link href="../app/css/admin.css" rel="stylesheet">
+        <link href="css/pagination.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div id="wrapper">
+
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/home">Zavrsni Radovi - Admin</a>
+                </div>
+
+                <ul class="nav navbar-right top-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{user.firstName && user.lastName && user.firstName + " " + user.lastName|| user.email}} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../#profile"><i class="fa fa-fw fa-user"></i> Profil </a>
+                            </li>
+                            <li>
+                                <a href="../#editprofile"><i class="fa fa-fw fa-gear"></i> Podesavanja </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a ng-click="logout()"><i class="fa fa-fw fa-reply"></i> Izlazak </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        <li>
+                            <a href="#/home"><i class="fa fa-fw fa-book"></i> Radovi </a>
+                        </li>
+                        <li>
+                            <a href="#/users"><i class="fa fa-fw fa-users"></i> Korisnici </a>
+                        </li>
+                        <li>
+                            <a href="#/settings"><i class="fa fa-fw fa-cogs"></i> Podesavanja </a>
+                        </li>
+                        <li>
+                            <a href="../index.html"><i class="fa fa-fw fa-desktop"></i> Pocetna </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </nav>
+            <div class="alert alert-danger navbar-fixed-bottom" role="alert" ng-show="errorMessage && errorMessage.length > 0">{{errorMessage}}</div>
+            <div id="page-wrapper" ng-view></div>
+        </div>
+
+        <script src="../app/lib/js/jquery-1.12.min.js"></script>
+        
+        
+        <script src="../app/lib/js/jquery.datatables.min.js"></script>
+
+        <script src="../app/lib/js/bootstrap.min.js" ></script>
+        <script src="../app/lib/js/angular-min.js"></script>
+        <script src="../app/lib/js/angular-route.min.js"></script>
+        <script src="../app/lib/js/angular-cookies.min.js"></script> 
+
+        <script src="../app/lib/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script src="../app/lib/js/angular-datatables.min.js"></script>
+
+        <script src="app.js"></script>
+        <script src="../app/services.js"></script>   
+        <script src="../app/directives.js"></script>   
+        <script src="controllers/home.js"></script>
+        <script src="controllers/settings.js"></script>
+        <script src="controllers/users.js"></script>
+
+    </body>
+
+</html>

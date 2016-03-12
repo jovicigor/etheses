@@ -1,0 +1,371 @@
+<script>
+    type = "text/javascript" >
+            $(function () {
+                $("#datepickerEdit").datepicker({dateFormat: 'dd.mm.yy'});
+
+                $("#datepickerAdd").datepicker({dateFormat: 'dd.mm.yy'});
+            });
+
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Radovi i datoteke <small> </small>
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-book fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{theses.length}}</div>
+                            <div>Radova</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="../">
+                    <div class="panel-footer">
+                        <span class="pull-left">Idi na radove</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{users.length}}</div>
+                            <div>Idi na korisnike</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#/users">
+                    <div class="panel-footer">
+                        <span class="pull-left">Prikazi</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!--div class="col-lg-4 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-comments fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">26</div>
+                            <div>Novi komentari</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="panel-footer">
+                        <span class="pull-left">Prikazi</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div-->
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-file fa-fw"></i> Radovi </h3>
+                </div>
+                <div class="panel-body">
+                    <div><div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Naziv Rada</th>
+                                        <th>Student</th>
+                                        <th>Mentor</th>
+                                        <th>Datum Odbrane</th>
+                                        <th>Datum Objave</th>
+                                        <th>Ocena</th>
+                                        <th>Operacije</th>
+                                    </tr>
+                                <tbody>
+                                    <tr ng-repeat="thesis in theses">
+                                        <td>{{thesis.id}}</td>
+                                        <td>{{thesis.name}}</td>
+                                        <td>{{thesis.user.firstName && thesis.user.lastName && thesis.user.firstName + " " + thesis.user.lastName|| thesis.userName||thesis.user.email||thesis.userEmail }}</td>
+                                        <td>{{thesis.mentor.firstName && thesis.mentor.lastName && thesis.mentor.firstName + " " + thesis.mentor.lastName|| thesis.mentor.firstName|| thesis.mentor.lastName|| thesis.mentor.email}}</td>
+                                        <td>{{thesis.defenseDate| date: 'dd.MM.yyyy' }}</td>
+                                        <td>{{thesis.datePosted| date: 'dd.MM.yyyy' }}</td>
+                                        <td>{{thesis.grade}}</td>
+                                        <td>
+                                            <a class="alert-primary" data-toggle="modal" data-target="#editModal" ng-click="editModalInit(thesis)"><i class="fa fa-pencil">Izmeni</i></a> 
+                                            <a class="text-danger"><i class="fa fa-times-circle" ng-click="deleteThesis(thesis)">Obriši</i></a>
+                                            <a class="text-warning"><i class="fa fa-info-circle" data-toggle="modal" data-target="#infoModal" ng-click="getInfoModalInit(thesis)">Detaljnije</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+
+                    <button type="button" class="btn btn-success btn btn-md" data-toggle="modal" data-target="#addModal">
+                        <span class="glyphicon glyphicon-plus"></span> Dodaj
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-file-pdf-o fa-fw"></i> Datoteke </h3>
+                </div>
+                <div class="panel-body">
+                    <div><div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Naziv datoteke</th>
+                                        <th>Naziv rada</th>
+                                        <th>Operacije</th>
+
+                                    </tr>
+                                <tbody>
+                                    <tr ng-repeat="file in files">
+                                        <td>{{file.id}}</td>
+                                        <td>{{file.fileName}}</td>
+                                        <td>{{file.thesisName}}</td>      
+                                        <td> 
+                                            <a class="text-danger"><i class="fa fa-times-circle" ng-click="deleteFile(file.id)"> Obriši</i></a>
+                                            <a class="text-primary"><i class="fa fa-arrow-down" ng-click="downloadFile(file.id)"> Preuzmi</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="reinit()">&times;</button>
+                    <h4 class="modal-title">Izmena rada</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Naziv rada</label>
+                            <input class="form-control" ng-model="newThesisName">
+                        </div>
+                        <div class="form-group">
+                            <label>Student</label>
+                            <select class="form-control" ng-options="user.id as user.displayName for user in users" ng-model="newThesisUserId"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Mentor</label>
+                            <select class="form-control" ng-options="user.id as user.displayName for user in admins" ng-model="newThesisMentorId"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ime i prezime studenta</label>
+                            <input class="form-control" ng-model="newThesisFullUserName">
+                        </div>
+                        <div class="form-group">
+                            <label>Email studenta</label>
+                            <input class="form-control" ng-model="newThesisUserEmail">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Opis</label>
+                            <textarea class="form-control" rows = "10" ng-model="newThesisDescription"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Datum odbrane</label>
+                            <input type='text' class="form-control" id="datepickerEdit" ng-model="newThesisDefenseDate" />
+                        </div>
+                        <div class="form-group">
+                            <label>Ocena</label>
+                            <select class="form-control" ng-model="newThesisGrade">
+                                <option ng-selected="newThesisGrade == 6">6</option>
+                                <option ng-selected="newThesisGrade == 7">7</option>
+                                <option ng-selected="newThesisGrade == 8">8</option>
+                                <option ng-selected="newThesisGrade == 9">9</option>
+                                <option ng-selected="newThesisGrade == 10">10</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Predmet:</label>
+                            <select class="form-control" ng-options="subject.name as subject.name for subject in subjects" ng-model="newThesisSubjectName"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tagovi</label>
+                            <textarea class="form-control" rows="5" ng-model="newThesisTags"></textarea>
+                        </div>
+                        <div class="form-group" ng-show="!updateThesisFile">
+                            <label>Rad</label>
+                            <input class="btn btn-default" type="file" file-model="thesisFile">
+                        </div>
+                        <button type="submit" class="btn btn-danger" data-dismiss = "modal" ng-click="deleteThesisFile()" ng-show="updateThesisFile" >Obrisi povezanu datoteku</button>
+                        <button type="submit" class="btn btn-info" data-dismiss = "modal" ng-click="updateThesis()" >Izmeni</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+    <div id="addModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="reinit()">&times;</button>
+                    <h4 class="modal-title">Dodavanje rada</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Naziv rada</label>
+                            <input class="form-control" ng-model="newThesisName">
+                        </div>
+                        <div class="form-group">
+                            <label>Profil studenta (ukoliko postoji)</label>
+                            <select class="form-control" ng-options="user.id as user.displayName for user in users" ng-model="newThesisUserId"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ime i prezime studenta</label>
+                            <input class="form-control" ng-model="newThesisFullUserName">
+                        </div>
+                        <div class="form-group">
+                            <label>Email studenta</label>
+                            <input class="form-control" ng-model="newThesisUserEmail">
+                        </div>
+                        <div class="form-group">
+                            <label>Mentor</label>
+                            <select class="form-control" ng-options="user.id as user.displayName for user in admins" ng-model="newThesisMentorId"></select>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>Opis</label>
+                            <textarea class="form-control" rows = "10" ng-model="newThesisDescription"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Datum odbrane</label>
+                            <input type='text' class="form-control" id="datepickerAdd" ng-model="newThesisDefenseDate" />
+                        </div>
+                        <div class="form-group">
+                            <label>Ocena</label>
+                            <select class="form-control" ng-model="newThesisGrade">
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Predmet:</label>
+                            <select class="form-control" ng-options="subject.name as subject.name for subject in subjects" ng-model="newThesisSubjectName"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tagovi</label>
+                            <textarea class="form-control" rows="5" ng-model="newThesisTags"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Rad</label>
+                            <input class="btn btn-default" type="file" file-model="thesisFile">
+                        </div>
+                        <button type="submit" class="btn btn-success" data-dismiss = "modal" ng-click="createThesis()">Dodaj</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+    <div id="infoModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="reinit()">&times;</button>
+                    <h4 class="modal-title">{{infoThesisName|| ""}}</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <table class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td>Student</td>
+                                <td>{{infoThesisUserName|| infoThesisUserEmail}}</td>
+                            </tr>
+                            <tr>
+                                <td>Datum odbrane</td>
+                                <td>{{infoThesisDefenseDate| date: 'dd.MM.yyyy' }}</td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td>Predmet</td>
+                                <td>{{infoThesisSubjectName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Mentor</td>
+                                <td>{{infoThesisMentorFirstName && infoThesisMentorLastName && infoThesisMentorName|| infoThesisMentorEmail}}</td>
+                            </tr>
+                            <tr>
+                                <td>Ocena</td>
+                                <td>{{infoThesisGrade}}</td>
+                            </tr>
+                            <tr>
+                                <td>Opis</td>
+                                <td>{{infoThesisDescription}}</td>
+                            </tr>
+                            <tr>
+                                <td>Tagovi</td>
+                                <td><span class="text-primary" ng-repeat="tag in infoThesisTags"><a>#{{tag.value}} </a></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-primary" data-dismiss="modal" ng-click="download()" ng-show="infoThesisFile"><span class="fa fa-arrow-circle-down"> Preuzmi </span></a>
+
+                    <p class="alert alert-warning" ng-show="!infoThesisFile">Sa ovim radom nije povezana ni jedna datoteka. Kliknite na 'Izmeni' kako biste otpremili datoteku.</p>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

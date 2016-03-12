@@ -1,0 +1,46 @@
+<!--script>
+    $(document).ready(function () {
+
+        window.onscroll = function (ev) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                $('#load-more-button').click();
+            }
+        };
+    });
+
+</script-->
+<div class="col-md-12">
+    <h1 class="page-header">
+        Zavrsni radovi
+    </h1>
+</div>
+
+<div class="col-md-7 ">
+
+    <!-- THESIS -->
+    <div class="panel panel-default" ng-repeat="thesis in theses">
+        <div class="panel-heading">
+            <a href="#rad/{{thesis.id}}">{{thesis.name}}</a>
+        </div>
+        <div class="panel-body" style="padding:5px;">
+            <table class="table table-hover" style="margin-bottom: 5px">
+                <tr>
+                    <td><span class="fa fa-user"></span> Student</td>
+                    <td>{{thesis.user.firstName && thesis.user.lastName && thesis.user.firstName + " " + thesis.user.lastName|| thesis.user.email|| thesis.userName || thesis.userEmail}}</td>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-time"></span> Datum: </td>
+                    <td>{{thesis.datePosted| date: 'dd.MM.yyyy'}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer">
+            <p><span class="text-primary" ng-repeat="tag in thesis.tags"><a href="#/advanced_search?tag={{tag.value}}"> #{{tag.value}} </a></span></p>
+        </div>
+    </div>
+    <div>
+        <button id = "load-more-button" class="btn btn-default btn-block " ng-click="loadMore()" ng-show="pageNumber <= totalPages"><span class="fa fa-refresh fa-spin"></span> Ucitaj jos</button>
+        <!--button id = "load-more-button" class="btn btn-default btn-block " ng-click="loadMore()" ng-show="lastVisible < allTheses.length - 1"><span class="fa fa-refresh fa-spin"></span> Ucitaj jos</button-->
+    </div>
+</div>
+

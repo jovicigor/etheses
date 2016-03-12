@@ -1,0 +1,190 @@
+<div class="container-fluid">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Korisnici <small></small>
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-users fa-fw"></i> Korisnici </h3>
+                </div>
+                <div class="panel-body">
+                    <div><div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID Korisnika</th>
+                                        <th>Email adresa</th>
+                                        <th>Ime i prezime</th>
+                                        <th>Broj indeksa</th>
+                                        <th>Zavrsni rad</th>
+                                        <th>Smer</th>
+                                        <th>Administrator</th>
+                                        <th>Operacije</th>
+                                    </tr>
+                                <tbody>
+                                    <tr ng-repeat="user in users">
+                                        <td>{{user.id}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.firstName && user.lastName && user.firstName + " " + user.lastName||user.firstName||user.lastName||""}}</td>
+                                        <td>{{user.studentsTranscript}}</td>
+                                        <td> {{user.thesis.name}} </td>
+                                        <td>{{user.course.name}}</td>
+                                        <td>{{user.admin}}</td>
+                                        <td>
+                                            <a class="text-primary" data-toggle="modal" data-target="#editModal" ng-click="editUserModalInit(user)"><i class="fa fa-pencil"> Izmeni</i></a> 
+                                            <a class="text-danger" ng-click="deleteUser(user)"><i class="fa fa-times-circle">Obriši</i></a>
+                                            <a class="text-warning" ng-click="getInfoModalInit(user)"><i class="fa fa-info-circle" data-toggle="modal" data-target="#infoModal"> Detaljnije</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-success btn btn-md" data-toggle="modal" data-target="#addModal">
+                        <span class="glyphicon glyphicon-plus"></span> Dodaj
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                    <h4 class="modal-title">Izmena korisnika</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Ime</label>
+                            <input class="form-control" ng-model="newUserName">
+                        </div>
+                        <div class="form-group">
+                            <label>Prezime</label>
+                            <input class="form-control" ng-model="newUserLastName">
+                        </div>
+                        <div class="form-group">
+                            <label> Broj indeksa</label>
+                            <input class="form-control" ng-model="newUserTranscript">
+                        </div>
+                        <div class="form-group">
+                            <label>Uloga</label>
+                            <select  class="form-control"  ng-model="admin">
+                                <option ng-selected = "admin == false" value="false"> Korisnik</option>
+                                <option value="true" ng-selected="admin"> Administrator </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Smer</label>
+                            <select class="form-control" ng-options="course.name as course.name for course in courses" ng-model="newUserCourseName"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Interesovanja</label>
+                            <textarea class="form-control" rows="3" ng-model="newUserInterests"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Biografija</label>
+                            <textarea class="form-control" rows="3" ng-model="newUserBiography"></textarea>
+                        </div>
+                        <!--button class="btn btn-danger">Ukloni fotografiju</button--> 
+                        <button type="submit" class="btn btn-info" data-dismiss="modal" ng-click="updateUser()">Izmeni</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="addModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" >&times;</button>
+                    <h4 class="modal-title">Izmena korisnika</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Email adresa</label>
+                            <input class="form-control" ng-model="emailReg">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Lozinka</label>
+                            <input class="form-control" type = "password" ng-model="passwordReg">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Potvrdite lozinku</label>
+                            <input class="form-control" type = "password" ng-model="passwordRegRep">
+                        </div> 
+                        <button type="submit" class="btn btn-info" data-dismiss="modal" ng-click="createUser()">Izmeni</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="infoModal" class="modal fade" role="dialog"  >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{infoUserName && infoUserLastName && infoUserName + " " + infoUserLastName||infoUserEmail}}</h4>
+                </div>
+
+                <!--div class="col-lg-3 " align="center">
+                    <img src="http://www.niksebastian.com/wp-content/uploads/2014/05/sample-2-sm.jpg" class="img-sq img-responsive"> </div-->
+                <div class="col-lg-12 "> 
+                    <table class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td>Smer:</td>
+                                <td>{{infoUserCourseName}}</td>
+                            </tr>
+                            <tr>
+                                <td>Zavrsni rad: </td>
+                                <td>{{infoUserThesisName}}</td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td>Broj indeksa:</td>
+                                <td>{{infoUserTranscript}}</td>
+                            </tr>
+                            <tr>
+                                <td>Interesovanja:</td>
+                                <td>{{infoUserInterests}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Biografija:</td>
+                                <td>
+                                    <p>{{infoUserBiography}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

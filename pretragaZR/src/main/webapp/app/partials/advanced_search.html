@@ -1,0 +1,85 @@
+<!--script>
+    $(document).ready(function () {
+
+        window.onscroll = function (ev) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                $('#load-more-button').click();
+            }
+        };
+    });
+
+</script-->
+<div class="col-md-12">
+    <h1 class="page-header">
+        Napredna pretraga
+    </h1>
+</div>
+
+<div class="col-md-8 ">
+    <div class="alert alert-dismissable alert-warning" ng-show="noResults">Ne postoje radovi koji odgovaraju unetim kriterijumima.</div>
+    <!-- THESIS -->
+  <div class="panel panel-default" ng-repeat="thesis in theses">
+        <div class="panel-heading">
+            <h3 class="text-primary"> <a href="#rad/{{thesis.id}}">{{thesis.name}}</a></h3>
+        </div>
+        <div class="panel-body" style="padding:5px;">
+            <table class="table table-hover" style="margin-bottom: 5px">
+                    <tr>
+                        <td><span class="fa fa-user"></span> Student</td>
+                        <td>{{thesis.user.firstName && thesis.user.lastName && thesis.user.firstName + " " + thesis.user.lastName|| thesis.user.email|| thesis.userName}}</td>
+                    </tr>
+                    <tr>
+                        <td><span class="glyphicon glyphicon-time"></span> Datum: </td>
+                        <td>{{thesis.datePosted| date: 'dd.MM.yyyy'}}</td>
+                    </tr>
+            </table>
+        </div>
+        <div class="panel-footer">
+            <p><span class="text-primary" ng-repeat="tag in thesis.tags"><a href="#/advanced_search?tag={{tag.value}}"> #{{tag.value}} </a></span></p>
+        </div>
+    </div>
+    <div>
+        <button id = "load-more-button" class="btn btn-default btn-block " ng-click="loadMore()" ng-show="searchPerformed && pageNumber <= totalPages"><span class="fa fa-refresh fa-spin"></span> Ucitaj jos</button>
+    </div>
+
+</div>
+<div class='col-md-4' >
+    <form role="form" >
+        <div class="form-group">
+            <label>Naziv rada(ili kljucna rec)</label>
+            <input class="form-control" ng-model="searchKeyWord">
+        </div>
+        <div class="form-group">
+            <label>Naziv predmeta</label>
+            <select class="form-control" ng-options="subject.name as subject.name for subject in subjects" ng-model="searchSubject">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Naziv smera</label>
+            <select class="form-control" ng-options="course.name as course.name for course in courses" ng-model="searchCourse">
+                 <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Nivo studija</label>
+            <select class="form-control" ng-options="study.name as study.name for study in studies" ng-model="searchStudyLevel">
+                 <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Tagovi</label>
+            <div class="checkbox" ng-repeat="tag in tags">
+                <label>
+                    <input type="checkbox" ng-model="tag.checked" value="{{tag.value}}" > <span class="text-primary">#{{tag.value}}</span>
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" data-dismiss = "modal" ng-click="performSearch()"><span class="fa fa-search"></span> Pretrazi</button>
+    </form>
+</div> 
+
+
+
+

@@ -1,0 +1,394 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Podesavanja
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-graduation-cap fa-fw"></i> Nivoi studija </h3>
+                </div>
+                <div class="panel-body">
+                    <div><div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sifra nivoa</th>
+                                        <th>Naziv nivoa</th>
+                                        <th>Smerovi</th>
+                                        <th>Operacije</th>
+                                    </tr>
+                                <tbody>
+                                    <tr ng-repeat="study in studies">
+                                        <td>{{study.id}}</td>
+                                        <td>{{study.name}}</td>
+                                        <td>{{study.nameShort}}</td>
+
+                                        <td>
+                                            <a class="text-primary" data-toggle="modal" data-target="#editStudyLevelModal" ng-click="editStudyLevelModalInit(study)"><i class="fa fa-pencil"> Izmeni</i></a> 
+                                            <a class="text-danger"><i class="fa fa-times-circle" ng-click="deleteStudyLevel(study)"> Obriši</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+
+                    <button type="button" class="btn btn-success btn btn-md" data-toggle="modal" data-target="#addStudyLevelModal">
+                        <span class="glyphicon glyphicon-plus"></span> Dodaj nivo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-arrows fa-fw"></i> Smerovi </h3>
+                </div>
+                <div class="panel-body">
+                    <div><div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sifra smera</th>
+                                        <th>Naziv smera</th>
+                                        <th>Skraceni naziv</th>
+                                        <th>Nivo studija</th>
+                                        <th>Operacije</th>
+                                    </tr>
+                                <tbody>
+                                    <tr ng-repeat="course in courses">
+                                        <td>{{course.id}}</td>
+                                        <td>{{course.name}}</td>
+                                        <td>{{course.nameShort}}</td>
+                                        <td><span ng-repeat="study in course.studies">{{study.nameShort + " "}}</span></td>
+                                        <td>
+                                            <a class="text-primary" data-toggle="modal" data-target="#editSmerModal" ng-click="editCourseModalInit(course)"><i class="fa fa-pencil"> Izmeni</i></a> 
+                                            <a class="text-danger"><i class="fa fa-times-circle" ng-click="deleteCourse(course)"> Obriši</i></a>
+                                            <!--a class="text-warning"><i class="fa fa-info-circle" data-toggle="modal" data-target="#infoSmerModal" ng-click="getInfo(course.id)" > Detaljnije</i></a-->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+
+                    <button type="button" class="btn btn-success btn btn-md" data-toggle="modal" data-target="#addSmerModal">
+                        <span class="glyphicon glyphicon-plus"></span> Dodaj smer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> Predmeti </h3>
+                </div>
+                <div class="panel-body">
+                    <div><div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sifra predmeta</th>
+                                        <th>Naziv predmeta</th>
+                                        <th>Smerovi</th>
+                                        <th>Operacije</th>
+                                    </tr>
+                                <tbody>
+                                    <tr ng-repeat="subject in subjects">
+                                        <td>{{subject.id}}</td>
+                                        <td>{{subject.name}}</td>
+                                        <td><span ng-repeat="innercourse in subject.courses">{{innercourse.nameShort + " "}}</span></td>
+                                        <td>
+                                            <a class="text-info" data-toggle="modal" data-target="#editPredmetModal" ng-click="editSubjectModalInit(subject.id, subject.name, subject.courses)"><i class="fa fa-pencil"> Izmeni</i></a> 
+                                            <a class="text-danger"><i class="fa fa-times-circle" ng-click="deleteSubject(subject)"> Obriši</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+
+                    <button type="button" class="btn btn-success btn btn-md" data-toggle="modal" data-target="#addPredmetModal">
+                        <span class="glyphicon glyphicon-plus"></span> Dodaj predmet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-tag fa-fw"></i> Tagovi </h3>
+                </div>
+                <div class="panel-body">
+                    <div><div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sifra taga</th>
+                                        <th>Tag</th>
+                                        <th>Operacije</th>
+                                    </tr>
+                                <tbody>
+                                    <tr ng-repeat="tag in tags">
+                                        <td>{{tag.id}}</td>
+                                        <td>{{tag.value}}</td>
+                                        <td>
+                                            <a class="text-danger"><i class="fa fa-times-circle" ng-click="deleteTag(tag)"> Obriši</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--MODALS --> 
+
+    <!--STUDY LEVEL MODALS --> 
+
+    <div id="addStudyLevelModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Dodavanje nivoa studija</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Naziv nivoa</label>
+                            <input class="form-control" ng-model="newStudyLevelName">
+                        </div>
+                        <div class="form-group">
+                            <label>Skraceni naziv</label>
+                            <input class="form-control"  ng-model="newStudyLevelNameShort">
+                        </div>
+                        <button type="submit" class="btn btn-success" data-dismiss="modal" ng-click="createStudyLevel()">Dodaj</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="editStudyLevelModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Izmena nivoa studija</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Naziv nivoa</label>
+                            <input class="form-control" ng-model="updateStudyLevelName">
+                        </div>
+                        <div class="form-group">
+                            <label>Skraceni naziv</label>
+                            <input class="form-control" ng-model="updateStudyLevelNameShort">
+                        </div>
+                        <button type="submit" class="btn btn-info" data-dismiss="modal" ng-click="updateStudyLevel()">Izmeni</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--COURSES -->
+    <div id="editSmerModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Izmena smera</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Naziv smera</label>
+                            <input class="form-control" ng-model="updateCourseName">
+                        </div>
+                        <div class="form-group">
+                            <label>Skraceni naziv</label>
+                            <input class="form-control" ng-model="updateCourseShortName">
+                        </div>
+                        <div class="form-group">
+                            <label>Nivoi studija</label>
+                            <div class="checkbox" ng-repeat="study in studies">
+                                <label>
+                                    <input type="checkbox" ng-checked = "study.checked" ng-model="study.checked" value="{{study.id}}">{{study.name}}
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-info" data-dismiss="modal" ng-click="updateCourse()">Izmeni</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="addSmerModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Dodavanje smera</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Naziv smera</label>
+                            <input class="form-control" ng-model="newCourseName">
+                        </div>
+                        <div class="form-group">
+                            <label>Skraceni naziv</label>
+                            <input class="form-control"  ng-model="newCourseNameShort">
+                        </div>
+                        <div class="form-group">
+                            <label>Nivoi studija</label>
+                            <div class="checkbox" ng-repeat="study in studies">
+                                <label>
+                                    <input type="checkbox" ng-checked = "study.checked" ng-model="study.checked" value="{{study.id}}">{{study.name}}
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success" data-dismiss="modal" ng-click="createCourse()">Dodaj</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+    <!--div id="infoSmerModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Dodavanje smera</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br/>
+                    <img class="img-responsive col-md-3" src="http://2.bp.blogspot.com/-b9hd-yyLes0/Te3MZXz5TMI/AAAAAAAAAsY/an0A32F8_Po/s400/Windows_Mobility_Center_icon.png" alt="">
+                    <div class="col-md-9"> 
+                        <table class="table table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td>Naziv smera:</td>
+                                    <td>{{courseInfoName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Skraceni naziv:</td>
+                                    <td>{{courseInfoNameShort}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div-->
+
+
+
+    <!--SUBJECTS -->
+
+    <div id="editPredmetModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Izmena predmeta</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Naziv predmeta</label>
+                            <input class="form-control" ng-model="updateSubjectName">
+                        </div>
+                        <div class="form-group">
+                            <label>Smerovi</label>
+                            <div class="checkbox" ng-repeat="course in courses">
+                                <label>
+                                    <input type="checkbox" ng-checked = "course.checked" ng-model="course.checked" value="{{course.id}}">{{course.name}}
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-info" data-dismiss="modal" ng-click="updateSubject()">Izmeni</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+
+        </div>
+    </div>
+    <div id="addPredmetModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Dodaj predmet</h4>
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    <br />
+                    <form role="form" >
+                        <div class="form-group">
+                            <label>Naziv predmeta</label>
+                            <input class="form-control" ng-model = "newSubjectName">
+                        </div>
+                        <div class="form-group">
+                            <label>Smerovi</label>
+                            <div class="checkbox" ng-repeat="course in courses">
+                                <label>
+                                    <input type="checkbox" ng-model="course.checked" ng-checked="course.checked" >{{course.nameShort}}
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success"  data-dismiss="modal" ng-click="createSubject()"> Dodaj</button>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
