@@ -124,7 +124,7 @@ public class ThesisServiceImpl implements ThesisService {
 		} catch (Exception e) {
 			logger.error(e);
 			throw new InvalidArgumentException(
-					"Prosledjeni parametri nisu ispravni. Najverovatnije polje koje ste izabrali za sortiranje ne postoji.");
+					"Prosledjeni parametri nisu ispravni.");
 		}
 	}
 
