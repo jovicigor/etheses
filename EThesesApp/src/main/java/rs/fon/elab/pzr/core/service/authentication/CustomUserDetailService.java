@@ -16,9 +16,12 @@ import rs.fon.elab.pzr.core.repository.UserRepository;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    private
-    UserRepository userRepository;
+    public CustomUserDetailService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email)
@@ -38,16 +41,5 @@ public class CustomUserDetailService implements UserDetailsService {
         }
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, authList);
-
     }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-
 }

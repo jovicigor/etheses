@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.fon.elab.pzr.core.model.User;
-import rs.fon.elab.pzr.core.service.ThesisService;
-import rs.fon.elab.pzr.core.service.UserService;
 import rs.fon.elab.pzr.core.service.authentication.AuthenticationService;
 import rs.fon.elab.pzr.rest.model.LoginData;
 import rs.fon.elab.pzr.rest.model.response.level1.UserResponseLevel1;
@@ -21,12 +19,12 @@ import rs.fon.elab.pzr.rest.model.util.RestFactory;
 @RequestMapping(value = "/authentication")
 public class AuthenticationResource {
 
+    private final AuthenticationService authenticationService;
+
     @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ThesisService thesisService;
+    public AuthenticationResource(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public
@@ -52,30 +50,4 @@ public class AuthenticationResource {
     public void invalidateTicket(@RequestHeader(value = "ticket", required = false) String ticket) {
         authenticationService.invalidateTicket(ticket);
     }
-
-    public AuthenticationService getAuthenticationService() {
-        return authenticationService;
-    }
-
-    public void setAuthenticationService(
-            AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public ThesisService getThesisService() {
-        return thesisService;
-    }
-
-    public void setThesisService(ThesisService thesisService) {
-        this.thesisService = thesisService;
-    }
-
 }

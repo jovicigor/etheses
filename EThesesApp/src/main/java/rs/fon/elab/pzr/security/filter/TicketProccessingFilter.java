@@ -26,35 +26,14 @@ public class TicketProccessingFilter extends GenericFilterBean {
 
     private static final Logger logger = Logger.getLogger(TicketProccessingFilter.class);
 
-    public TicketProccessingFilter() {
+    private final UserDetailsService customUserDetailsService;
+    private final AuthenticationService authenticationService;
+
+    @Autowired
+    public TicketProccessingFilter(AuthenticationService authenticationService, UserDetailsService customUserDetailsService, AuthenticationManager authenticationManager) {
         super();
-    }
-
-    @Autowired
-    private UserDetailsService customUserDetailsService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private AuthenticationService authenticationService;
-
-    public UserDetailsService getCustomUserDetailsService() {
-        return customUserDetailsService;
-    }
-
-    public void setCustomUserDetailsService(
-            UserDetailsService customUserDetailsService) {
+        this.authenticationService = authenticationService;
         this.customUserDetailsService = customUserDetailsService;
-    }
-
-    public AuthenticationManager getAuthenticationManager() {
-        return authenticationManager;
-    }
-
-    public void setAuthenticationManager(
-            AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
     }
 
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -80,13 +59,4 @@ public class TicketProccessingFilter extends GenericFilterBean {
         }
         chain.doFilter(request, response);
     }
-
-    public AuthenticationService getAuthenticationService() {
-        return authenticationService;
-    }
-
-    public void setAuthenticationService(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
-
 }

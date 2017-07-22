@@ -20,10 +20,12 @@ public class KeywordServiceImpl implements KeywordService {
 
     private final Logger logger = Logger.getLogger(KeywordServiceImpl.class);
 
+    private final KeywordRepository keywordRepository;
+
     @Autowired
-    private KeywordRepository keywordRepository;
-    @Autowired
-    private ThesisService thesisService;
+    public KeywordServiceImpl(KeywordRepository keywordRepository) {
+        this.keywordRepository = keywordRepository;
+    }
 
     @Override
     public Keyword getKeyword(Long id) {
@@ -126,22 +128,5 @@ public class KeywordServiceImpl implements KeywordService {
         logger.info("Deleted " + numDeleted
                 + " unconnected and unbanned keywords.");
         return numDeleted;
-    }
-
-    // GETTERS AND SETTERS
-    public KeywordRepository getKeywordRepository() {
-        return keywordRepository;
-    }
-
-    public void setKeywordRepository(KeywordRepository keywordRepository) {
-        this.keywordRepository = keywordRepository;
-    }
-
-    public ThesisService getThesisService() {
-        return thesisService;
-    }
-
-    public void setThesisService(ThesisService thesisService) {
-        this.thesisService = thesisService;
     }
 }

@@ -57,18 +57,22 @@ import rs.fon.elab.pzr.rest.model.util.RestFactory;
 public class ThesisResource {
 
     private final Logger logger = Logger.getLogger(ThesisResource.class);
+    private final ThesisService thesisService;
+    private final UserService userService;
+    private final CourseService courseService;
+    private final TagService tagService;
+    private final FieldOfStudyService fieldOfStudyService;
+    private final KeywordService keywordService;
+
     @Autowired
-    private ThesisService thesisService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private CourseService courseService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private FieldOfStudyService fieldOfStudyService;
-    @Autowired
-    private KeywordService keywordService;
+    public ThesisResource(KeywordService keywordService, UserService userService, TagService tagService, ThesisService thesisService, CourseService courseService, FieldOfStudyService fieldOfStudyService) {
+        this.keywordService = keywordService;
+        this.userService = userService;
+        this.tagService = tagService;
+        this.thesisService = thesisService;
+        this.courseService = courseService;
+        this.fieldOfStudyService = fieldOfStudyService;
+    }
 
     // READ
     @RequestMapping(method = RequestMethod.GET)
@@ -196,17 +200,6 @@ public class ThesisResource {
                 .createThesisResponseLevel1(thesisService.addThesis(thesis));
     }
 
-	/*
-     * @RequestMapping(method = RequestMethod.POST, value = "/{thesisID}/tags")
-	 * public @ResponseBody ThesisResponse setTags(@RequestBody
-	 * ThesisTagsRequest thesisTagsRequest,@PathVariable("thesisID") Long
-	 * thesisID) { ParamaterCheck.mandatory("Lista tagova",
-	 * thesisTagsRequest.getTags()); return
-	 * RestFactory.createThesisResponse(thesisService.setTags(thesisID,
-	 * thesisTagsRequest.getTags())); }
-	 */
-
-    // UPDATE
     @RequestMapping(method = RequestMethod.PUT, value = "/{thesisID}")
     public
     @ResponseBody
@@ -378,8 +371,8 @@ public class ThesisResource {
 		 */
         response.setHeader("Content-Disposition",
                 "inline; filename=\"" + file.getName() + "\"");
-		/*
-		 * "Content-Disposition : attachment" will be directly download, may
+        /*
+         * "Content-Disposition : attachment" will be directly download, may
 		 * provide save as popup, based on your browser setting
 		 */
         // response.setHeader("Content-Disposition",
@@ -420,15 +413,15 @@ public class ThesisResource {
         response.setContentType(mimeType);
 
 		/*
-		 * "Content-Disposition : inline" will show viewable types [like
+         * "Content-Disposition : inline" will show viewable types [like
 		 * images/text/pdf/anything viewable by browser] right on browser while
 		 * others(zip e.g) will be directly downloaded [may provide save as
 		 * popup, based on your browser setting.]
 		 */
         response.setHeader("Content-Disposition",
                 "inline; filename=\"" + file.getName() + "\"");
-		/*
-		 * "Content-Disposition : attachment" will be directly download, may
+        /*
+         * "Content-Disposition : attachment" will be directly download, may
 		 * provide save as popup, based on your browser setting
 		 */
         // response.setHeader("Content-Disposition",
@@ -440,53 +433,4 @@ public class ThesisResource {
         // closes both streams.
         FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
-
-    public ThesisService getThesisService() {
-        return thesisService;
-    }
-
-    public void setThesisService(ThesisService thesisService) {
-        this.thesisService = thesisService;
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public CourseService getCourseService() {
-        return courseService;
-    }
-
-    public void setCourseService(CourseService courseService) {
-        this.courseService = courseService;
-    }
-
-    public TagService getTagService() {
-        return tagService;
-    }
-
-    public void setTagService(TagService tagService) {
-        this.tagService = tagService;
-    }
-
-    public FieldOfStudyService getFieldOfStudyService() {
-        return fieldOfStudyService;
-    }
-
-    public void setFieldOfStudyService(FieldOfStudyService fieldOfStudyService) {
-        this.fieldOfStudyService = fieldOfStudyService;
-    }
-
-    public KeywordService getKeywordService() {
-        return keywordService;
-    }
-
-    public void setKeywordService(KeywordService keywordService) {
-        this.keywordService = keywordService;
-    }
-
 }

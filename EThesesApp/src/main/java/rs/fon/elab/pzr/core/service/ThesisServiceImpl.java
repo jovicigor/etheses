@@ -37,16 +37,22 @@ public class ThesisServiceImpl implements ThesisService {
 
     private String thesisFilesFolder;
 
+    private final ThesisRepository thesisRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final UserService userService;
+    private final FileRepository fileRepository;
+
     @Autowired
-    private ThesisRepository thesisRepository;
-    @Autowired
-    private CommentRepository commentRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private FileRepository fileRepository;
+    public ThesisServiceImpl(UserRepository userRepository, ThesisRepository thesisRepository,
+                             FileRepository fileRepository, CommentRepository commentRepository,
+                             UserService userService) {
+        this.userRepository = userRepository;
+        this.thesisRepository = thesisRepository;
+        this.fileRepository = fileRepository;
+        this.commentRepository = commentRepository;
+        this.userService = userService;
+    }
 
     @Override
     public Thesis getThesis(Long id) {
@@ -383,54 +389,5 @@ public class ThesisServiceImpl implements ThesisService {
                     "Morate biti ulogovani da bi ste mogli obrisati komentar!");
         }
         commentRepository.delete(commentRepository.findOne(commentId));
-    }
-
-    // GETTERS AND SETTERS
-    public ThesisRepository getThesisRepository() {
-        return thesisRepository;
-    }
-
-    public void setThesisRepository(ThesisRepository thesisRepository) {
-        this.thesisRepository = thesisRepository;
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public CommentRepository getCommentRepository() {
-        return commentRepository;
-    }
-
-    public void setCommentRepository(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public FileRepository getFileRepository() {
-        return fileRepository;
-    }
-
-    public void setFileRepository(FileRepository fileRepository) {
-        this.fileRepository = fileRepository;
-    }
-
-    public String getThesisFilesFolder() {
-        return thesisFilesFolder;
-    }
-
-    public void setThesisFilesFolder(String thesisFilesFolder) {
-        this.thesisFilesFolder = thesisFilesFolder;
     }
 }

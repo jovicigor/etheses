@@ -13,8 +13,12 @@ import rs.fon.elab.pzr.core.repository.CourseRepository;
 @Service
 public class CourseServiceImpl implements CourseService {
 
+    private final CourseRepository courseRepository;
+
     @Autowired
-    private CourseRepository courseRepository;
+    public CourseServiceImpl(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
 
     @Override
     public Course getCourse(Long id) {
@@ -80,14 +84,4 @@ public class CourseServiceImpl implements CourseService {
         }
         courseRepository.delete(course);
     }
-
-    public CourseRepository getCourseRepository() {
-        return courseRepository;
-    }
-
-    public void setCourseRepository(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
-
-
 }

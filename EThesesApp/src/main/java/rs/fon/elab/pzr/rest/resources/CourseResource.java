@@ -28,10 +28,14 @@ import rs.fon.elab.pzr.rest.model.util.RestFactory;
 @RequestMapping(value = "/courses")
 public class CourseResource {
 
+    private final CourseService courseService;
+    private final StudiesService studiesService;
+
     @Autowired
-    private CourseService courseService;
-    @Autowired
-    private StudiesService studiesService;
+    public CourseResource(CourseService courseService, StudiesService studiesService) {
+        this.courseService = courseService;
+        this.studiesService = studiesService;
+    }
 
     // READ
     @RequestMapping(method = RequestMethod.GET)
@@ -128,22 +132,5 @@ public class CourseResource {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{courseID}")
     public void removeCourse(@PathVariable("courseID") Long courseID) {
         courseService.removeCourse(courseID);
-    }
-
-    // GETTERS AND SETTERS
-    public CourseService getCourseService() {
-        return courseService;
-    }
-
-    public void setCourseService(CourseService courseService) {
-        this.courseService = courseService;
-    }
-
-    public StudiesService getStudiesService() {
-        return studiesService;
-    }
-
-    public void setStudiesService(StudiesService studiesService) {
-        this.studiesService = studiesService;
     }
 }

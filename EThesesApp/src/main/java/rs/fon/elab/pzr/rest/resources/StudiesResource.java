@@ -24,10 +24,13 @@ import rs.fon.elab.pzr.rest.model.util.RestFactory;
 @RequestMapping(value = "/studies")
 public class StudiesResource {
 
-    @Autowired
-    private StudiesService studiesService;
+    private final StudiesService studiesService;
 
-    // READ
+    @Autowired
+    public StudiesResource(StudiesService studiesService) {
+        this.studiesService = studiesService;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public
     @ResponseBody
@@ -82,21 +85,6 @@ public class StudiesResource {
         return RestFactory.createStudiesResponseLevel1(studiesService.addStudies(studies));
     }
 
-	/*
-	 * @RequestMapping(method = RequestMethod.POST, value =
-	 * "/{courseID}/subjects") public @ResponseBody CourseResponse
-	 * addCourseSubjects(@RequestBody CourseSubjectsRequest
-	 * courseSubjectsRequest, @PathVariable("courseID") Long courseID) {
-	 * ParamaterCheck.mandatory("Predmeti",
-	 * courseSubjectsRequest.getSubjectIDs()); for(Long subjectID:
-	 * courseSubjectsRequest.getSubjectIDs()){
-	 * ParamaterCheck.mandatory("Id predmeta ", subjectID.toString()); } Course
-	 * courseNew =
-	 * courseService.addCourseSubjects(courseID,courseSubjectsRequest
-	 * .getSubjectIDs()); return RestFactory.createCourseResponse(courseNew); }
-	 */
-
-    // UPDATE
     @RequestMapping(method = RequestMethod.PUT, value = "/{studiesID}")
     public
     @ResponseBody
@@ -117,34 +105,8 @@ public class StudiesResource {
         return RestFactory.createStudiesResponseLevel1(studiesService.updateStudies(studies));
     }
 
-    // DELETE
     @RequestMapping(method = RequestMethod.DELETE, value = "/{studiesID}")
     public void removeStudies(@PathVariable("studiesID") Long studiesID) {
         studiesService.removeStudies(studiesID);
     }
-
-	/*
-	 * @RequestMapping(method = RequestMethod.DELETE,
-	 * value="/{courseID}/subjects") public CourseResponse
-	 * removeCourseSubjects(@RequestBody CourseSubjectsRequest
-	 * courseSubjectsRequest,@PathVariable("courseID") Long courseID) {
-	 * ParamaterCheck.mandatory("Predmeti",
-	 * courseSubjectsRequest.getSubjectIDs()); for(Long subjectID:
-	 * courseSubjectsRequest.getSubjectIDs()){
-	 * ParamaterCheck.mandatory("Id predmeta ", subjectID.toString()); } Course
-	 * courseDeleted =
-	 * courseService.removeCourseSubjects(courseID,courseSubjectsRequest
-	 * .getSubjectIDs()); return
-	 * RestFactory.createCourseResponse(courseDeleted); }
-	 */
-
-    // GETTERS AND SETTERS
-    public StudiesService getStudiesService() {
-        return studiesService;
-    }
-
-    public void setStudiesService(StudiesService studiesService) {
-        this.studiesService = studiesService;
-    }
-
 }

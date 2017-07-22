@@ -13,8 +13,12 @@ import rs.fon.elab.pzr.core.repository.FieldOfStudyRepository;
 @Service
 public class FieldOfStudyServiceImpl implements FieldOfStudyService {
 
+    private final FieldOfStudyRepository fieldOfStudyRepository;
+
     @Autowired
-    private FieldOfStudyRepository fieldOfStudyRepository;
+    public FieldOfStudyServiceImpl(FieldOfStudyRepository fieldOfStudyRepository) {
+        this.fieldOfStudyRepository = fieldOfStudyRepository;
+    }
 
     @Override
     public FieldOfStudy getFieldOfStudy(Long id) {
@@ -70,14 +74,4 @@ public class FieldOfStudyServiceImpl implements FieldOfStudyService {
         }
         fieldOfStudyRepository.delete(id);
     }
-
-    public FieldOfStudyRepository getFieldOfStudyRepository() {
-        return fieldOfStudyRepository;
-    }
-
-    public void setFieldOfStudyRepository(
-            FieldOfStudyRepository fieldOfStudyRepository) {
-        this.fieldOfStudyRepository = fieldOfStudyRepository;
-    }
-
 }

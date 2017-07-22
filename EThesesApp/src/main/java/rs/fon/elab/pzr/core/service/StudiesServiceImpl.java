@@ -13,8 +13,12 @@ import rs.fon.elab.pzr.core.repository.StudiesRepository;
 @Service
 public class StudiesServiceImpl implements StudiesService {
 
+    private final StudiesRepository studiesRepository;
+
     @Autowired
-    private StudiesRepository studiesRepository;
+    public StudiesServiceImpl(StudiesRepository studiesRepository) {
+        this.studiesRepository = studiesRepository;
+    }
 
     @Override
     public Studies getStudies(Long id) {
@@ -82,13 +86,4 @@ public class StudiesServiceImpl implements StudiesService {
         }
         studiesRepository.delete(studies);
     }
-
-    public StudiesRepository getStudiesRepository() {
-        return studiesRepository;
-    }
-
-    public void setStudiesRepository(StudiesRepository studiesRepository) {
-        this.studiesRepository = studiesRepository;
-    }
-
 }

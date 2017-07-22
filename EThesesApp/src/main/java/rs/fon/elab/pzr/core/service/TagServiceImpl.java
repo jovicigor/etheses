@@ -13,8 +13,12 @@ import rs.fon.elab.pzr.core.repository.TagRepository;
 @Service
 public class TagServiceImpl implements TagService {
 
+    private final TagRepository tagRepository;
+
     @Autowired
-    private TagRepository tagRepository;
+    public TagServiceImpl(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
 
     @Override
     public Tag getTag(Long id) {
@@ -55,13 +59,4 @@ public class TagServiceImpl implements TagService {
         }
         tagRepository.delete(id);
     }
-
-    public TagRepository getTagRepository() {
-        return tagRepository;
-    }
-
-    public void setTagRepository(TagRepository tagRepository) {
-        this.tagRepository = tagRepository;
-    }
-
 }

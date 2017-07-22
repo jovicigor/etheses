@@ -16,28 +16,21 @@ import rs.fon.elab.pzr.core.service.TagService;
 @RequestMapping(value = "/tags")
 public class TagResource {
 
-    @Autowired
-    private TagService tagService;
+    private final TagService tagService;
 
-    // READ
+    @Autowired
+    public TagResource(TagService tagService) {
+        this.tagService = tagService;
+    }
+
     @RequestMapping(method = RequestMethod.GET)
-    public
     @ResponseBody
-    Set<Tag> getTags() {
+    public Set<Tag> getTags() {
         return tagService.getAllTags();
     }
 
-    // DELETE
     @RequestMapping(method = RequestMethod.DELETE, value = "/{tagID}")
     public void deleteTag(@PathVariable("tagID") Long tagID) {
         tagService.removeTag(tagID);
-    }
-
-    public TagService getTagService() {
-        return tagService;
-    }
-
-    public void setTagService(TagService tagService) {
-        this.tagService = tagService;
     }
 }

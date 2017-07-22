@@ -28,12 +28,14 @@ import rs.fon.elab.pzr.rest.model.util.RestFactory;
 @RequestMapping(value = "/users")
 public class UserResource {
 
+    private final UserService userService;
+    private final CourseService courseService;
+
     @Autowired
-    private UserService userService;
-    @Autowired
-    private CourseService courseService;
-    @Autowired
-    private ThesisService thesisService;
+    public UserResource(UserService userService, CourseService courseService) {
+        this.userService = userService;
+        this.courseService = courseService;
+    }
 
     // READ
     @RequestMapping(method = RequestMethod.GET)
@@ -136,30 +138,4 @@ public class UserResource {
     public void deleteUser(@PathVariable("userID") Long userID) {
         userService.deleteUser(userID);
     }
-
-    // GETTERS AND SETTERS
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    public CourseService getCourseService() {
-        return courseService;
-    }
-
-    public void setCourseService(CourseService courseService) {
-        this.courseService = courseService;
-    }
-
-    public ThesisService getThesisService() {
-        return thesisService;
-    }
-
-    public void setThesisService(ThesisService thesisService) {
-        this.thesisService = thesisService;
-    }
-
 }

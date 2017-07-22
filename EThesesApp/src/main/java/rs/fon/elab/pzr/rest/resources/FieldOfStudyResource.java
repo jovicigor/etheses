@@ -20,8 +20,12 @@ import rs.fon.elab.pzr.rest.model.request.FieldOfStudyRequest;
 @RequestMapping(value = "/fields-of-study")
 public class FieldOfStudyResource {
 
+    private final FieldOfStudyService fieldOfStudyService;
+
     @Autowired
-    private FieldOfStudyService fieldOfStudyService;
+    public FieldOfStudyResource(FieldOfStudyService fieldOfStudyService) {
+        this.fieldOfStudyService = fieldOfStudyService;
+    }
 
     // READ
     @RequestMapping(method = RequestMethod.GET)
@@ -63,13 +67,5 @@ public class FieldOfStudyResource {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{fieldOfStudyID}")
     public void deleteTag(@PathVariable("fieldOfStudyID") Long fieldOfStudyID) {
         fieldOfStudyService.removeFieldOfStudy(fieldOfStudyID);
-    }
-
-    public FieldOfStudyService getFieldOfStudyService() {
-        return fieldOfStudyService;
-    }
-
-    public void setFieldOfStudyService(FieldOfStudyService fieldOfStudyService) {
-        this.fieldOfStudyService = fieldOfStudyService;
     }
 }

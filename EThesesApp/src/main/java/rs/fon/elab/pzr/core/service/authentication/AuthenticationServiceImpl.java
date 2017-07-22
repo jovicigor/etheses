@@ -12,13 +12,16 @@ import rs.fon.elab.pzr.core.repository.UserRepository;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Autowired
-    private TicketService ticketService;
+    private final TicketService ticketService;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserRepository userRepository;
-
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    public AuthenticationServiceImpl(UserRepository userRepository, TicketService ticketService) {
+        this.userRepository = userRepository;
+        this.ticketService = ticketService;
+        passwordEncoder = new BCryptPasswordEncoder();
+    }
 
     @Override
     public String authenticate(String email, String password) throws AuthenticationException {
@@ -73,30 +76,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         ticketService.invalidateTicket(ticket);
     }
-
-    public TicketService getTicketService() {
-        return ticketService;
-    }
-
-    public void setTicketService(TicketService ticketService) {
-        this.ticketService = ticketService;
-    }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public BCryptPasswordEncoder getPasswordEncoder() {
-        return passwordEncoder;
-    }
-
-    public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
-
 }

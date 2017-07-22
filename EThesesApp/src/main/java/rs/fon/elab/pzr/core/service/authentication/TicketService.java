@@ -12,16 +12,20 @@ public class TicketService {
 
     private final Logger logger = Logger.getLogger(TicketService.class);
 
-    @Autowired
-    private InMemoryTicketCash ticketCash;
+    private final InMemoryTicketCash ticketCash;
 
-    public SimpleTicket generateTicket(Long userId) {
+    @Autowired
+    public TicketService(InMemoryTicketCash ticketCash) {
+        this.ticketCash = ticketCash;
+    }
+
+    SimpleTicket generateTicket(Long userId) {
         SimpleTicket ticket = new SimpleTicket(userId);
         ticketCash.addTicket(ticket);
         return ticket;
     }
 
-    public Long getTicketUserId(String ticket) {
+    Long getTicketUserId(String ticket) {
         SimpleTicket inMemoryTicket = ticketCash.getTicket(ticket);
         if (inMemoryTicket != null) {
             return inMemoryTicket.getUserId();
@@ -29,27 +33,19 @@ public class TicketService {
         return null;
     }
 
-    public void prolongTicket(String ticketId) {
+    void prolongTicket(String ticketId) {
         SimpleTicket ticket = ticketCash.getTicket(ticketId);
         if (ticket != null) {
             ticket.resetTicketExpiration();
         }
     }
 
-    public void invalidateTicket(String ticket) {
+    void invalidateTicket(String ticket) {
         ticketCash.remove(ticket);
     }
 
     public void invalidateOldTickets() {
         logger.debug("Invalidating old tickets.");
         ticketCash.removeExpired();
-    }
-
-    public InMemoryTicketCash getTicketCash() {
-        return ticketCash;
-    }
-
-    public void setTicketCash(InMemoryTicketCash ticketCash) {
-        this.ticketCash = ticketCash;
     }
 }

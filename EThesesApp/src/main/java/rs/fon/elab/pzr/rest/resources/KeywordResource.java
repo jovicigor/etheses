@@ -22,8 +22,12 @@ import rs.fon.elab.pzr.rest.model.request.KeywordRequest;
 @RequestMapping(value = "/keywords")
 public class KeywordResource {
 
+    private final KeywordService keywordService;
+
     @Autowired
-    private KeywordService keywordService;
+    public KeywordResource(KeywordService keywordService) {
+        this.keywordService = keywordService;
+    }
 
     // READ
     @RequestMapping(method = RequestMethod.GET)
@@ -62,13 +66,5 @@ public class KeywordResource {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{keywordID}")
     public void deleteKeyword(@PathVariable("keywordID") Long keywordID) {
         keywordService.removeKeyword(keywordID);
-    }
-
-    public KeywordService getKeywordService() {
-        return keywordService;
-    }
-
-    public void setKeywordService(KeywordService keywordService) {
-        this.keywordService = keywordService;
     }
 }

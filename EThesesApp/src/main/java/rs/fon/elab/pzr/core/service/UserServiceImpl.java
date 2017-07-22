@@ -19,12 +19,16 @@ import rs.fon.elab.pzr.core.repository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private ThesisRepository thesisRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        passwordEncoder = new BCryptPasswordEncoder();
+
+    }
 
     @Override
     public User getUser(Long userId) {
@@ -109,21 +113,4 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
 
     }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public ThesisRepository getThesisRepository() {
-        return thesisRepository;
-    }
-
-    public void setThesisRepository(ThesisRepository thesisRepository) {
-        this.thesisRepository = thesisRepository;
-    }
-
 }
