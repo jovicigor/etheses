@@ -4,17 +4,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import rs.fon.elab.pzr.rest.model.response.level2.StudiesResponseLevel2;
-import rs.fon.elab.pzr.rest.model.response.level2.ThesisResponseLevel2;
 
 public class CourseResponseLevel1 {
 	
-	protected Long id;
+	private Long id;
 	
-	protected String name;
+	private String name;
 	
-	protected String nameShort;	
+	private String nameShort;
 	
-	protected Set<StudiesResponseLevel2> studies = new HashSet<StudiesResponseLevel2>();
+	private Set<StudiesResponseLevel2> studies = new HashSet<>();
 
 	public Long getId() {
 		return id;

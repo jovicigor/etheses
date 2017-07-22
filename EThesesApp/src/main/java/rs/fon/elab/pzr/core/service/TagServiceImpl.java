@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.elab.pzr.core.exception.InvalidArgumentException;
-import rs.fon.elab.pzr.core.model.Keyword;
 import rs.fon.elab.pzr.core.model.Tag;
 import rs.fon.elab.pzr.core.repository.TagRepository;
 

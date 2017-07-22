@@ -2,24 +2,17 @@ package rs.fon.elab.pzr.rest.model.response.level2;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import rs.fon.elab.pzr.core.model.Thesis;
-import rs.fon.elab.pzr.core.model.User;
-
 public class ThesisCommentResponseLevel2 {
 
-	protected Long id;
+	private Long id;
 
-	protected String message;
+	private String message;
 	
-	protected Date datePosted;
+	private Date datePosted;
 	
-	protected Long authorId;	
+	private Long authorId;
 	
-	protected Long thesisId;
+	private Long thesisId;
 
 	public Long getId() {
 		return id;

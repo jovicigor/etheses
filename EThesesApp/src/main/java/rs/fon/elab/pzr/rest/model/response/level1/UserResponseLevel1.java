@@ -1,6 +1,5 @@
 package rs.fon.elab.pzr.rest.model.response.level1;
 
-import java.util.List;
 import java.util.Set;
 
 import rs.fon.elab.pzr.rest.model.response.level2.CourseResponseLevel2;
@@ -8,25 +7,25 @@ import rs.fon.elab.pzr.rest.model.response.level2.ThesisResponseLevel2;
 
 public class UserResponseLevel1 {
 
-	protected Long id;
+	private Long id;
 
-	protected String firstName;
+	private String firstName;
 
-	protected String lastName;
+	private String lastName;
 
-	protected String email;
+	private String email;
 
-	protected String studentsTranscript;
+	private String studentsTranscript;
 
-	protected boolean isAdmin;
+	private boolean isAdmin;
 
-	protected CourseResponseLevel2 course;
+	private CourseResponseLevel2 course;
 
-	protected Set<ThesisResponseLevel2> theses;
+	private Set<ThesisResponseLevel2> theses;
 
-	protected String biography;
+	private String biography;
 
-	protected String interests;
+	private String interests;
 
 	public Long getId() {
 		return id;

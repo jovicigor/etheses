@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class StudiesResponseLevel2 {
-	protected Long id;
+	private Long id;
 	
-	protected String name;
+	private String name;
 	
-	protected String nameShort;
+	private String nameShort;
 	
-	protected Set<Long> courseIDs = new HashSet<Long>();
+	private Set<Long> courseIDs = new HashSet<>();
 
 	public Long getId() {
 		return id;

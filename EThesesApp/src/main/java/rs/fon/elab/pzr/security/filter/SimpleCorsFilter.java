@@ -4,19 +4,16 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-public class SimpleCorsFilter extends OncePerRequestFilter {
+class SimpleCorsFilter extends OncePerRequestFilter {
     private final Logger logger = Logger.getLogger(SimpleCorsFilter.class);
 
-    public SimpleCorsFilter() {
+    private SimpleCorsFilter() {
 
     }
 

@@ -4,25 +4,25 @@ import java.util.List;
 
 public class UserResponseLevel2 {
 
-	protected Long id;
+	private Long id;
 
-	protected String firstName;
+	private String firstName;
 
-	protected String lastName;
+	private String lastName;
 
-	protected String email;
+	private String email;
 
-	protected String studentsTranscript;
+	private String studentsTranscript;
 
-	protected boolean isAdmin;
+	private boolean isAdmin;
 
-	protected Long courseId;
+	private Long courseId;
 
-	protected List<Long> thesisIDs;
+	private List<Long> thesisIDs;
 
-	protected String biography;
+	private String biography;
 
-	protected String interests;
+	private String interests;
 
 	public Long getId() {
 		return id;

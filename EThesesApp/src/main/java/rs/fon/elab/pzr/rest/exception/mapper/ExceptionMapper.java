@@ -16,7 +16,7 @@ import rs.fon.elab.pzr.rest.model.ErrorMessage;
 @ControllerAdvice
 public class ExceptionMapper {
 	
-	Logger logger = Logger.getLogger(ExceptionMapper.class);
+	private final Logger logger = Logger.getLogger(ExceptionMapper.class);
 
 	@ResponseStatus(HttpStatus.OK)
 	@ExceptionHandler(AuthenticationException.class)

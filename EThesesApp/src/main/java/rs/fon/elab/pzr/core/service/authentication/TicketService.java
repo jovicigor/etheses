@@ -10,7 +10,7 @@ import rs.fon.elab.pzr.core.model.ticket.SimpleTicket;
 @Service
 public class TicketService {
 
-    Logger logger = Logger.getLogger(TicketService.class);
+    private final Logger logger = Logger.getLogger(TicketService.class);
 
     @Autowired
     private InMemoryTicketCash ticketCash;

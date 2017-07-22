@@ -40,7 +40,7 @@ public class CourseResource {
     List<CourseResponseLevel1> getCourses(
             @RequestParam(value = "courseName", required = false) String courseName) {
         List<Course> courseList = courseService.getAllCourses();
-        List<CourseResponseLevel1> courseResponseList = new ArrayList<CourseResponseLevel1>();
+        List<CourseResponseLevel1> courseResponseList = new ArrayList<>();
         if (courseName != null) {
             courseResponseList.add(RestFactory
                     .createCourseResponseLevel1(courseService
@@ -78,7 +78,7 @@ public class CourseResource {
         course.setName(courseRequest.getName());
         course.setNameShort(courseRequest.getNameShort());
         if (courseRequest.getStudiesIDs() != null) {
-            Set<Studies> studiesList = new HashSet<Studies>();
+            Set<Studies> studiesList = new HashSet<>();
             for (Long studiesId : courseRequest.getStudiesIDs()) {
                 Studies studies = studiesService.getStudies(studiesId);
                 if (studies != null) {
@@ -111,7 +111,7 @@ public class CourseResource {
         }
 
         if (courseRequest.getStudiesIDs() != null) {
-            Set<Studies> studiesList = new HashSet<Studies>();
+            Set<Studies> studiesList = new HashSet<>();
             for (Long studiesId : courseRequest.getStudiesIDs()) {
                 Studies studies = studiesService.getStudies(studiesId);
                 if (studies != null) {

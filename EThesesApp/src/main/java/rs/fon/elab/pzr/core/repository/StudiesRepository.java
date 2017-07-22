@@ -8,7 +8,7 @@ import rs.fon.elab.pzr.core.model.Studies;
 
 public interface StudiesRepository extends CrudRepository<Studies, Long> {
 	
-	public List<Studies> findAll();
-	public Studies findByName(String name);
-	public Studies findByNameShort(String nameShort);
+	List<Studies> findAll();
+	Studies findByName(String name);
+	Studies findByNameShort(String nameShort);
 }

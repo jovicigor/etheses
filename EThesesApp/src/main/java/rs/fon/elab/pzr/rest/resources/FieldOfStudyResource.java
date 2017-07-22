@@ -7,15 +7,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.fon.elab.pzr.core.exception.InvalidArgumentException;
 import rs.fon.elab.pzr.core.model.FieldOfStudy;
-import rs.fon.elab.pzr.core.model.Tag;
 import rs.fon.elab.pzr.core.service.FieldOfStudyService;
-import rs.fon.elab.pzr.core.service.TagService;
 import rs.fon.elab.pzr.core.service.util.ParamaterCheck;
 import rs.fon.elab.pzr.rest.model.request.FieldOfStudyRequest;
 

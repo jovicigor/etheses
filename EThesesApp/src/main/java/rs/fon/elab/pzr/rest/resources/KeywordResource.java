@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.fon.elab.pzr.core.exception.InvalidArgumentException;
-import rs.fon.elab.pzr.core.exception.PzrRuntimeException;
 import rs.fon.elab.pzr.core.model.Keyword;
-import rs.fon.elab.pzr.core.model.Tag;
-import rs.fon.elab.pzr.core.repository.KeywordRepository;
 import rs.fon.elab.pzr.core.service.KeywordService;
-import rs.fon.elab.pzr.core.service.TagService;
 import rs.fon.elab.pzr.rest.model.request.BannedKeywordsRequest;
 import rs.fon.elab.pzr.rest.model.request.KeywordRequest;
 
@@ -42,7 +38,7 @@ public class KeywordResource {
     public
     @ResponseBody
     List<Keyword> addBannedKeywords(@RequestBody BannedKeywordsRequest bannedKeywords) {
-        List<Keyword> keywords = new ArrayList<Keyword>();
+        List<Keyword> keywords = new ArrayList<>();
         for (String keywordValue : bannedKeywords.getKeywords()) {
             keywords.add(keywordService.addBannedKeyword(keywordValue));
         }

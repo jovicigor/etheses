@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThesisPageResponse {
-	Integer number;
-	Integer numberOfElements;
-	Integer size;
-	Long totalElements;
-	Integer totalPages;
-	List<ThesisResponseLevel1> content = new ArrayList<ThesisResponseLevel1>();
+	private Integer number;
+	private Integer numberOfElements;
+	private Integer size;
+	private Long totalElements;
+	private Integer totalPages;
+	private List<ThesisResponseLevel1> content = new ArrayList<>();
 
 	public Integer getNumber() {
 		return number;

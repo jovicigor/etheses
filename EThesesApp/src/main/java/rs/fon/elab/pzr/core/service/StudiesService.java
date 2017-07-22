@@ -6,16 +6,16 @@ import rs.fon.elab.pzr.core.model.Studies;
 
 public interface StudiesService {
 
-	public abstract Studies getStudies(Long id);
+	Studies getStudies(Long id);
 	
-	public abstract Studies getStudiesByName(String name);
+	Studies getStudiesByName(String name);
 
-	public abstract List<Studies> getAllStudies();
+	List<Studies> getAllStudies();
 
-	public abstract Studies addStudies(Studies studies);
+	Studies addStudies(Studies studies);
 	
-	public abstract Studies updateStudies(Studies studies);
+	Studies updateStudies(Studies studies);
 	
-	public abstract void removeStudies(Long studiesID);
+	void removeStudies(Long studiesID);
 	
 }

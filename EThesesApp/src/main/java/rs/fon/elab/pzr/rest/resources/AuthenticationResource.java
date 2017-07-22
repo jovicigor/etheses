@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import rs.fon.elab.pzr.core.model.Thesis;
 import rs.fon.elab.pzr.core.model.User;
 import rs.fon.elab.pzr.core.service.ThesisService;
 import rs.fon.elab.pzr.core.service.UserService;

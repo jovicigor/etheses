@@ -18,21 +18,21 @@ public class ThesisComment {
 	@Id
 	@Column(name = "thesis_comment_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 
 	@Column(name="comment_message")
-	protected String message;
+	private String message;
 	
 	@Column(name = "date_posted")
-	protected Date datePosted;
+	private Date datePosted;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	protected User author;	
+	private User author;
 	
 	@ManyToOne
 	@JoinColumn(name = "thesis_id")
-	protected Thesis thesis;
+	private Thesis thesis;
 
 	public Long getId() {
 		return id;

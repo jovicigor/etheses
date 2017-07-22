@@ -9,41 +9,41 @@ import rs.fon.elab.pzr.core.model.TFile;
 import rs.fon.elab.pzr.core.model.Tag;
 
 public class ThesisResponseLevel2 {
-	protected Long id;
+	private Long id;
 
-	protected String name;
+	private String name;
 
-	protected Integer grade;
+	private Integer grade;
 
-	protected Date datePosted;
+	private Date datePosted;
 
-	protected Date defenseDate;
+	private Date defenseDate;
 
-	protected String description;
+	private String description;
 
-	protected Long courseId;
+	private Long courseId;
 
-	protected Long userId;
+	private Long userId;
 
-	protected String userName;
+	private String userName;
 
-	protected String userEmail;
+	private String userEmail;
 	
-	protected Integer viewCount = 0;
+	private Integer viewCount = 0;
 
-	protected Long mentorId;
+	private Long mentorId;
 	
-	protected String mentorName;
+	private String mentorName;
 
-	protected String mentorEmail;
+	private String mentorEmail;
 
-	protected Set<Tag> tags = new HashSet<Tag>();
+	private Set<Tag> tags = new HashSet<>();
 	
-	protected Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();
+	private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();
 
-	protected Set<Long> commentIDs = new HashSet<Long>();
+	private Set<Long> commentIDs = new HashSet<>();
 
-	protected TFile file;
+	private TFile file;
 
 	public Long getId() {
 		return id;

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.fon.elab.pzr.core.exception.InvalidArgumentException;
 import rs.fon.elab.pzr.core.model.Course;
-import rs.fon.elab.pzr.core.model.Thesis;
 import rs.fon.elab.pzr.core.model.User;
 import rs.fon.elab.pzr.core.service.CourseService;
 import rs.fon.elab.pzr.core.service.ThesisService;
@@ -42,7 +41,7 @@ public class UserResource {
     @ResponseBody
     List<UserResponseLevel1> getUsers() {
         List<User> userList = userService.getAllUsers();
-        List<UserResponseLevel1> userResponseList = new ArrayList<UserResponseLevel1>();
+        List<UserResponseLevel1> userResponseList = new ArrayList<>();
         for (User user : userList) {
             userResponseList.add(RestFactory.createUserResponseLevel1(user));
         }

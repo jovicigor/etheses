@@ -14,16 +14,16 @@ public class TFile {
 	@Id
 	@Column(name = "file_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 
 	@Column(name = "file_name")
-	protected String fileName;	
+	private String fileName;
 	
 	@Column(name = "thesis_name")
-	protected String thesisName;
+	private String thesisName;
 	
 	@Column(name="download_count")
-	protected Integer downloadCount = 0;
+	private Integer downloadCount = 0;
 
 	public Long getId() {
 		return id;

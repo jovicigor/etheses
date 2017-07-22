@@ -10,7 +10,7 @@ public class Test {
 
 	}
 	
-	public static void extractWords(){
+	private static void extractWords(){
 		String input = "Input text, with words, punctuation, etc. Well, it's rather short.";
 		Pattern p = Pattern.compile("[\\w']+");
 		Matcher m = p.matcher(input);

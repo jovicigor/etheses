@@ -39,12 +39,10 @@ public class StudiesServiceImpl implements StudiesService {
             throw new InvalidArgumentException("Nivo studija " + studies.getName()
                     + " već postoji u bazi!");
         }
-        ;
         if (studiesRepository.findByNameShort(studies.getNameShort()) != null) {
             throw new InvalidArgumentException("Nivo studija " + studies.getNameShort()
                     + " već postoji u bazi!");
         }
-        ;
         return studiesRepository.save(studies);
     }
 

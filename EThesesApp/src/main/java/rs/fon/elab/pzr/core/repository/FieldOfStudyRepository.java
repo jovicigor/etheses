@@ -8,7 +8,7 @@ import rs.fon.elab.pzr.core.model.FieldOfStudy;
 
 public interface FieldOfStudyRepository extends CrudRepository<FieldOfStudy, Long> {
 	
-	public FieldOfStudy findByName(String name);
-	public Set<FieldOfStudy> findAll();
+	FieldOfStudy findByName(String name);
+	Set<FieldOfStudy> findAll();
 
 }

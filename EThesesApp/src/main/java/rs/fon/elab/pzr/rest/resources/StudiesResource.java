@@ -34,7 +34,7 @@ public class StudiesResource {
     List<StudiesResponseLevel1> getStudies(
             @RequestParam(value = "studiesName", required = false) String studiesName) {
         List<Studies> studiesList = studiesService.getAllStudies();
-        List<StudiesResponseLevel1> studiesResponseLevel1 = new ArrayList<StudiesResponseLevel1>();
+        List<StudiesResponseLevel1> studiesResponseLevel1 = new ArrayList<>();
         if (studiesName != null) {
             studiesResponseLevel1.add(RestFactory
                     .createStudiesResponseLevel1(studiesService

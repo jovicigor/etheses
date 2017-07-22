@@ -3,7 +3,7 @@ package rs.fon.elab.pzr.rest.model.request;
 
 public class KeywordRequest {
 
-	protected boolean banned;
+	private boolean banned;
 
 	public boolean getBanned() {
 		return banned;

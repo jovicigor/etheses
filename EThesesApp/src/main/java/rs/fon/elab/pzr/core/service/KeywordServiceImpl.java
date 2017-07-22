@@ -18,7 +18,7 @@ import rs.fon.elab.pzr.core.repository.KeywordRepository;
 @Service
 public class KeywordServiceImpl implements KeywordService {
 
-    private Logger logger = Logger.getLogger(KeywordServiceImpl.class);
+    private final Logger logger = Logger.getLogger(KeywordServiceImpl.class);
 
     @Autowired
     private KeywordRepository keywordRepository;
@@ -98,7 +98,7 @@ public class KeywordServiceImpl implements KeywordService {
     }
 
     public Map<String, Integer> extractWordsWithCount(String input) {
-        Map<String, Integer> words = new HashMap<String, Integer>();
+        Map<String, Integer> words = new HashMap<>();
         Pattern p = Pattern.compile("[\\w']+");
         Matcher m = p.matcher(input);
 

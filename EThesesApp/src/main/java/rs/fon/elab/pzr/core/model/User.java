@@ -21,41 +21,41 @@ public class User {
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 
 	@Column(name = "first_name")
-	protected String firstName;
+	private String firstName;
 
 	@Column(name = "last_name")
-	protected String lastName;
+	private String lastName;
 	
 	@Column(name = "email")
-	protected String email;
+	private String email;
 	
 	@Column(name = "password")
-	protected String password;
+	private String password;
 	
 	@Column(name = "students_transcript")
-	protected String studentsTranscript;
+	private String studentsTranscript;
 	
 	@Column(name = "is_admin")
-	protected  boolean isAdmin;
+	private boolean isAdmin;
 		
 	@ManyToOne
 	@JoinColumn(name = "course_id")
-	protected Course course;
+	private Course course;
 		
 	@Column(name = "biography")
-	protected String biography;
+	private String biography;
 	
 	@Column(name = "interests")
-	protected String interests;
+	private String interests;
 	
 	@Column(name = "last_activity")
-	protected Date lastActivity;
+	private Date lastActivity;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	protected Set<Thesis> theses = new HashSet<Thesis>();
+	private Set<Thesis> theses = new HashSet<>();
 
 	public Long getId() {
 		return id;

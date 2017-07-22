@@ -1,9 +1,8 @@
 package rs.fon.elab.pzr.rest.model.request;
 
-import java.util.List;
 import java.util.Set;
 
-public class SubjectRequest {
+class SubjectRequest {
 	
 	private String name;
 	

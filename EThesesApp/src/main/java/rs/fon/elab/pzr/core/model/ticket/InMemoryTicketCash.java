@@ -7,7 +7,7 @@ import java.util.Map;
 
 @Service
 public class InMemoryTicketCash {
-    private static Map<String, SimpleTicket> ticketCash = new HashMap<String, SimpleTicket>();
+    private static final Map<String, SimpleTicket> ticketCash = new HashMap<>();
 
     public void addTicket(SimpleTicket ticket) {
         ticketCash.put(ticket.getTicket(), ticket);

@@ -28,7 +28,7 @@ public class RestFactory {
 	
 	public static ThesisPageResponse CreateThesisPageResponse(Page<Thesis> thesisPage){
 		ThesisPageResponse thesisPageResponse = new ThesisPageResponse();
-		List<ThesisResponseLevel1> thesisResponseLevel1List = new ArrayList<ThesisResponseLevel1>();
+		List<ThesisResponseLevel1> thesisResponseLevel1List = new ArrayList<>();
 		for(Thesis thesis: thesisPage.getContent()){
 			thesisResponseLevel1List.add(createThesisResponseLevel1(thesis));
 		}
@@ -48,7 +48,7 @@ public class RestFactory {
 		}
 		ThesisResponseLevel1 thesisResponseLevel1 = new ThesisResponseLevel1();
 
-		Set<ThesisCommentResponseLevel2> thesisCommentResponseLevel2List = new HashSet<ThesisCommentResponseLevel2>();
+		Set<ThesisCommentResponseLevel2> thesisCommentResponseLevel2List = new HashSet<>();
 		for (ThesisComment comment : thesis.getComments()) {
 			thesisCommentResponseLevel2List
 					.add(createThesisCommentResponseLevel2(comment));
@@ -78,12 +78,12 @@ public class RestFactory {
 		return thesisResponseLevel1;
 	}
 
-	public static ThesisResponseLevel2 createThesisResponseLevel2(Thesis thesis) {
+	private static ThesisResponseLevel2 createThesisResponseLevel2(Thesis thesis) {
 		if (thesis == null) {
 			return null;
 		}
 		ThesisResponseLevel2 thesisResponseLevel2 = new ThesisResponseLevel2();
-		Set<Long> commentIDs = new HashSet<Long>();
+		Set<Long> commentIDs = new HashSet<>();
 		for (ThesisComment comment : thesis.getComments()) {
 			commentIDs.add(comment.getId());
 		}
@@ -134,8 +134,8 @@ public class RestFactory {
 		return thesisCommentResponseLevel1;
 	}
 
-	public static ThesisCommentResponseLevel2 createThesisCommentResponseLevel2(
-			ThesisComment comment) {
+	private static ThesisCommentResponseLevel2 createThesisCommentResponseLevel2(
+            ThesisComment comment) {
 		if (comment == null) {
 			return null;
 		}
@@ -171,7 +171,7 @@ public class RestFactory {
 		userResponseLevel1.setInterests(user.getInterests());
 		userResponseLevel1.setLastName(user.getLastName());
 		userResponseLevel1.setStudentsTranscript(user.getStudentsTranscript());
-		Set<ThesisResponseLevel2> thesisResponseLevel2 = new HashSet<ThesisResponseLevel2>();
+		Set<ThesisResponseLevel2> thesisResponseLevel2 = new HashSet<>();
 		for(Thesis thesis: user.getTheses()){
 			thesisResponseLevel2.add(createThesisResponseLevel2(thesis));
 		}
@@ -181,7 +181,7 @@ public class RestFactory {
 
 	}
 
-	public static UserResponseLevel2 createUserResponseLevel2(User user) {
+	private static UserResponseLevel2 createUserResponseLevel2(User user) {
 		if (user == null) {
 			return null;
 		}
@@ -198,7 +198,7 @@ public class RestFactory {
 		userResponseLevel2.setInterests(user.getInterests());
 		userResponseLevel2.setLastName(user.getLastName());
 		userResponseLevel2.setStudentsTranscript(user.getStudentsTranscript());
-		List<Long> thesisIDs = new ArrayList<Long>();
+		List<Long> thesisIDs = new ArrayList<>();
 		for(Thesis thesis: user.getTheses()){
 			thesisIDs.add(thesis.getId());
 		}
@@ -218,7 +218,7 @@ public class RestFactory {
 		courseResponseLevel1.setNameShort(course.getNameShort());		
 		Set<Studies> studies = course.getStudies();
 		if(studies!=null){
-			Set<StudiesResponseLevel2> studiesResponseLevel2 = new HashSet<StudiesResponseLevel2>();
+			Set<StudiesResponseLevel2> studiesResponseLevel2 = new HashSet<>();
 			for (Studies studiesLevel : studies) {
 				studiesResponseLevel2
 						.add(createStudiesResponseLevel2(studiesLevel));
@@ -229,7 +229,7 @@ public class RestFactory {
 
 	}
 
-	public static CourseResponseLevel2 createCourseResponseLevel2(Course course) {
+	private static CourseResponseLevel2 createCourseResponseLevel2(Course course) {
 		if (course == null) {
 			return null;
 		}
@@ -239,7 +239,7 @@ public class RestFactory {
 		courseResponseLevel2.setNameShort(course.getNameShort());	
 		Set<Studies> studies = course.getStudies();
 		if (studies != null) {
-			Set<Long> studiesIDs = new HashSet<Long>();
+			Set<Long> studiesIDs = new HashSet<>();
 			for (Studies studiesLevel : studies) {
 				studiesIDs.add(studiesLevel.getId());
 			}
@@ -259,7 +259,7 @@ public class RestFactory {
 		studiesResponseLevel1.setNameShort(studies.getNameShort());
 		Set<Course> courses = studies.getCourses();
 		if (courses != null) {
-			Set<CourseResponseLevel2> courseResponseLevel1 = new HashSet<CourseResponseLevel2>();
+			Set<CourseResponseLevel2> courseResponseLevel1 = new HashSet<>();
 			for (Course course : courses) {
 				courseResponseLevel1.add(createCourseResponseLevel2(course));
 			}
@@ -269,7 +269,7 @@ public class RestFactory {
 
 	}
 	
-	public static StudiesResponseLevel2 createStudiesResponseLevel2(Studies studies) {
+	private static StudiesResponseLevel2 createStudiesResponseLevel2(Studies studies) {
 		if (studies == null) {
 			return null;
 		}
@@ -279,7 +279,7 @@ public class RestFactory {
 		studiesResponseLevel2.setNameShort(studies.getNameShort());
 		Set<Course> courses = studies.getCourses();
 		if (courses != null) {
-			Set<Long> courseIDs = new HashSet<Long>();
+			Set<Long> courseIDs = new HashSet<>();
 			for (Course subject : courses) {
 				courseIDs.add(subject.getId());
 			}

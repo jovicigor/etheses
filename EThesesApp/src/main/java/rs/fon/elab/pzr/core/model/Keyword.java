@@ -14,13 +14,13 @@ public class Keyword {
 	@Id
 	@Column(name = "keyword_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+    private Long id;
 
 	@Column(name = "value")
-	protected String value;	
+    private String value;
 	
 	@Column(name = "is_banned")
-	protected boolean banned;	
+    private boolean banned;
 
 	public Long getId() {
 		return id;

@@ -8,7 +8,7 @@ import rs.fon.elab.pzr.core.model.Tag;
 
 public interface TagRepository extends CrudRepository<Tag, Long> {
 	
-	public Tag findByValue(String value);
-	public Set<Tag> findAll();
+	Tag findByValue(String value);
+	Set<Tag> findAll();
 
 }

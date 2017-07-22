@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,17 +21,17 @@ public class Course {
 	@Id
 	@Column(name = "course_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+    private Long id;
 
 	@Column(name = "name")
-	protected String name;
+    private String name;
 	
 	@Column(name = "name_short")
-	protected String nameShort;	
+    private String nameShort;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "course_studies", joinColumns = { @JoinColumn(name = "course_id") }, inverseJoinColumns = { @JoinColumn(name = "studies_id") })
-	protected Set<Studies> studies = new HashSet<Studies>();
+    private Set<Studies> studies = new HashSet<>();
 	
 	public Long getId() {
 		return id;

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import rs.fon.elab.pzr.core.exception.AuthenticationException;
 import rs.fon.elab.pzr.core.exception.InvalidTicketException;
 import rs.fon.elab.pzr.core.model.User;
-import rs.fon.elab.pzr.core.model.ticket.SimpleTicket;
 import rs.fon.elab.pzr.core.repository.UserRepository;
 
 @Service
@@ -24,17 +23,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public String authenticate(String email, String password) throws AuthenticationException {
         if (email == null || password == null) {
-            throw new AuthenticationException("Bad credentials");
+            throw new AuthenticationException();
         }
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new AuthenticationException("Bad credentials");
+            throw new AuthenticationException();
         }
 
         String encodedPassword = user.getPassword();
         boolean matches = passwordEncoder.matches(password, encodedPassword);
         if (!matches) {
-            throw new AuthenticationException("Bad credentials");
+            throw new AuthenticationException();
         }
         return ticketService.generateTicket(user.getId()).getTicket();
 

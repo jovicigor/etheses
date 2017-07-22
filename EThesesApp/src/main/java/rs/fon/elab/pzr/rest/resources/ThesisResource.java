@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
@@ -57,7 +56,7 @@ import rs.fon.elab.pzr.rest.model.util.RestFactory;
 @RequestMapping(value = "/theses")
 public class ThesisResource {
 
-    private Logger logger = Logger.getLogger(ThesisResource.class);
+    private final Logger logger = Logger.getLogger(ThesisResource.class);
     @Autowired
     private ThesisService thesisService;
     @Autowired
@@ -77,7 +76,7 @@ public class ThesisResource {
     @ResponseBody
     List<ThesisResponseLevel1> getThesises(
             @RequestParam(value = "userID", required = false) Long userID) {
-        List<ThesisResponseLevel1> thesisResponseList = new ArrayList<ThesisResponseLevel1>();
+        List<ThesisResponseLevel1> thesisResponseList = new ArrayList<>();
 
         if (userID != null) {
             List<Thesis> userThesis = thesisService.getThesisByUserId(userID);
@@ -193,9 +192,8 @@ public class ThesisResource {
             User mentor = userService.getUser(thesisRequest.getMentorId());
             thesis.setMentor(mentor);
         }
-        ThesisResponseLevel1 thesisResponseLevel1 = RestFactory
+        return RestFactory
                 .createThesisResponseLevel1(thesisService.addThesis(thesis));
-        return thesisResponseLevel1;
     }
 
 	/*
@@ -267,7 +265,7 @@ public class ThesisResource {
             thesis.setMentor(mentor);
         }
         if (thesisRequest.getTags() != null) {
-            Set<Tag> tagList = new HashSet<Tag>();
+            Set<Tag> tagList = new HashSet<>();
             for (String tagValue : thesisRequest.getTags()) {
                 tagList.add(tagService.addTag(tagValue));
             }
@@ -315,7 +313,7 @@ public class ThesisResource {
             @PathVariable("thesisID") Long thesisId) {
         Set<ThesisComment> thesisComments = thesisService
                 .getAllComments(thesisId);
-        Set<ThesisCommentResponseLevel1> thesisCommentResponses = new HashSet<ThesisCommentResponseLevel1>();
+        Set<ThesisCommentResponseLevel1> thesisCommentResponses = new HashSet<>();
         for (ThesisComment thesisComment : thesisComments) {
             thesisCommentResponses.add(RestFactory
                     .createThesisCommentResponseLevel1(thesisComment));
@@ -379,7 +377,7 @@ public class ThesisResource {
 		 * popup, based on your browser setting.]
 		 */
         response.setHeader("Content-Disposition",
-                String.format("inline; filename=\"" + file.getName() + "\""));
+                "inline; filename=\"" + file.getName() + "\"");
 		/*
 		 * "Content-Disposition : attachment" will be directly download, may
 		 * provide save as popup, based on your browser setting
@@ -428,7 +426,7 @@ public class ThesisResource {
 		 * popup, based on your browser setting.]
 		 */
         response.setHeader("Content-Disposition",
-                String.format("inline; filename=\"" + file.getName() + "\""));
+                "inline; filename=\"" + file.getName() + "\"");
 		/*
 		 * "Content-Disposition : attachment" will be directly download, may
 		 * provide save as popup, based on your browser setting

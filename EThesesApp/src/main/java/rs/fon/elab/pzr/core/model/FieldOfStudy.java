@@ -14,10 +14,10 @@ public class FieldOfStudy {
 	@Id
 	@Column(name = "field_of_study_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+    private Long id;
 
 	@Column(name = "name")
-	protected String name;
+    private String name;
 
 	public Long getId() {
 		return id;

@@ -1,7 +1,7 @@
 package rs.fon.elab.pzr.rest.model.request;
 
 public class FieldOfStudyRequest {
-	protected String name;
+	private String name;
 
 	public String getName() {
 		return name;

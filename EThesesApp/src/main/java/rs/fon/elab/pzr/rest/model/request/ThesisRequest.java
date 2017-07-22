@@ -5,31 +5,31 @@ import java.util.Set;
 
 public class ThesisRequest {
 
-	protected String name;
+	private String name;
 
-	protected Integer grade;
+	private Integer grade;
 
-	protected Date defenseDate;
+	private Date defenseDate;
 
-	protected String description;
+	private String description;
 
-	protected String courseName;
+	private String courseName;
 
-	protected Long userId;
+	private Long userId;
 
-	protected String userName;
+	private String userName;
 
-	protected String userEmail;
+	private String userEmail;
 
-	protected Long mentorId;
+	private Long mentorId;
 
-	protected String mentorName;
+	private String mentorName;
 
-	protected String mentorEmail;
+	private String mentorEmail;
 
-	protected Set<String> tags;
+	private Set<String> tags;
 
-	protected Set<String> fieldsOfStudy;
+	private Set<String> fieldsOfStudy;
 
 	public String getName() {
 		return name;

@@ -15,10 +15,10 @@ public class Tag {
 	@Id
 	@Column(name = "tag_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 
 	@Column(name = "value")
-	protected String value;
+	private String value;
 
 	public Long getId() {
 		return id;

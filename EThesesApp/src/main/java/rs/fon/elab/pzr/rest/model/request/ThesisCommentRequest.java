@@ -1,10 +1,8 @@
 package rs.fon.elab.pzr.rest.model.request;
 
-import java.util.Date;
-
 public class ThesisCommentRequest {
 
-	protected String message;
+	private String message;
 
 	public String getMessage() {
 		return message;

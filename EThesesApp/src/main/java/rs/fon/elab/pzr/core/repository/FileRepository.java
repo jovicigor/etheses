@@ -8,6 +8,6 @@ import rs.fon.elab.pzr.core.model.TFile;
 
 public interface FileRepository extends CrudRepository<TFile, Long>{
 	
-	public abstract TFile findByFileName(String fileName);
-	public abstract Set<TFile> findAll(); 
+	TFile findByFileName(String fileName);
+	Set<TFile> findAll();
 }

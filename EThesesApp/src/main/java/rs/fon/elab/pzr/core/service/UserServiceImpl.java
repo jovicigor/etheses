@@ -1,6 +1,7 @@
 package rs.fon.elab.pzr.core.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.elab.pzr.core.exception.InvalidArgumentException;
 import rs.fon.elab.pzr.core.exception.InvalidTicketException;
-import rs.fon.elab.pzr.core.model.Thesis;
 import rs.fon.elab.pzr.core.model.User;
 import rs.fon.elab.pzr.core.repository.ThesisRepository;
 import rs.fon.elab.pzr.core.repository.UserRepository;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public User getUser(Long userId) {
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
                     .getContext().getAuthentication().getPrincipal();
             String email = springUser.getUsername();
             User loggedInUser = getUser(email);
-            if (!loggedInUser.isAdmin() && loggedInUser.getId() != user.getId()) {
+            if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), user.getId())) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
                     .getContext().getAuthentication().getPrincipal();
             String email = springUser.getUsername();
             User loggedInUser = getUser(email);
-            if (!loggedInUser.isAdmin() && loggedInUser.getId() != user.getId()) {
+            if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), user.getId())) {
                 throw new Exception();
             }
         } catch (Exception e) {

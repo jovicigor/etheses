@@ -12,41 +12,41 @@ import rs.fon.elab.pzr.rest.model.response.level2.ThesisCommentResponseLevel2;
 import rs.fon.elab.pzr.rest.model.response.level2.UserResponseLevel2;
 
 public class ThesisResponseLevel1 {
-	protected Long id;
+	private Long id;
 
-	protected String name;
+	private String name;
 
-	protected Integer grade;
+	private Integer grade;
 
-	protected Date datePosted;
+	private Date datePosted;
 
-	protected Date defenseDate;
+	private Date defenseDate;
 
-	protected String description;
+	private String description;
 
-	protected CourseResponseLevel2 course;
+	private CourseResponseLevel2 course;
 
-	protected UserResponseLevel2 user;
+	private UserResponseLevel2 user;
 
-	protected String userName;
+	private String userName;
 
-	protected String userEmail;
+	private String userEmail;
 	
-	protected Integer viewCount = 0;
+	private Integer viewCount = 0;
 
-	protected UserResponseLevel2 mentor;
+	private UserResponseLevel2 mentor;
 	
-	protected String mentorName;
+	private String mentorName;
 
-	protected String mentorEmail;
+	private String mentorEmail;
 
-	protected Set<Tag> tags = new HashSet<>();
+	private Set<Tag> tags = new HashSet<>();
 	
-	protected Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();
+	private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();
 
-	protected Set<ThesisCommentResponseLevel2> comments = new HashSet<ThesisCommentResponseLevel2>();
+	private Set<ThesisCommentResponseLevel2> comments = new HashSet<>();
 
-	protected TFile file;
+	private TFile file;
 
 	public Long getId() {
 		return id;

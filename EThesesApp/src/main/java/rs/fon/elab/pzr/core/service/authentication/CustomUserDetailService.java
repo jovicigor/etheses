@@ -29,7 +29,7 @@ public class CustomUserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException("There is no user with userName: " + email);
         }
 
-        List authList = new ArrayList();
+        List<SimpleGrantedAuthority> authList = new ArrayList<>();
         if (user.isAdmin()) {
             authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -37,8 +37,7 @@ public class CustomUserDetailService implements UserDetailsService {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
 
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, authList);
-        return userDetails;
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, authList);
 
     }
 

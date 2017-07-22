@@ -38,12 +38,10 @@ public class CourseServiceImpl implements CourseService {
             throw new InvalidArgumentException("Kurs " + course.getName()
                     + " već postoji u bazi!");
         }
-        ;
         if (courseRepository.findByNameShort(course.getNameShort()) != null) {
             throw new InvalidArgumentException("Kurs " + course.getNameShort()
                     + " već postoji u bazi!");
         }
-        ;
         return courseRepository.save(course);
     }
 

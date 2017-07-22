@@ -20,17 +20,17 @@ public class Studies {
 	@Id
 	@Column(name = "studies_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+    private Long id;
 
 	@Column(name = "name")
-	protected String name;
+    private String name;
 	
 	@Column(name = "name_short")
-	protected String nameShort;
+    private String nameShort;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "course_studies", joinColumns = { @JoinColumn(name = "studies_id") }, inverseJoinColumns = { @JoinColumn(name = "course_id") })
-	protected Set<Course> courses = new HashSet<Course>();
+    private Set<Course> courses = new HashSet<>();
 
 	public Long getId() {
 		return id;

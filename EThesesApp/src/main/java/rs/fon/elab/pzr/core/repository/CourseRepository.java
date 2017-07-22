@@ -8,7 +8,7 @@ import rs.fon.elab.pzr.core.model.Course;
 
 public interface CourseRepository extends CrudRepository<Course, Long> {
 	
-	public List<Course> findAll();
-	public Course findByName(String name);
-	public Course findByNameShort(String nameShort);
+	List<Course> findAll();
+	Course findByName(String name);
+	Course findByNameShort(String nameShort);
 }

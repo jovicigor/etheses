@@ -2,17 +2,17 @@ package rs.fon.elab.pzr.rest.model.request;
 
 public class UserRequest {
 
-	protected String firstName;
+	private String firstName;
 
-	protected String lastName;
+	private String lastName;
 
-	protected String studentsTranscript;
+	private String studentsTranscript;
 
-	protected String courseName;	
+	private String courseName;
 
-	protected String biography;
+	private String biography;
 
-	protected String interests;	
+	private String interests;
 
 	public String getFirstName() {
 		return firstName;

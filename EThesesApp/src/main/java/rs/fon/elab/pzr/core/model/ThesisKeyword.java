@@ -1,6 +1,5 @@
 package rs.fon.elab.pzr.core.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,7 @@ public class ThesisKeyword {
 	@Id
 	@Column(name = "thesis_keyword_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "thesis_id")

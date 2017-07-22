@@ -13,7 +13,7 @@ public class SimpleTicket {
 	private Long userId;
 	
 	private Date validTo;
-	private SecureRandom random = new SecureRandom();
+	private final SecureRandom random = new SecureRandom();
 
 	public SimpleTicket() {
 		

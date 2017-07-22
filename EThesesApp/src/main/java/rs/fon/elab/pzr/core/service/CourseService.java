@@ -7,16 +7,16 @@ import rs.fon.elab.pzr.core.model.Course;
 
 public interface CourseService {
 
-	public abstract Course getCourse(Long id);
+	Course getCourse(Long id);
 	
-	public abstract Course getCourseByName(String name);
+	Course getCourseByName(String name);
 
-	public abstract List<Course> getAllCourses();
+	List<Course> getAllCourses();
 
-	public abstract Course addCourse(Course course);
+	Course addCourse(Course course);
 	
-	public abstract Course updateCourse(Course course);
+	Course updateCourse(Course course);
 	
-	public abstract void removeCourse(Long courseID);
+	void removeCourse(Long courseID);
 	
 }

@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -25,14 +26,13 @@ import rs.fon.elab.pzr.core.model.ThesisComment;
 import rs.fon.elab.pzr.core.model.User;
 import rs.fon.elab.pzr.core.repository.CommentRepository;
 import rs.fon.elab.pzr.core.repository.FileRepository;
-import rs.fon.elab.pzr.core.repository.TagRepository;
 import rs.fon.elab.pzr.core.repository.ThesisRepository;
 import rs.fon.elab.pzr.core.repository.UserRepository;
 
 @Service
 public class ThesisServiceImpl implements ThesisService {
 
-    private Logger logger = Logger.getLogger(ThesisServiceImpl.class);
+    private final Logger logger = Logger.getLogger(ThesisServiceImpl.class);
     private static final int DEFAULT_PAGE_SIZE = 10;
 
     private String thesisFilesFolder;
@@ -95,21 +95,21 @@ public class ThesisServiceImpl implements ThesisService {
             thesisName = "%" + thesisName + "%";
         }
         if (tagValues == null || tagValues.isEmpty()) {
-            tagsMatchLimit = 0l;
+            tagsMatchLimit = 0L;
         } else {
             if (tagsMatchLimit == null) {
                 tagsMatchLimit = (long) tagValues.size();
             }
         }
         if (fieldValues == null || fieldValues.isEmpty()) {
-            fieldsMatchLimit = 0l;
+            fieldsMatchLimit = 0L;
         } else {
             if (fieldsMatchLimit == null) {
                 fieldsMatchLimit = (long) fieldValues.size();
             }
         }
 
-        PageRequest pageRequest = null;
+        PageRequest pageRequest;
         if (sortField == null || sortField.equals("")) {
             pageRequest = new PageRequest(pageNumber, pageSize, new Sort(
                     Sort.Direction.DESC, "datePosted"));
@@ -120,7 +120,7 @@ public class ThesisServiceImpl implements ThesisService {
         }
 
         try {
-            if (courseName != null && courseName != "") {
+            if (courseName != null && !Objects.equals(courseName, "")) {
                 if (descriptionKeys == null || descriptionKeys.isEmpty()) {
                     return thesisRepository
                             .findByNameLikeTagsFieldsAndCoursePagable(
@@ -137,7 +137,7 @@ public class ThesisServiceImpl implements ThesisService {
                                 tagsMatchLimit, courseName, fieldValues,
                                 fieldsMatchLimit, descriptionKeys,
                                 descriptionKeyLimit);
-            } else if (studiesName != null && studiesName != "") {
+            } else if (studiesName != null && !Objects.equals(studiesName, "")) {
                 if (descriptionKeys == null || descriptionKeys.isEmpty()) {
                     return thesisRepository
                             .findByNameLikeTagsFieldsAndStudiesPagable(
@@ -374,8 +374,8 @@ public class ThesisServiceImpl implements ThesisService {
             User loggedInUser = userService.getUser(email);
             ThesisComment thesisComment = commentRepository.findOne(commentId);
             if (!loggedInUser.isAdmin()
-                    && thesisComment.getAuthor().getId() != loggedInUser
-                    .getId()) {
+                    && !Objects.equals(thesisComment.getAuthor().getId(), loggedInUser
+                    .getId())) {
                 throw new Exception();
             }
         } catch (Exception e) {

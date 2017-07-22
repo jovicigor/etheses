@@ -26,67 +26,67 @@ public class Thesis {
 		@Id
 		@Column(name = "thesis_id")
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		protected Long id;
+		private Long id;
 
 		@Column(name = "name")
-		protected String name;
+		private String name;
 		
 		@Column(name="grade")
-		protected Integer grade;
+		private Integer grade;
 		
 		@Column(name="date_posted")
-		protected Date datePosted;
+		private Date datePosted;
 		
 		@Column(name="defense_date")
-		protected Date defenseDate;
+		private Date defenseDate;
 		
 		@Column(name="description")
-		protected String description;
+		private String description;
 		
 		@ManyToOne
 		@JoinColumn(name = "course_id")
-		protected Course course;
+		private Course course;
 		
 		@ManyToOne
 		@JoinColumn(name = "file_id")
-		protected TFile file;
+		private TFile file;
 		
 		@ManyToOne
 		@JoinColumn(name = "user_id")
-		protected User user;
+		private User user;
 		
 		@Column(name="user_name")
-		protected String userName;
+		private String userName;
 		
 		@Column(name="user_email")
-		protected String userEmail;
+		private String userEmail;
 		
 		@Column(name="view_count")
-		protected Integer viewCount = 0;
+		private Integer viewCount = 0;
 				
 		@ManyToOne
 		@JoinColumn(name = "user_mentor_id")
-		protected User mentor;
+		private User mentor;
 		
 		@Column(name="mentor_name")
-		protected String mentorName;
+		private String mentorName;
 		
 		@Column(name="mentor_email")
-		protected String mentorEmail;
+		private String mentorEmail;
 		
 		@OneToMany(mappedBy = "thesis", fetch = FetchType.EAGER)
-		protected Set<ThesisComment> comments = new HashSet<ThesisComment>();
+		private Set<ThesisComment> comments = new HashSet<>();
 		
 		@ManyToMany(fetch = FetchType.EAGER)
 		@JoinTable(name = "thesis_tag", joinColumns = { @JoinColumn(name = "thesis_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
-		protected Set<Tag> tags = new HashSet<Tag>();
+		private Set<Tag> tags = new HashSet<>();
 		
 		@ManyToMany(fetch = FetchType.EAGER)
 		@JoinTable(name = "thesis_field_of_study", joinColumns = { @JoinColumn(name = "thesis_id") }, inverseJoinColumns = { @JoinColumn(name = "field_of_study_id") })
-		protected Set<FieldOfStudy> fieldOfStudies = new HashSet<>(); 
+		private Set<FieldOfStudy> fieldOfStudies = new HashSet<>();
 		
 		@OneToMany(mappedBy = "thesis", fetch = FetchType.EAGER, cascade=CascadeType.ALL,orphanRemoval=true)
-	    private Set<ThesisKeyword> thesisKeywords = new HashSet<ThesisKeyword>();
+	    private Set<ThesisKeyword> thesisKeywords = new HashSet<>();
 		
 
 		public Long getId() {
