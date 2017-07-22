@@ -1,5 +1,6 @@
 package rs.fon.elab.pzr.rest.resources;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,54 +22,61 @@ import rs.fon.elab.pzr.rest.model.util.RestFactory;
 @RequestMapping(value = "/authentication")
 public class AuthenticationResource {
 
-	private AuthenticationService authenticationService;
-	private UserService userService;
-	private ThesisService thesisService;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ThesisService thesisService;
 
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody UserResponseLevel1 getAuthenticatedUser(
-			@RequestHeader(value="ticket",required=false) String ticket) {
-		User user = authenticationService.getTicketUser(ticket);
-		return RestFactory.createUserResponseLevel1(user);
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public
+    @ResponseBody
+    UserResponseLevel1 getAuthenticatedUser(
+            @RequestHeader(value = "ticket", required = false) String ticket) {
+        User user = authenticationService.getTicketUser(ticket);
+        return RestFactory.createUserResponseLevel1(user);
+    }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody TicketResponse authenticate(
-			@RequestBody LoginData loginData) {
-		String ticket = authenticationService.authenticate(
-				loginData.getEmail(), loginData.getPassword());
-		return new TicketResponse(ticket);
+    @RequestMapping(method = RequestMethod.POST)
+    public
+    @ResponseBody
+    TicketResponse authenticate(
+            @RequestBody LoginData loginData) {
+        String ticket = authenticationService.authenticate(
+                loginData.getEmail(), loginData.getPassword());
+        return new TicketResponse(ticket);
 
-	}
+    }
 
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void invalidateTicket(@RequestHeader(value="ticket",required=false) String ticket) {
-		authenticationService.invalidateTicket(ticket);
-	}
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void invalidateTicket(@RequestHeader(value = "ticket", required = false) String ticket) {
+        authenticationService.invalidateTicket(ticket);
+    }
 
-	public AuthenticationService getAuthenticationService() {
-		return authenticationService;
-	}
+    public AuthenticationService getAuthenticationService() {
+        return authenticationService;
+    }
 
-	public void setAuthenticationService(
-			AuthenticationService authenticationService) {
-		this.authenticationService = authenticationService;
-	}
+    public void setAuthenticationService(
+            AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
 
-	public UserService getUserService() {
-		return userService;
-	}
+    public UserService getUserService() {
+        return userService;
+    }
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
-	public ThesisService getThesisService() {
-		return thesisService;
-	}
+    public ThesisService getThesisService() {
+        return thesisService;
+    }
 
-	public void setThesisService(ThesisService thesisService) {
-		this.thesisService = thesisService;
-	}	
+    public void setThesisService(ThesisService thesisService) {
+        this.thesisService = thesisService;
+    }
 
 }

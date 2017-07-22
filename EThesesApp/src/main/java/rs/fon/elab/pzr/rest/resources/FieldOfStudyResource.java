@@ -2,6 +2,7 @@ package rs.fon.elab.pzr.rest.resources;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,49 +23,56 @@ import rs.fon.elab.pzr.rest.model.request.FieldOfStudyRequest;
 @RequestMapping(value = "/fields-of-study")
 public class FieldOfStudyResource {
 
-	private FieldOfStudyService fieldOfStudyService;
+    @Autowired
+    private FieldOfStudyService fieldOfStudyService;
 
-	// READ
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody Set<FieldOfStudy> getFieldOfStudies() {
-		return fieldOfStudyService.getAllFieldsOfStudy();
-	}
+    // READ
+    @RequestMapping(method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Set<FieldOfStudy> getFieldOfStudies() {
+        return fieldOfStudyService.getAllFieldsOfStudy();
+    }
 
-	// CREATE
-	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody FieldOfStudy addFieldOfStudy(
-			@RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
-		ParamaterCheck.mandatory("Naziv oblasti", fieldOfStudyRequest.getName());
-		return fieldOfStudyService.addFieldOfStudy(fieldOfStudyRequest.getName());
-	}
+    // CREATE
+    @RequestMapping(method = RequestMethod.POST)
+    public
+    @ResponseBody
+    FieldOfStudy addFieldOfStudy(
+            @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
+        ParamaterCheck.mandatory("Naziv oblasti", fieldOfStudyRequest.getName());
+        return fieldOfStudyService.addFieldOfStudy(fieldOfStudyRequest.getName());
+    }
 
-	// UPDATE
-	@RequestMapping(method = RequestMethod.PUT, value = "/{fieldOfStudyID}")
-	public @ResponseBody FieldOfStudy updateFieldOfStudy(@PathVariable("fieldOfStudyID") Long fieldOfStudyID,
-			@RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
-		FieldOfStudy fieldOfStudy = fieldOfStudyService.getFieldOfStudy(fieldOfStudyID);
-		if (fieldOfStudy == null) {
-			throw new InvalidArgumentException("Oblast sa id-em " + fieldOfStudyID
-					+ " ne postoji u bazi!");
-		}
-		if(fieldOfStudyRequest.getName()!=null){
-			fieldOfStudy.setName(fieldOfStudyRequest.getName());
-		}
-		return fieldOfStudyService.updateFieldOfStudy(fieldOfStudy);
-		
-	}
+    // UPDATE
+    @RequestMapping(method = RequestMethod.PUT, value = "/{fieldOfStudyID}")
+    public
+    @ResponseBody
+    FieldOfStudy updateFieldOfStudy(@PathVariable("fieldOfStudyID") Long fieldOfStudyID,
+                                    @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
+        FieldOfStudy fieldOfStudy = fieldOfStudyService.getFieldOfStudy(fieldOfStudyID);
+        if (fieldOfStudy == null) {
+            throw new InvalidArgumentException("Oblast sa id-em " + fieldOfStudyID
+                    + " ne postoji u bazi!");
+        }
+        if (fieldOfStudyRequest.getName() != null) {
+            fieldOfStudy.setName(fieldOfStudyRequest.getName());
+        }
+        return fieldOfStudyService.updateFieldOfStudy(fieldOfStudy);
 
-	// DELETE
-	@RequestMapping(method = RequestMethod.DELETE, value = "/{fieldOfStudyID}")
-	public void deleteTag(@PathVariable("fieldOfStudyID") Long fieldOfStudyID) {
-		fieldOfStudyService.removeFieldOfStudy(fieldOfStudyID);
-	}
+    }
 
-	public FieldOfStudyService getFieldOfStudyService() {
-		return fieldOfStudyService;
-	}
+    // DELETE
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{fieldOfStudyID}")
+    public void deleteTag(@PathVariable("fieldOfStudyID") Long fieldOfStudyID) {
+        fieldOfStudyService.removeFieldOfStudy(fieldOfStudyID);
+    }
 
-	public void setFieldOfStudyService(FieldOfStudyService fieldOfStudyService) {
-		this.fieldOfStudyService = fieldOfStudyService;
-	}
+    public FieldOfStudyService getFieldOfStudyService() {
+        return fieldOfStudyService;
+    }
+
+    public void setFieldOfStudyService(FieldOfStudyService fieldOfStudyService) {
+        this.fieldOfStudyService = fieldOfStudyService;
+    }
 }

@@ -2,6 +2,7 @@ package rs.fon.elab.pzr.rest.resources;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,25 +16,28 @@ import rs.fon.elab.pzr.core.service.TagService;
 @RequestMapping(value = "/tags")
 public class TagResource {
 
-	private TagService tagService;
+    @Autowired
+    private TagService tagService;
 
-	// READ
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody Set<Tag> getTags() {
-		return tagService.getAllTags();
-	}
-	
-	// DELETE
-	@RequestMapping(method = RequestMethod.DELETE, value = "/{tagID}")
-	public void deleteTag(@PathVariable("tagID") Long tagID) {
-		tagService.removeTag(tagID);
-	}	
+    // READ
+    @RequestMapping(method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Set<Tag> getTags() {
+        return tagService.getAllTags();
+    }
 
-	public TagService getTagService() {
-		return tagService;
-	}
+    // DELETE
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{tagID}")
+    public void deleteTag(@PathVariable("tagID") Long tagID) {
+        tagService.removeTag(tagID);
+    }
 
-	public void setTagService(TagService tagService) {
-		this.tagService = tagService;
-	}
+    public TagService getTagService() {
+        return tagService;
+    }
+
+    public void setTagService(TagService tagService) {
+        this.tagService = tagService;
+    }
 }

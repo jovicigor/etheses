@@ -14,29 +14,29 @@ import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 public class SimpleCorsFilter extends OncePerRequestFilter {
-	private final Logger logger = Logger.getLogger(SimpleCorsFilter.class);
+    private final Logger logger = Logger.getLogger(SimpleCorsFilter.class);
 
-	public SimpleCorsFilter() {
-		
-	}
-	
-	@Override
-	protected void doFilterInternal(HttpServletRequest request,
-			HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		logger.debug("SimpleCORSFilter");
-		if (request.getHeader("Access-Control-Request-Method") != null
-				&& "OPTIONS".equals(request.getMethod())) {
-			logger.debug("Sending Header to enable CrosOrigin requests...");
-			response.addHeader("Access-Control-Allow-Methods",
-					"GET, POST, PUT, DELETE");
-			response.addHeader("Access-Control-Max-Age", "3600");
-			response.addHeader("Access-Control-Allow-Headers",
-					  "Content-Type, accept, ticket");
-		}
+    public SimpleCorsFilter() {
 
-		filterChain.doFilter(request, response);
-	}
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        logger.debug("SimpleCORSFilter");
+        if (request.getHeader("Access-Control-Request-Method") != null
+                && "OPTIONS".equals(request.getMethod())) {
+            logger.debug("Sending Header to enable CrosOrigin requests...");
+            response.addHeader("Access-Control-Allow-Methods",
+                    "GET, POST, PUT, DELETE");
+            response.addHeader("Access-Control-Max-Age", "3600");
+            response.addHeader("Access-Control-Allow-Headers",
+                    "Content-Type, accept, ticket");
+        }
+
+        filterChain.doFilter(request, response);
+    }
 
 }
