@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.model;
+package rs.fon.pzr.persistence.model;
 
 import java.util.Date;
 import java.util.HashSet;

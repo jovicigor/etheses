@@ -1,10 +1,10 @@
-package rs.fon.pzr.core.repository;
+package rs.fon.pzr.persistence.repository;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.core.model.Course;
+import rs.fon.pzr.persistence.model.Course;
 
 public interface CourseRepository extends CrudRepository<Course, Long> {
 	

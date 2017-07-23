@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.fon.pzr.core.exception.AuthenticationException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
-import rs.fon.pzr.core.model.User;
+import rs.fon.pzr.persistence.model.User;
 import rs.fon.pzr.core.service.UserService;
 
 @Service

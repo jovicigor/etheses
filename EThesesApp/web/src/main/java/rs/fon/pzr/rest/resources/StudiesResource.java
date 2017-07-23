@@ -3,7 +3,7 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.model.Studies;
+import rs.fon.pzr.persistence.model.Studies;
 import rs.fon.pzr.core.service.StudiesService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
 import rs.fon.pzr.rest.model.request.StudiesRequest;

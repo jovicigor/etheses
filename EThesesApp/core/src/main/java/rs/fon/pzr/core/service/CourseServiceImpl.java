@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.model.Course;
-import rs.fon.pzr.core.repository.CourseRepository;
+import rs.fon.pzr.persistence.model.Course;
+import rs.fon.pzr.persistence.repository.CourseRepository;
 
 @Service
 public class CourseServiceImpl implements CourseService {

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.model.Keyword;
-import rs.fon.pzr.core.repository.KeywordRepository;
+import rs.fon.pzr.persistence.model.Keyword;
+import rs.fon.pzr.persistence.repository.KeywordRepository;
 
 @Service
 public class KeywordServiceImpl implements KeywordService {

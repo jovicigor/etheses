@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
-import rs.fon.pzr.core.model.User;
-import rs.fon.pzr.core.repository.UserRepository;
+import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {

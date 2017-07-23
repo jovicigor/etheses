@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.repository;
+package rs.fon.pzr.persistence.repository;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import rs.fon.pzr.core.model.Thesis;
-import rs.fon.pzr.core.model.User;
+import rs.fon.pzr.persistence.model.Thesis;
+import rs.fon.pzr.persistence.model.User;
 
 public interface ThesisRepository extends PagingAndSortingRepository<Thesis, Long>  {
 	

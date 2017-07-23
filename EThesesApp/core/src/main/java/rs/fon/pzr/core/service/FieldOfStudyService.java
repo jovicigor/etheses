@@ -2,7 +2,7 @@ package rs.fon.pzr.core.service;
 
 import java.util.Set;
 
-import rs.fon.pzr.core.model.FieldOfStudy;
+import rs.fon.pzr.persistence.model.FieldOfStudy;
 
 public interface FieldOfStudyService {
 

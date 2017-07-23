@@ -2,21 +2,21 @@ package rs.fon.pzr.core.service;
 
 import java.util.List;
 
-import rs.fon.pzr.core.model.Course;
+import rs.fon.pzr.persistence.model.Course;
 
 
 public interface CourseService {
 
-	Course getCourse(Long id);
-	
-	Course getCourseByName(String name);
+    Course getCourse(Long id);
 
-	List<Course> getAllCourses();
+    Course getCourseByName(String name);
 
-	Course addCourse(Course course);
-	
-	Course updateCourse(Course course);
-	
-	void removeCourse(Long courseID);
-	
+    List<Course> getAllCourses();
+
+    Course addCourse(Course course);
+
+    Course updateCourse(Course course);
+
+    void removeCourse(Long courseID);
+
 }

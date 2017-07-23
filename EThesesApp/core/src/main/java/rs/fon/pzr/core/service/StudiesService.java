@@ -2,7 +2,7 @@ package rs.fon.pzr.core.service;
 
 import java.util.List;
 
-import rs.fon.pzr.core.model.Studies;
+import rs.fon.pzr.persistence.model.Studies;
 
 public interface StudiesService {
 

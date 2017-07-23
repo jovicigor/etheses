@@ -20,14 +20,14 @@ import org.springframework.web.multipart.MultipartFile;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.exception.PzrRuntimeException;
-import rs.fon.pzr.core.model.TFile;
-import rs.fon.pzr.core.model.Thesis;
-import rs.fon.pzr.core.model.ThesisComment;
-import rs.fon.pzr.core.model.User;
-import rs.fon.pzr.core.repository.CommentRepository;
-import rs.fon.pzr.core.repository.FileRepository;
-import rs.fon.pzr.core.repository.ThesisRepository;
-import rs.fon.pzr.core.repository.UserRepository;
+import rs.fon.pzr.persistence.model.TFile;
+import rs.fon.pzr.persistence.model.Thesis;
+import rs.fon.pzr.persistence.model.ThesisComment;
+import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.repository.CommentRepository;
+import rs.fon.pzr.persistence.repository.FileRepository;
+import rs.fon.pzr.persistence.repository.ThesisRepository;
+import rs.fon.pzr.persistence.repository.UserRepository;
 
 @Service
 public class ThesisServiceImpl implements ThesisService {

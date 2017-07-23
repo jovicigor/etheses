@@ -1,7 +1,7 @@
 package rs.fon.pzr.rest.model.util;
 
 import org.springframework.data.domain.Page;
-import rs.fon.pzr.core.model.*;
+import rs.fon.pzr.persistence.model.*;
 import rs.fon.pzr.rest.model.response.level1.*;
 import rs.fon.pzr.rest.model.response.level2.*;
 

@@ -3,7 +3,7 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.model.Keyword;
+import rs.fon.pzr.persistence.model.Keyword;
 import rs.fon.pzr.core.service.KeywordService;
 import rs.fon.pzr.rest.model.request.BannedKeywordsRequest;
 import rs.fon.pzr.rest.model.request.KeywordRequest;

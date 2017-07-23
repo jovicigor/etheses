@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.repository;
+package rs.fon.pzr.persistence.repository;
 
 import java.util.Set;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import rs.fon.pzr.core.model.Keyword;
+import rs.fon.pzr.persistence.model.Keyword;
 
 public interface KeywordRepository extends CrudRepository<Keyword, Long> {
 	Keyword findByValue(String value);

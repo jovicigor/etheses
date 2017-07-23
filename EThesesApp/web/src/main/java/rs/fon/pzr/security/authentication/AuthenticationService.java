@@ -1,6 +1,6 @@
 package rs.fon.pzr.security.authentication;
 
-import rs.fon.pzr.core.model.User;
+import rs.fon.pzr.persistence.model.User;
 
 public interface AuthenticationService {
     String authenticate(String username, String password);

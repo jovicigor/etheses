@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.model.Studies;
-import rs.fon.pzr.core.repository.StudiesRepository;
+import rs.fon.pzr.persistence.model.Studies;
+import rs.fon.pzr.persistence.repository.StudiesRepository;
 
 @Service
 public class StudiesServiceImpl implements StudiesService {

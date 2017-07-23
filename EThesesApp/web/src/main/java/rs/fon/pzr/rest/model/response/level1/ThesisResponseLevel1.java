@@ -1,8 +1,8 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.core.model.FieldOfStudy;
-import rs.fon.pzr.core.model.TFile;
-import rs.fon.pzr.core.model.Tag;
+import rs.fon.pzr.persistence.model.FieldOfStudy;
+import rs.fon.pzr.persistence.model.TFile;
+import rs.fon.pzr.persistence.model.Tag;
 import rs.fon.pzr.rest.model.response.level2.CourseResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.ThesisCommentResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.UserResponseLevel2;

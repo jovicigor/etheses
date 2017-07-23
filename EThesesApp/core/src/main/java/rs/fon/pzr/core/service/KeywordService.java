@@ -3,7 +3,7 @@ package rs.fon.pzr.core.service;
 import java.util.Map;
 import java.util.Set;
 
-import rs.fon.pzr.core.model.Keyword;
+import rs.fon.pzr.persistence.model.Keyword;
 
 public interface KeywordService {
 

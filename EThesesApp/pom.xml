@@ -11,6 +11,7 @@
         <module>core</module>
         <module>web</module>
         <module>app</module>
+        <module>persistence</module>
     </modules>
     <name>e_theses</name>
 

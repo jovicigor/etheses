@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.model.Tag;
-import rs.fon.pzr.core.repository.TagRepository;
+import rs.fon.pzr.persistence.model.Tag;
+import rs.fon.pzr.persistence.repository.TagRepository;
 
 @Service
 public class TagServiceImpl implements TagService {
