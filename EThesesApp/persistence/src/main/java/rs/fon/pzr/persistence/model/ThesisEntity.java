@@ -20,7 +20,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "thesis")
-public class Thesis {
+public class ThesisEntity {
 	
 		
 		@Id
@@ -45,15 +45,15 @@ public class Thesis {
 		
 		@ManyToOne
 		@JoinColumn(name = "course_id")
-		private Course course;
+		private CourseEntity course;
 		
 		@ManyToOne
 		@JoinColumn(name = "file_id")
-		private TFile file;
+		private TFileEntity file;
 		
 		@ManyToOne
 		@JoinColumn(name = "user_id")
-		private User user;
+		private UserEntity user;
 		
 		@Column(name="user_name")
 		private String userName;
@@ -66,7 +66,7 @@ public class Thesis {
 				
 		@ManyToOne
 		@JoinColumn(name = "user_mentor_id")
-		private User mentor;
+		private UserEntity mentor;
 		
 		@Column(name="mentor_name")
 		private String mentorName;
@@ -79,14 +79,14 @@ public class Thesis {
 		
 		@ManyToMany(fetch = FetchType.EAGER)
 		@JoinTable(name = "thesis_tag", joinColumns = { @JoinColumn(name = "thesis_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
-		private Set<Tag> tags = new HashSet<>();
+		private Set<TagEntity> tags = new HashSet<>();
 		
 		@ManyToMany(fetch = FetchType.EAGER)
 		@JoinTable(name = "thesis_field_of_study", joinColumns = { @JoinColumn(name = "thesis_id") }, inverseJoinColumns = { @JoinColumn(name = "field_of_study_id") })
-		private Set<FieldOfStudy> fieldOfStudies = new HashSet<>();
+		private Set<FieldOfStudyEntity> fieldOfStudies = new HashSet<>();
 		
 		@OneToMany(mappedBy = "thesis", fetch = FetchType.EAGER, cascade=CascadeType.ALL,orphanRemoval=true)
-	    private Set<ThesisKeyword> thesisKeywords = new HashSet<>();
+	    private Set<ThesisKeywordEntity> thesisKeywords = new HashSet<>();
 		
 
 		public Long getId() {
@@ -137,19 +137,19 @@ public class Thesis {
 			this.description = description;
 		}		
 
-		public Course getCourse() {
+		public CourseEntity getCourse() {
 			return course;
 		}
 
-		public void setCourse(Course course) {
+		public void setCourse(CourseEntity course) {
 			this.course = course;
 		}
 
-		public User getMentor() {
+		public UserEntity getMentor() {
 			return mentor;
 		}
 
-		public void setMentor(User mentor) {
+		public void setMentor(UserEntity mentor) {
 			this.mentor = mentor;
 		}		
 
@@ -161,27 +161,27 @@ public class Thesis {
 			this.comments = comments;
 		}
 
-		public Set<Tag> getTags() {
+		public Set<TagEntity> getTags() {
 			return tags;
 		}
 
-		public void setTags(Set<Tag> tags) {
+		public void setTags(Set<TagEntity> tags) {
 			this.tags = tags;
 		}
 
-		public User getUser() {
+		public UserEntity getUser() {
 			return user;
 		}
 
-		public void setUser(User user) {
+		public void setUser(UserEntity user) {
 			this.user = user;
 		}
 
-		public TFile getFile() {
+		public TFileEntity getFile() {
 			return file;
 		}
 
-		public void setFile(TFile file) {
+		public void setFile(TFileEntity file) {
 			this.file = file;
 		}
 
@@ -209,19 +209,19 @@ public class Thesis {
 			this.viewCount = viewCount;
 		}
 
-		public Set<ThesisKeyword> getThesisKeywords() {
+		public Set<ThesisKeywordEntity> getThesisKeywords() {
 			return thesisKeywords;
 		}
 
-		public void setThesisKeywords(Set<ThesisKeyword> thesisKeywords) {
+		public void setThesisKeywords(Set<ThesisKeywordEntity> thesisKeywords) {
 			this.thesisKeywords = thesisKeywords;
 		}
 
-		public Set<FieldOfStudy> getFieldOfStudies() {
+		public Set<FieldOfStudyEntity> getFieldOfStudies() {
 			return fieldOfStudies;
 		}
 
-		public void setFieldOfStudies(Set<FieldOfStudy> fieldOfStudies) {
+		public void setFieldOfStudies(Set<FieldOfStudyEntity> fieldOfStudies) {
 			this.fieldOfStudies = fieldOfStudies;
 		}
 

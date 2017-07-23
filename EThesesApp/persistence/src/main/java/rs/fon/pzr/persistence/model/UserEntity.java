@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user")
-public class User {
+public class UserEntity {
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,7 @@ public class User {
 		
 	@ManyToOne
 	@JoinColumn(name = "course_id")
-	private Course course;
+	private CourseEntity course;
 		
 	@Column(name = "biography")
 	private String biography;
@@ -55,7 +55,7 @@ public class User {
 	private Date lastActivity;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private Set<Thesis> theses = new HashSet<>();
+	private Set<ThesisEntity> theses = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -113,11 +113,11 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 
-	public Course getCourse() {
+	public CourseEntity getCourse() {
 		return course;
 	}
 
-	public void setCourse(Course course) {
+	public void setCourse(CourseEntity course) {
 		this.course = course;
 	}
 
@@ -145,11 +145,11 @@ public class User {
 		this.lastActivity = lastActivity;
 	}
 
-	public Set<Thesis> getTheses() {
+	public Set<ThesisEntity> getTheses() {
 		return theses;
 	}
 
-	public void setTheses(Set<Thesis> theses) {
+	public void setTheses(Set<ThesisEntity> theses) {
 		this.theses = theses;
 	}
 

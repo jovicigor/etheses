@@ -3,21 +3,21 @@ package rs.fon.pzr.core.service;
 import java.util.Map;
 import java.util.Set;
 
-import rs.fon.pzr.persistence.model.Keyword;
+import rs.fon.pzr.persistence.model.KeywordEntity;
 
 public interface KeywordService {
 
-	Keyword getKeyword(Long id);
+	KeywordEntity getKeyword(Long id);
 
-	Keyword getKeywordByValue(String value);
+	KeywordEntity getKeywordByValue(String value);
 
-	Set<Keyword> getAllKeywords();
+	Set<KeywordEntity> getAllKeywords();
 
-	Keyword addKeyword(Keyword keyword);
+	KeywordEntity addKeyword(KeywordEntity keyword);
 	
-	Keyword addBannedKeyword(String value);
+	KeywordEntity addBannedKeyword(String value);
 	
-	Keyword updateKeyword(Keyword keyword);
+	KeywordEntity updateKeyword(KeywordEntity keyword);
 
 	void removeKeyword(Long id);
 

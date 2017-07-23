@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import rs.fon.pzr.persistence.model.Keyword;
+import rs.fon.pzr.persistence.model.KeywordEntity;
 
-public interface KeywordRepository extends CrudRepository<Keyword, Long> {
-	Keyword findByValue(String value);
+public interface KeywordRepository extends CrudRepository<KeywordEntity, Long> {
+	KeywordEntity findByValue(String value);
 
-	Set<Keyword> findAll();
+	Set<KeywordEntity> findAll();
 	
 	@Query("SELECT count(tk.keyword) from ThesisKeyword tk where tk.keyword.id=?1")
     Long numberOfConnectedTheses(Long keywordId);

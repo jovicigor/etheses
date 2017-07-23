@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.Keyword;
+import rs.fon.pzr.persistence.model.KeywordEntity;
 import rs.fon.pzr.persistence.repository.KeywordRepository;
 
 @Service
@@ -28,27 +28,27 @@ public class KeywordServiceImpl implements KeywordService {
     }
 
     @Override
-    public Keyword getKeyword(Long id) {
+    public KeywordEntity getKeyword(Long id) {
         return keywordRepository.findOne(id);
     }
 
     @Override
-    public Keyword getKeywordByValue(String value) {
+    public KeywordEntity getKeywordByValue(String value) {
         return keywordRepository.findByValue(value);
     }
 
     @Override
-    public Set<Keyword> getAllKeywords() {
+    public Set<KeywordEntity> getAllKeywords() {
         return keywordRepository.findAll();
     }
 
     @Override
     @Transactional
-    public Keyword addKeyword(Keyword keyword) {
+    public KeywordEntity addKeyword(KeywordEntity keyword) {
         keyword.setValue(keyword.getValue().toLowerCase());
         keyword.setValue(keyword.getValue().replaceAll("\\s+", ""));
 
-        Keyword existingKeyword = keywordRepository.findByValue(keyword
+        KeywordEntity existingKeyword = keywordRepository.findByValue(keyword
                 .getValue());
         if (existingKeyword != null) {
             return existingKeyword;
@@ -58,8 +58,8 @@ public class KeywordServiceImpl implements KeywordService {
 
     @Override
     @Transactional
-    public Keyword updateKeyword(Keyword keyword) {
-        Keyword existingKeyword = keywordRepository.findOne(keyword.getId());
+    public KeywordEntity updateKeyword(KeywordEntity keyword) {
+        KeywordEntity existingKeyword = keywordRepository.findOne(keyword.getId());
         if (existingKeyword == null) {
             throw new InvalidArgumentException("Ključna reč sa id-em "
                     + keyword.getId() + " ne postoji u bazi!");
@@ -69,16 +69,16 @@ public class KeywordServiceImpl implements KeywordService {
 
     @Transactional
     @Override
-    public Keyword addBannedKeyword(String value) {
+    public KeywordEntity addBannedKeyword(String value) {
         value = value.toLowerCase();
         value = value.replaceAll("\\s+", "");
 
-        Keyword keyword = keywordRepository.findByValue(value);
+        KeywordEntity keyword = keywordRepository.findByValue(value);
         if (keyword != null) {
             keyword.setBanned(true);
             return keywordRepository.save(keyword);
         }
-        keyword = new Keyword();
+        keyword = new KeywordEntity();
         keyword.setValue(value);
         keyword.setBanned(true);
         return keywordRepository.save(keyword);
@@ -87,7 +87,7 @@ public class KeywordServiceImpl implements KeywordService {
     @Override
     @Transactional
     public void removeKeyword(Long id) {
-        Keyword keyword = keywordRepository.findOne(id);
+        KeywordEntity keyword = keywordRepository.findOne(id);
         if (keyword == null) {
             throw new InvalidArgumentException("Ključna reč sa id-em " + id
                     + " ne postoji u bazi!");

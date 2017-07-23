@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.model.UserEntity;
 
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<UserEntity, Long> {
 	
-	List<User> findAll();
-	User findByEmail(String email);
+	List<UserEntity> findAll();
+	UserEntity findByEmail(String email);
 }

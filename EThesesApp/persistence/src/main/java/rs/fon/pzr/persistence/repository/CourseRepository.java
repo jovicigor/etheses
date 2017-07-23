@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.persistence.model.Course;
+import rs.fon.pzr.persistence.model.CourseEntity;
 
-public interface CourseRepository extends CrudRepository<Course, Long> {
+public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	
-	List<Course> findAll();
-	Course findByName(String name);
-	Course findByNameShort(String nameShort);
+	List<CourseEntity> findAll();
+	CourseEntity findByName(String name);
+	CourseEntity findByNameShort(String nameShort);
 }

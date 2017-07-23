@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.FieldOfStudy;
+import rs.fon.pzr.persistence.model.FieldOfStudyEntity;
 import rs.fon.pzr.persistence.repository.FieldOfStudyRepository;
 
 @Service
@@ -21,36 +21,36 @@ public class FieldOfStudyServiceImpl implements FieldOfStudyService {
     }
 
     @Override
-    public FieldOfStudy getFieldOfStudy(Long id) {
+    public FieldOfStudyEntity getFieldOfStudy(Long id) {
         return fieldOfStudyRepository.findOne(id);
     }
 
     @Override
-    public FieldOfStudy getgetFieldOfStudyByName(String name) {
+    public FieldOfStudyEntity getgetFieldOfStudyByName(String name) {
         return fieldOfStudyRepository.findByName(name);
     }
 
     @Override
-    public Set<FieldOfStudy> getAllFieldsOfStudy() {
+    public Set<FieldOfStudyEntity> getAllFieldsOfStudy() {
         return fieldOfStudyRepository.findAll();
     }
 
     @Transactional
     @Override
-    public FieldOfStudy addFieldOfStudy(String name) {
-        FieldOfStudy fieldOfStudy = fieldOfStudyRepository.findByName(name);
+    public FieldOfStudyEntity addFieldOfStudy(String name) {
+        FieldOfStudyEntity fieldOfStudy = fieldOfStudyRepository.findByName(name);
         if (fieldOfStudy != null) {
             return fieldOfStudy;
         }
-        fieldOfStudy = new FieldOfStudy();
+        fieldOfStudy = new FieldOfStudyEntity();
         fieldOfStudy.setName(name);
         return fieldOfStudyRepository.save(fieldOfStudy);
     }
 
     @Override
     @Transactional
-    public FieldOfStudy updateFieldOfStudy(FieldOfStudy fieldOfStudy) {
-        FieldOfStudy oldFieldOfStudy = fieldOfStudyRepository.findOne(fieldOfStudy.getId());
+    public FieldOfStudyEntity updateFieldOfStudy(FieldOfStudyEntity fieldOfStudy) {
+        FieldOfStudyEntity oldFieldOfStudy = fieldOfStudyRepository.findOne(fieldOfStudy.getId());
         if (oldFieldOfStudy == null) {
             throw new InvalidArgumentException("Oblast sa id-em " + fieldOfStudy.getId()
                     + " ne postoji u bazi!");
@@ -67,7 +67,7 @@ public class FieldOfStudyServiceImpl implements FieldOfStudyService {
     @Transactional
     @Override
     public void removeFieldOfStudy(Long id) {
-        FieldOfStudy fieldOfStudy = fieldOfStudyRepository.findOne(id);
+        FieldOfStudyEntity fieldOfStudy = fieldOfStudyRepository.findOne(id);
         if (fieldOfStudy == null) {
             throw new InvalidArgumentException("Oblast sa id-em " + id
                     + " ne postoji u bazi!");

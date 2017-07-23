@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "file")
-public class TFile {
+public class TFileEntity {
 	
 	@Id
 	@Column(name = "file_id")

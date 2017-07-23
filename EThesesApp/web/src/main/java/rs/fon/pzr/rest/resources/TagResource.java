@@ -2,7 +2,7 @@ package rs.fon.pzr.rest.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import rs.fon.pzr.persistence.model.Tag;
+import rs.fon.pzr.persistence.model.TagEntity;
 import rs.fon.pzr.core.service.TagService;
 
 import java.util.Set;
@@ -20,7 +20,7 @@ public class TagResource {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Set<Tag> getTags() {
+    public Set<TagEntity> getTags() {
         return tagService.getAllTags();
     }
 

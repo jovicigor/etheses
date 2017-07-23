@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
-import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.model.UserEntity;
 import rs.fon.pzr.persistence.repository.UserRepository;
 
 @Service
@@ -30,23 +30,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(Long userId) {
+    public UserEntity getUser(Long userId) {
         return userRepository.findOne(userId);
     }
 
     @Override
-    public User getUser(String email) {
+    public UserEntity getUser(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Transactional
     @Override
-    public User addUser(User user) {
+    public UserEntity addUser(UserEntity user) {
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new InvalidArgumentException("Korisnik sa email-om "
                     + user.getEmail() + " je već registrovan!");
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User updateUser(User user) {
+    public UserEntity updateUser(UserEntity user) {
         if (userRepository.findOne(user.getId()) == null) {
             throw new InvalidArgumentException("Korisnik sa id-em "
                     + user.getId() + " ne postoji u bazi!");
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
             org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                     .getContext().getAuthentication().getPrincipal();
             String email = springUser.getUsername();
-            User loggedInUser = getUser(email);
+            UserEntity loggedInUser = getUser(email);
             if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), user.getId())) {
                 throw new Exception();
             }
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUser(Long userId) {
-        User user = userRepository.findOne(userId);
+        UserEntity user = userRepository.findOne(userId);
         if (user == null) {
             throw new InvalidArgumentException("Korisnik sa id-em " + userId
                     + " ne postoji u bazi!");
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
             org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                     .getContext().getAuthentication().getPrincipal();
             String email = springUser.getUsername();
-            User loggedInUser = getUser(email);
+            UserEntity loggedInUser = getUser(email);
             if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), user.getId())) {
                 throw new Exception();
             }

@@ -8,16 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="field_of_study")
-public class FieldOfStudy {
-
+@Table(name = "keyword")
+public class KeywordEntity {
+	
 	@Id
-	@Column(name = "field_of_study_id")
+	@Column(name = "keyword_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@Column(name = "name")
-    private String name;
+	@Column(name = "value")
+    private String value;
+	
+	@Column(name = "is_banned")
+    private boolean banned;
 
 	public Long getId() {
 		return id;
@@ -27,11 +30,20 @@ public class FieldOfStudy {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getValue() {
+		return value;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setValue(String value) {
+		this.value = value;
 	}
+	
+	public boolean getBanned() {
+		return banned;
+	}
+
+	public void setBanned(boolean banned) {
+		this.banned = banned;
+	}
+	
 }

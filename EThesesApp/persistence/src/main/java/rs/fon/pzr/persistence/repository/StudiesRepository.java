@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.persistence.model.Studies;
+import rs.fon.pzr.persistence.model.StudiesEntity;
 
-public interface StudiesRepository extends CrudRepository<Studies, Long> {
+public interface StudiesRepository extends CrudRepository<StudiesEntity, Long> {
 	
-	List<Studies> findAll();
-	Studies findByName(String name);
-	Studies findByNameShort(String nameShort);
+	List<StudiesEntity> findAll();
+	StudiesEntity findByName(String name);
+	StudiesEntity findByNameShort(String nameShort);
 }

@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "thesis_keyword")
-public class ThesisKeyword {
+public class ThesisKeywordEntity {
 
 	@Id
 	@Column(name = "thesis_keyword_id")
@@ -20,11 +20,11 @@ public class ThesisKeyword {
 
 	@ManyToOne
 	@JoinColumn(name = "thesis_id")
-	private Thesis thesis;
+	private ThesisEntity thesis;
 
 	@ManyToOne
 	@JoinColumn(name = "keyword_id")
-	private Keyword keyword;
+	private KeywordEntity keyword;
 
 	@Column(name = "count")
 	private Integer count;
@@ -37,19 +37,19 @@ public class ThesisKeyword {
 		this.id = id;
 	}
 
-	public Thesis getThesis() {
+	public ThesisEntity getThesis() {
 		return thesis;
 	}
 
-	public void setThesis(Thesis thesis) {
+	public void setThesis(ThesisEntity thesis) {
 		this.thesis = thesis;
 	}
 
-	public Keyword getKeyword() {
+	public KeywordEntity getKeyword() {
 		return keyword;
 	}
 
-	public void setKeyword(Keyword keyword) {
+	public void setKeyword(KeywordEntity keyword) {
 		this.keyword = keyword;
 	}
 

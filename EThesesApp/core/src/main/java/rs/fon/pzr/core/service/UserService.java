@@ -2,19 +2,19 @@ package rs.fon.pzr.core.service;
 
 import java.util.List;
 
-import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.model.UserEntity;
 
 public interface UserService {
 
-	User getUser(Long userId);
+	UserEntity getUser(Long userId);
 	
-	User getUser(String email);
+	UserEntity getUser(String email);
 	
-	List<User> getAllUsers();
+	List<UserEntity> getAllUsers();
 
-	User addUser(User user);
+	UserEntity addUser(UserEntity user);
 	
-	User updateUser(User user);
+	UserEntity updateUser(UserEntity user);
 	
 	void deleteUser(Long userId);
 

@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.model.UserEntity;
 import rs.fon.pzr.core.service.UserService;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        User user = userService.getUser(email);
+        UserEntity user = userService.getUser(email);
         if (user == null) {
             throw new UsernameNotFoundException("There is no user with userName: " + email);
         }

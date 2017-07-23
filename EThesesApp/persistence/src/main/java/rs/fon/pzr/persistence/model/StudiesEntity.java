@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "studies")
-public class Studies {
+public class StudiesEntity {
 	@Id
 	@Column(name = "studies_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class Studies {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "course_studies", joinColumns = { @JoinColumn(name = "studies_id") }, inverseJoinColumns = { @JoinColumn(name = "course_id") })
-    private Set<Course> courses = new HashSet<>();
+    private Set<CourseEntity> courses = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -56,11 +56,11 @@ public class Studies {
 		this.nameShort = nameShort;
 	}
 
-	public Set<Course> getCourses() {
+	public Set<CourseEntity> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Set<Course> courses) {
+	public void setCourses(Set<CourseEntity> courses) {
 		this.courses = courses;
 	}	
 }

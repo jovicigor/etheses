@@ -7,35 +7,35 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
-import rs.fon.pzr.persistence.model.TFile;
-import rs.fon.pzr.persistence.model.Thesis;
+import rs.fon.pzr.persistence.model.TFileEntity;
+import rs.fon.pzr.persistence.model.ThesisEntity;
 import rs.fon.pzr.persistence.model.ThesisComment;
 
 public interface ThesisService {
 	
 	//TODO: advanced search methods
 	
-	Thesis getThesis(Long id);
+	ThesisEntity getThesis(Long id);
 	
-	List<Thesis> getThesisByUserId(Long userId);
+	List<ThesisEntity> getThesisByUserId(Long userId);
 
-	List<Thesis> getAllThesis();
+	List<ThesisEntity> getAllThesis();
 	
-	Page<Thesis> advancedSearch(Integer pageNumber, Integer pageSize, String thesisName, List<String> tagValues, Long matchLimit, String courseName, String studiesName, String sortField, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit);
+	Page<ThesisEntity> advancedSearch(Integer pageNumber, Integer pageSize, String thesisName, List<String> tagValues, Long matchLimit, String courseName, String studiesName, String sortField, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit);
 
-	Thesis addThesis(Thesis thesis);
+	ThesisEntity addThesis(ThesisEntity thesis);
 	
-	Thesis updateThesis(Thesis thesis);
+	ThesisEntity updateThesis(ThesisEntity thesis);
 	
 	void removeThesis(Long thesisId);
 	
-	TFile addFile(Long thesisId, MultipartFile file);
+	TFileEntity addFile(Long thesisId, MultipartFile file);
 	
 	File getThesisFile(Long thesisId);
 	
 	File getFileById(Long fileId);
 	
-	Set<TFile> getAllFileRecords();
+	Set<TFileEntity> getAllFileRecords();
 	
 	void removeFile(Long fileId);
 	

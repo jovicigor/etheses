@@ -1,8 +1,8 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import rs.fon.pzr.persistence.model.FieldOfStudy;
-import rs.fon.pzr.persistence.model.TFile;
-import rs.fon.pzr.persistence.model.Tag;
+import rs.fon.pzr.persistence.model.FieldOfStudyEntity;
+import rs.fon.pzr.persistence.model.TFileEntity;
+import rs.fon.pzr.persistence.model.TagEntity;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -37,13 +37,13 @@ public class ThesisResponseLevel2 {
 
 	private String mentorEmail;
 
-	private Set<Tag> tags = new HashSet<>();
+	private Set<TagEntity> tags = new HashSet<>();
 	
-	private Set<FieldOfStudy> fieldsOfStudy = new HashSet<>();
+	private Set<FieldOfStudyEntity> fieldsOfStudy = new HashSet<>();
 
 	private Set<Long> commentIDs = new HashSet<>();
 
-	private TFile file;
+	private TFileEntity file;
 
 	public Long getId() {
 		return id;
@@ -149,19 +149,19 @@ public class ThesisResponseLevel2 {
 		this.mentorEmail = mentorEmail;
 	}
 
-	public Set<Tag> getTags() {
+	public Set<TagEntity> getTags() {
 		return tags;
 	}
 
-	public void setTags(Set<Tag> tags) {
+	public void setTags(Set<TagEntity> tags) {
 		this.tags = tags;
 	}	
 
-	public Set<FieldOfStudy> getFieldsOfStudy() {
+	public Set<FieldOfStudyEntity> getFieldsOfStudy() {
 		return fieldsOfStudy;
 	}
 
-	public void setFieldsOfStudy(Set<FieldOfStudy> fieldsOfStudy) {
+	public void setFieldsOfStudy(Set<FieldOfStudyEntity> fieldsOfStudy) {
 		this.fieldsOfStudy = fieldsOfStudy;
 	}
 
@@ -173,11 +173,11 @@ public class ThesisResponseLevel2 {
 		this.commentIDs = commentIDs;
 	}
 
-	public TFile getFile() {
+	public TFileEntity getFile() {
 		return file;
 	}
 
-	public void setFile(TFile file) {
+	public void setFile(TFileEntity file) {
 		this.file = file;
 	}
 

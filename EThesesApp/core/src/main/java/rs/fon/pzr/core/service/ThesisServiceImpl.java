@@ -20,10 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.exception.PzrRuntimeException;
-import rs.fon.pzr.persistence.model.TFile;
-import rs.fon.pzr.persistence.model.Thesis;
+import rs.fon.pzr.persistence.model.TFileEntity;
+import rs.fon.pzr.persistence.model.ThesisEntity;
 import rs.fon.pzr.persistence.model.ThesisComment;
-import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.model.UserEntity;
 import rs.fon.pzr.persistence.repository.CommentRepository;
 import rs.fon.pzr.persistence.repository.FileRepository;
 import rs.fon.pzr.persistence.repository.ThesisRepository;
@@ -55,13 +55,13 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public Thesis getThesis(Long id) {
+    public ThesisEntity getThesis(Long id) {
         return thesisRepository.findOne(id);
     }
 
     @Override
-    public List<Thesis> getThesisByUserId(Long userId) {
-        User user = userRepository.findOne(userId);
+    public List<ThesisEntity> getThesisByUserId(Long userId) {
+        UserEntity user = userRepository.findOne(userId);
         if (user == null) {
             throw new InvalidArgumentException("Korisnik sa id-em " + userId
                     + " ne postoji u bazi!.");
@@ -70,16 +70,16 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public List<Thesis> getAllThesis() {
+    public List<ThesisEntity> getAllThesis() {
         return thesisRepository.findAll();
     }
 
     @Override
-    public Page<Thesis> advancedSearch(Integer pageNumber, Integer pageSize,
-                                       String thesisName, List<String> tagValues, Long tagsMatchLimit,
-                                       String courseName, String studiesName, String sortField,
-                                       List<String> fieldValues, Long fieldsMatchLimit,
-                                       List<String> descriptionKeys, Long descriptionKeyLimit) {
+    public Page<ThesisEntity> advancedSearch(Integer pageNumber, Integer pageSize,
+                                             String thesisName, List<String> tagValues, Long tagsMatchLimit,
+                                             String courseName, String studiesName, String sortField,
+                                             List<String> fieldValues, Long fieldsMatchLimit,
+                                             List<String> descriptionKeys, Long descriptionKeyLimit) {
         if (pageSize == null) {
             if (pageNumber == null) {
                 pageSize = thesisRepository.findAll().size();
@@ -185,7 +185,7 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Override
     @Transactional
-    public Thesis addThesis(Thesis thesis) {
+    public ThesisEntity addThesis(ThesisEntity thesis) {
         if (thesisRepository.findByName(thesis.getName()) != null) {
             throw new InvalidArgumentException("Rad " + thesis.getName()
                     + "već postoji u bazi!");
@@ -195,8 +195,8 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Transactional
     @Override
-    public Thesis updateThesis(Thesis thesis) {
-        Thesis oldThesis = thesisRepository.findOne(thesis.getId());
+    public ThesisEntity updateThesis(ThesisEntity thesis) {
+        ThesisEntity oldThesis = thesisRepository.findOne(thesis.getId());
         if (oldThesis == null) {
             throw new InvalidArgumentException("Rad sa id-em " + thesis.getId()
                     + " ne postoji u bazi!");
@@ -213,7 +213,7 @@ public class ThesisServiceImpl implements ThesisService {
     @Transactional
     @Override
     public void removeThesis(Long thesisId) {
-        Thesis thesis = thesisRepository.findOne(thesisId);
+        ThesisEntity thesis = thesisRepository.findOne(thesisId);
         if (thesis == null) {
             throw new InvalidArgumentException("Rad sa id-em " + thesisId
                     + " ne postoji u bazi!");
@@ -222,16 +222,16 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public TFile addFile(Long thesisId, MultipartFile file) {
+    public TFileEntity addFile(Long thesisId, MultipartFile file) {
         if (file.isEmpty()) {
             throw new InvalidArgumentException("Fajl je prazan!");
         }
-        Thesis thesis = getThesis(thesisId);
+        ThesisEntity thesis = getThesis(thesisId);
         if (thesis == null) {
             throw new InvalidArgumentException("Rad sa id-em " + thesisId
                     + " ne postoji u bazi!");
         }
-        TFile existingTFile = thesis.getFile();
+        TFileEntity existingTFile = thesis.getFile();
         if (existingTFile != null) {
             throw new InvalidArgumentException("Rad " + thesis.getName()
                     + " već ima upload-ovan fajl "
@@ -242,7 +242,7 @@ public class ThesisServiceImpl implements ThesisService {
                     + file.getOriginalFilename()
                     + " već postoji. Molimo izaberite drugo ime fajla.");
         }
-        TFile tFile = new TFile();
+        TFileEntity tFile = new TFileEntity();
         tFile.setThesisName(thesis.getName());
         tFile.setFileName(file.getOriginalFilename());
         thesis.setFile(tFile);
@@ -265,13 +265,13 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public Set<TFile> getAllFileRecords() {
+    public Set<TFileEntity> getAllFileRecords() {
         return fileRepository.findAll();
     }
 
     @Override
     public void removeFile(Long fileId) {
-        TFile existingFile = fileRepository.findOne(fileId);
+        TFileEntity existingFile = fileRepository.findOne(fileId);
         if (existingFile == null) {
             throw new InvalidArgumentException("Fajl sa id-em " + fileId
                     + " ne postoji u bazi!");
@@ -293,12 +293,12 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Override
     public File getThesisFile(Long thesisId) {
-        Thesis thesis = getThesis(thesisId);
+        ThesisEntity thesis = getThesis(thesisId);
         if (thesis == null) {
             throw new InvalidArgumentException("Rad sa id-em " + thesisId
                     + " ne postoji u bazi!");
         }
-        TFile existingTFile = thesis.getFile();
+        TFileEntity existingTFile = thesis.getFile();
         if (existingTFile == null) {
             throw new InvalidArgumentException("Rad " + thesis.getName()
                     + " nema upload-ovan fajl ");
@@ -306,7 +306,7 @@ public class ThesisServiceImpl implements ThesisService {
         File file = new File(thesisFilesFolder + existingTFile.getFileName());
 
         if (!file.exists()) {
-            logger.error("Thesis " + thesis.getName() + " has attached file "
+            logger.error("ThesisEntity " + thesis.getName() + " has attached file "
                     + existingTFile.getFileName()
                     + " but file doesnot exist on disc at location: "
                     + thesisFilesFolder + existingTFile.getFileName());
@@ -321,7 +321,7 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Override
     public File getFileById(Long fileId) {
-        TFile tFile = fileRepository.findOne(fileId);
+        TFileEntity tFile = fileRepository.findOne(fileId);
         if (tFile == null) {
             throw new PzrRuntimeException("Fajl sa id-em " + fileId
                     + " ne postoji u bazi.");
@@ -342,7 +342,7 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Override
     public Set<ThesisComment> getAllComments(Long thesisId) {
-        Thesis thesis = thesisRepository.findOne(thesisId);
+        ThesisEntity thesis = thesisRepository.findOne(thesisId);
         if (thesis == null) {
             throw new InvalidArgumentException("Rad sa id-em " + thesisId
                     + " ne postoji u bazi!");
@@ -357,7 +357,7 @@ public class ThesisServiceImpl implements ThesisService {
             org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                     .getContext().getAuthentication().getPrincipal();
             String email = user.getUsername();
-            User loggedInUser = userService.getUser(email);
+            UserEntity loggedInUser = userService.getUser(email);
             thesisComment.setAuthor(loggedInUser);
         } catch (Exception e) {
             throw new InvalidTicketException(
@@ -377,7 +377,7 @@ public class ThesisServiceImpl implements ThesisService {
             org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                     .getContext().getAuthentication().getPrincipal();
             String email = user.getUsername();
-            User loggedInUser = userService.getUser(email);
+            UserEntity loggedInUser = userService.getUser(email);
             ThesisComment thesisComment = commentRepository.findOne(commentId);
             if (!loggedInUser.isAdmin()
                     && !Objects.equals(thesisComment.getAuthor().getId(), loggedInUser

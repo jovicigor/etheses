@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.Course;
+import rs.fon.pzr.persistence.model.CourseEntity;
 import rs.fon.pzr.persistence.repository.CourseRepository;
 
 @Service
@@ -21,23 +21,23 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourse(Long id) {
+    public CourseEntity getCourse(Long id) {
         return courseRepository.findOne(id);
     }
 
     @Override
-    public Course getCourseByName(String name) {
+    public CourseEntity getCourseByName(String name) {
         return courseRepository.findByName(name);
     }
 
     @Override
-    public List<Course> getAllCourses() {
+    public List<CourseEntity> getAllCourses() {
         return courseRepository.findAll();
     }
 
     @Transactional
     @Override
-    public Course addCourse(Course course) {
+    public CourseEntity addCourse(CourseEntity course) {
         if (courseRepository.findByName(course.getName()) != null) {
             throw new InvalidArgumentException("Kurs " + course.getName()
                     + " već postoji u bazi!");
@@ -51,8 +51,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Transactional
     @Override
-    public Course updateCourse(Course course) {
-        Course existingCourse = courseRepository.findOne(course.getId());
+    public CourseEntity updateCourse(CourseEntity course) {
+        CourseEntity existingCourse = courseRepository.findOne(course.getId());
         if (existingCourse == null) {
             throw new InvalidArgumentException("Smer sa id-em "
                     + course.getId() + " ne postoji u bazi!");
@@ -77,7 +77,7 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     @Override
     public void removeCourse(Long courseID) {
-        Course course = courseRepository.findOne(courseID);
+        CourseEntity course = courseRepository.findOne(courseID);
         if (course == null) {
             throw new InvalidArgumentException("Smer sa id-em " + courseID
                     + " ne postoji u bazi!");

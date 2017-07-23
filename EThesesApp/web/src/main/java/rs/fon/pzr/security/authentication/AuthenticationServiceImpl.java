@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.fon.pzr.core.exception.AuthenticationException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
-import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.model.UserEntity;
 import rs.fon.pzr.core.service.UserService;
 
 @Service
@@ -27,7 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (email == null || password == null) {
             throw new AuthenticationException();
         }
-        User user = userService.getUser(email);
+        UserEntity user = userService.getUser(email);
         if (user == null) {
             throw new AuthenticationException();
         }
@@ -51,13 +51,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new InvalidTicketException("Provided ticket is not valid! Your ticket may be expired.");
         }
         ticketService.prolongTicket(ticket);
-        User user = userService.getUser(userId);
+        UserEntity user = userService.getUser(userId);
         return user.getEmail();
 
     }
 
     @Override
-    public User getTicketUser(String ticket) {
+    public UserEntity getTicketUser(String ticket) {
         if (ticket == null) {
             throw new InvalidTicketException("Must provide a valid ticket!");
         }

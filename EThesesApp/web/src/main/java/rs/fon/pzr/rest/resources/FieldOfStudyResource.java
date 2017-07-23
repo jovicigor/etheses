@@ -3,7 +3,7 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.FieldOfStudy;
+import rs.fon.pzr.persistence.model.FieldOfStudyEntity;
 import rs.fon.pzr.core.service.FieldOfStudyService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
 import rs.fon.pzr.rest.model.request.FieldOfStudyRequest;
@@ -25,7 +25,7 @@ public class FieldOfStudyResource {
     @RequestMapping(method = RequestMethod.GET)
     public
     @ResponseBody
-    Set<FieldOfStudy> getFieldOfStudies() {
+    Set<FieldOfStudyEntity> getFieldOfStudies() {
         return fieldOfStudyService.getAllFieldsOfStudy();
     }
 
@@ -33,7 +33,7 @@ public class FieldOfStudyResource {
     @RequestMapping(method = RequestMethod.POST)
     public
     @ResponseBody
-    FieldOfStudy addFieldOfStudy(
+    FieldOfStudyEntity addFieldOfStudy(
             @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
         ParamaterCheck.mandatory("Naziv oblasti", fieldOfStudyRequest.getName());
         return fieldOfStudyService.addFieldOfStudy(fieldOfStudyRequest.getName());
@@ -43,9 +43,9 @@ public class FieldOfStudyResource {
     @RequestMapping(method = RequestMethod.PUT, value = "/{fieldOfStudyID}")
     public
     @ResponseBody
-    FieldOfStudy updateFieldOfStudy(@PathVariable("fieldOfStudyID") Long fieldOfStudyID,
-                                    @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
-        FieldOfStudy fieldOfStudy = fieldOfStudyService.getFieldOfStudy(fieldOfStudyID);
+    FieldOfStudyEntity updateFieldOfStudy(@PathVariable("fieldOfStudyID") Long fieldOfStudyID,
+                                          @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
+        FieldOfStudyEntity fieldOfStudy = fieldOfStudyService.getFieldOfStudy(fieldOfStudyID);
         if (fieldOfStudy == null) {
             throw new InvalidArgumentException("Oblast sa id-em " + fieldOfStudyID
                     + " ne postoji u bazi!");

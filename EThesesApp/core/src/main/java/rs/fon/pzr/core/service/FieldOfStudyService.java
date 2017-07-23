@@ -2,20 +2,20 @@ package rs.fon.pzr.core.service;
 
 import java.util.Set;
 
-import rs.fon.pzr.persistence.model.FieldOfStudy;
+import rs.fon.pzr.persistence.model.FieldOfStudyEntity;
 
 public interface FieldOfStudyService {
 
-	FieldOfStudy getFieldOfStudy(Long id);
+	FieldOfStudyEntity getFieldOfStudy(Long id);
 	
-	FieldOfStudy getgetFieldOfStudyByName(String name);
+	FieldOfStudyEntity getgetFieldOfStudyByName(String name);
 	
-	Set<FieldOfStudy> getAllFieldsOfStudy();
+	Set<FieldOfStudyEntity> getAllFieldsOfStudy();
 	
-	FieldOfStudy addFieldOfStudy(String name);
+	FieldOfStudyEntity addFieldOfStudy(String name);
 	
 	void removeFieldOfStudy(Long id);
 
-	FieldOfStudy updateFieldOfStudy(FieldOfStudy fieldOfStudy);
+	FieldOfStudyEntity updateFieldOfStudy(FieldOfStudyEntity fieldOfStudy);
 	
 }

@@ -3,8 +3,8 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.Course;
-import rs.fon.pzr.persistence.model.User;
+import rs.fon.pzr.persistence.model.CourseEntity;
+import rs.fon.pzr.persistence.model.UserEntity;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.UserService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
@@ -35,9 +35,9 @@ public class UserResource {
     public
     @ResponseBody
     List<UserResponseLevel1> getUsers() {
-        List<User> userList = userService.getAllUsers();
+        List<UserEntity> userList = userService.getAllUsers();
         List<UserResponseLevel1> userResponseList = new ArrayList<>();
-        for (User user : userList) {
+        for (UserEntity user : userList) {
             userResponseList.add(RestFactory.createUserResponseLevel1(user));
         }
         return userResponseList;
@@ -60,7 +60,7 @@ public class UserResource {
             @RequestBody LoginData loginData) {
         ParamaterCheck.mandatory("Email ", loginData.getEmail());
         ParamaterCheck.mandatory("Password ", loginData.getPassword());
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setEmail(loginData.getEmail());
         user.setPassword(loginData.getPassword());
         user = userService.addUser(user);
@@ -78,7 +78,7 @@ public class UserResource {
             @RequestBody UserRequest userRequest,
             @PathVariable("userID") Long userID) {
 
-        User user = userService.getUser(userID);
+        UserEntity user = userService.getUser(userID);
         if (user == null) {
             throw new InvalidArgumentException("Korisnik sa id-em " + userID
                     + " ne postoji u bazi!");
@@ -88,7 +88,7 @@ public class UserResource {
             user.setBiography(userRequest.getBiography());
         }
         if (userRequest.getCourseName() != null) {
-            Course course = courseService.getCourseByName(userRequest
+            CourseEntity course = courseService.getCourseByName(userRequest
                     .getCourseName());
             user.setCourse(course);
         }
@@ -116,7 +116,7 @@ public class UserResource {
             @PathVariable("userID") Long userID,
             @RequestBody AdminPrivilegeRequest adminPrivilegeRequest) {
         ParamaterCheck.mandatory("admin", adminPrivilegeRequest.isAdmin());
-        User user = userService.getUser(userID);
+        UserEntity user = userService.getUser(userID);
         if (user == null) {
             throw new InvalidArgumentException("Korisnik sa id-em " + userID
                     + " ne postoji u bazi!");

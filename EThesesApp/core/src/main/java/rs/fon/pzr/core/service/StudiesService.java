@@ -2,19 +2,19 @@ package rs.fon.pzr.core.service;
 
 import java.util.List;
 
-import rs.fon.pzr.persistence.model.Studies;
+import rs.fon.pzr.persistence.model.StudiesEntity;
 
 public interface StudiesService {
 
-	Studies getStudies(Long id);
+	StudiesEntity getStudies(Long id);
 	
-	Studies getStudiesByName(String name);
+	StudiesEntity getStudiesByName(String name);
 
-	List<Studies> getAllStudies();
+	List<StudiesEntity> getAllStudies();
 
-	Studies addStudies(Studies studies);
+	StudiesEntity addStudies(StudiesEntity studies);
 	
-	Studies updateStudies(Studies studies);
+	StudiesEntity updateStudies(StudiesEntity studies);
 	
 	void removeStudies(Long studiesID);
 	

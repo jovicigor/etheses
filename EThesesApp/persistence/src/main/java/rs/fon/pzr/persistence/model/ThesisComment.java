@@ -28,11 +28,11 @@ public class ThesisComment {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private User author;
+	private UserEntity author;
 	
 	@ManyToOne
 	@JoinColumn(name = "thesis_id")
-	private Thesis thesis;
+	private ThesisEntity thesis;
 
 	public Long getId() {
 		return id;
@@ -58,19 +58,19 @@ public class ThesisComment {
 		this.datePosted = datePosted;
 	}
 
-	public User getAuthor() {
+	public UserEntity getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(UserEntity author) {
 		this.author = author;
 	}
 
-	public Thesis getThesis() {
+	public ThesisEntity getThesis() {
 		return thesis;
 	}
 
-	public void setThesis(Thesis thesis) {
+	public void setThesis(ThesisEntity thesis) {
 		this.thesis = thesis;
 	}	
 	

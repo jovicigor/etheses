@@ -4,11 +4,11 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.persistence.model.FieldOfStudy;
+import rs.fon.pzr.persistence.model.FieldOfStudyEntity;
 
-public interface FieldOfStudyRepository extends CrudRepository<FieldOfStudy, Long> {
+public interface FieldOfStudyRepository extends CrudRepository<FieldOfStudyEntity, Long> {
 	
-	FieldOfStudy findByName(String name);
-	Set<FieldOfStudy> findAll();
+	FieldOfStudyEntity findByName(String name);
+	Set<FieldOfStudyEntity> findAll();
 
 }

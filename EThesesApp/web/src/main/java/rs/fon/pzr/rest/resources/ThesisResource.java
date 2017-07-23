@@ -53,17 +53,17 @@ public class ThesisResource {
         List<ThesisResponseLevel1> thesisResponseList = new ArrayList<>();
 
         if (userID != null) {
-            List<Thesis> userThesis = thesisService.getThesisByUserId(userID);
-            for (Thesis thesis : userThesis) {
+            List<ThesisEntity> userThesis = thesisService.getThesisByUserId(userID);
+            for (ThesisEntity thesis : userThesis) {
                 thesisResponseList.add(RestFactory
                         .createThesisResponseLevel1(thesis));
             }
             return thesisResponseList;
         }
 
-        List<Thesis> thesisList = thesisService.getAllThesis();
+        List<ThesisEntity> thesisList = thesisService.getAllThesis();
 
-        for (Thesis thesis : thesisList) {
+        for (ThesisEntity thesis : thesisList) {
             thesisResponseList.add(RestFactory
                     .createThesisResponseLevel1(thesis));
         }
@@ -86,7 +86,7 @@ public class ThesisResource {
             @RequestParam(value = "fieldMatchLimit", required = false) Long fieldMatchLimit,
             @RequestParam(value = "descriptionKeys", required = false) List<String> descriptioinKeys,
             @RequestParam(value = "descriptionMatchLimit", required = false) Long descriptionMatchLimit) {
-        Page<Thesis> thesisPage = thesisService.advancedSearch(pageNumber,
+        Page<ThesisEntity> thesisPage = thesisService.advancedSearch(pageNumber,
                 pageSize, thesisName, tagValues, matchLimit, courseName,
                 studiesName, sortField, fieldValues, fieldMatchLimit, descriptioinKeys, descriptionMatchLimit);
         return RestFactory.CreateThesisPageResponse(thesisPage);
@@ -97,7 +97,7 @@ public class ThesisResource {
     @ResponseBody
     ThesisResponseLevel1 getThesis(
             @PathVariable("thesisID") Long thesisId) {
-        Thesis thesis = thesisService.getThesis(thesisId);
+        ThesisEntity thesis = thesisService.getThesis(thesisId);
         thesis.setViewCount(thesis.getViewCount() + 1);
         thesis = thesisService.updateThesis(thesis);
         return RestFactory.createThesisResponseLevel1(thesis);
@@ -111,7 +111,7 @@ public class ThesisResource {
             @RequestBody ThesisRequest thesisRequest) {
         ParamaterCheck.mandatory("Naziv rada", thesisRequest.getName());
 
-        Thesis thesis = new Thesis();
+        ThesisEntity thesis = new ThesisEntity();
         thesis.setName(thesisRequest.getName());
         thesis.setDatePosted(new Date());
         thesis.setDefenseDate(thesisRequest.getDefenseDate());
@@ -122,12 +122,12 @@ public class ThesisResource {
                     .extractWordsWithCount(thesisRequest.getDescription());
 
             for (Map.Entry<String, Integer> entry : keywords.entrySet()) {
-                Keyword keyword = new Keyword();
+                KeywordEntity keyword = new KeywordEntity();
                 keyword.setValue(entry.getKey());
                 // add or return existing
                 keyword = keywordService.addKeyword(keyword);
 
-                ThesisKeyword thesisKeywod = new ThesisKeyword();
+                ThesisKeywordEntity thesisKeywod = new ThesisKeywordEntity();
                 thesisKeywod.setCount(entry.getValue());
                 thesisKeywod.setKeyword(keyword);
                 thesisKeywod.setThesis(thesis);
@@ -140,30 +140,30 @@ public class ThesisResource {
         thesis.setMentorEmail(thesisRequest.getMentorEmail());
         thesis.setMentorName(thesisRequest.getMentorName());
         if (thesisRequest.getCourseName() != null) {
-            Course course = courseService.getCourseByName(thesisRequest
+            CourseEntity course = courseService.getCourseByName(thesisRequest
                     .getCourseName());
             thesis.setCourse(course);
         }
         if (thesisRequest.getUserId() != null) {
-            User user1 = userService.getUser(thesisRequest.getUserId());
+            UserEntity user1 = userService.getUser(thesisRequest.getUserId());
             thesis.setUser(user1);
         }
         if (thesisRequest.getTags() != null) {
-            Set<Tag> tagList = new HashSet<>();
+            Set<TagEntity> tagList = new HashSet<>();
             for (String tagValue : thesisRequest.getTags()) {
                 tagList.add(tagService.addTag(tagValue));
             }
             thesis.setTags(tagList);
         }
         if (thesisRequest.getFieldsOfStudy() != null) {
-            Set<FieldOfStudy> fieldOfStudiesList = new HashSet<>();
+            Set<FieldOfStudyEntity> fieldOfStudiesList = new HashSet<>();
             for (String fieldOfStudyName : thesisRequest.getFieldsOfStudy()) {
                 fieldOfStudiesList.add(fieldOfStudyService.addFieldOfStudy(fieldOfStudyName));
             }
             thesis.setFieldOfStudies(fieldOfStudiesList);
         }
         if (thesisRequest.getMentorId() != null) {
-            User mentor = userService.getUser(thesisRequest.getMentorId());
+            UserEntity mentor = userService.getUser(thesisRequest.getMentorId());
             thesis.setMentor(mentor);
         }
         return RestFactory
@@ -177,7 +177,7 @@ public class ThesisResource {
             @RequestBody ThesisRequest thesisRequest,
             @PathVariable("thesisID") Long thesisID) {
 
-        Thesis thesis = thesisService.getThesis(thesisID);
+        ThesisEntity thesis = thesisService.getThesis(thesisID);
         if (thesis == null) {
             throw new InvalidArgumentException("Predmet sa id-em " + thesisID
                     + " ne postoji u bazi!");
@@ -195,12 +195,12 @@ public class ThesisResource {
                         .extractWordsWithCount(description);
 
                 for (Map.Entry<String, Integer> entry : keywords.entrySet()) {
-                    Keyword keyword = new Keyword();
+                    KeywordEntity keyword = new KeywordEntity();
                     keyword.setValue(entry.getKey());
                     // added or returned existing
                     keyword = keywordService.addKeyword(keyword);
 
-                    ThesisKeyword thesisKeywod = new ThesisKeyword();
+                    ThesisKeywordEntity thesisKeywod = new ThesisKeywordEntity();
                     thesisKeywod.setCount(entry.getValue());
                     thesisKeywod.setKeyword(keyword);
                     thesisKeywod.setThesis(thesis);
@@ -224,25 +224,25 @@ public class ThesisResource {
             thesis.setMentorName(thesisRequest.getMentorName());
         }
         if (thesisRequest.getMentorId() != null) {
-            User mentor = userService.getUser(thesisRequest.getMentorId());
+            UserEntity mentor = userService.getUser(thesisRequest.getMentorId());
             thesis.setMentor(mentor);
         }
         if (thesisRequest.getTags() != null) {
-            Set<Tag> tagList = new HashSet<>();
+            Set<TagEntity> tagList = new HashSet<>();
             for (String tagValue : thesisRequest.getTags()) {
                 tagList.add(tagService.addTag(tagValue));
             }
             thesis.setTags(tagList);
         }
         if (thesisRequest.getFieldsOfStudy() != null) {
-            Set<FieldOfStudy> fieldOfStudiesList = new HashSet<>();
+            Set<FieldOfStudyEntity> fieldOfStudiesList = new HashSet<>();
             for (String fieldOfStudyName : thesisRequest.getFieldsOfStudy()) {
                 fieldOfStudiesList.add(fieldOfStudyService.addFieldOfStudy(fieldOfStudyName));
             }
             thesis.setFieldOfStudies(fieldOfStudiesList);
         }
         if (thesisRequest.getUserId() != null) {
-            User user = userService.getUser(thesisRequest.getUserId());
+            UserEntity user = userService.getUser(thesisRequest.getUserId());
             thesis.setUser(user);
         }
         if (thesisRequest.getName() != null) {
@@ -252,7 +252,7 @@ public class ThesisResource {
             }
         }
         if (thesisRequest.getCourseName() != null) {
-            Course course = courseService.getCourseByName(thesisRequest
+            CourseEntity course = courseService.getCourseByName(thesisRequest
                     .getCourseName());
             thesis.setCourse(course);
         }
@@ -296,7 +296,7 @@ public class ThesisResource {
 
         ThesisComment thesisComment = new ThesisComment();
 
-        Thesis thesis = thesisService.getThesis(thesisId);
+        ThesisEntity thesis = thesisService.getThesis(thesisId);
         thesisComment.setThesis(thesis);
         thesisComment.setMessage(thesisCommentRequest.getMessage());
         thesisComment.setDatePosted(new Date());
@@ -314,7 +314,7 @@ public class ThesisResource {
     @RequestMapping(value = "/files", method = RequestMethod.GET)
     public
     @ResponseBody
-    Set<TFile> getAllFileRecords() {
+    Set<TFileEntity> getAllFileRecords() {
         return thesisService.getAllFileRecords();
     }
 
@@ -361,8 +361,8 @@ public class ThesisResource {
     }
 
     @RequestMapping(value = "/{thesisID}/upload", method = RequestMethod.POST)
-    public TFile uploadThesisFile(@PathVariable("thesisID") Long thesisID,
-                                  @RequestParam("file") MultipartFile file) {
+    public TFileEntity uploadThesisFile(@PathVariable("thesisID") Long thesisID,
+                                        @RequestParam("file") MultipartFile file) {
         return thesisService.addFile(thesisID, file);
     }
 

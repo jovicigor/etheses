@@ -2,17 +2,17 @@ package rs.fon.pzr.core.service;
 
 import java.util.Set;
 
-import rs.fon.pzr.persistence.model.Tag;
+import rs.fon.pzr.persistence.model.TagEntity;
 
 public interface TagService {
 
-	Tag getTag(Long id);
+	TagEntity getTag(Long id);
 	
-	Tag getTagByValue(String value);
+	TagEntity getTagByValue(String value);
 	
-	Set<Tag> getAllTags();
+	Set<TagEntity> getAllTags();
 	
-	Tag addTag(String value);
+	TagEntity addTag(String value);
 	
 	void removeTag(Long tagId);
 	

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tag")
-public class Tag {
+public class TagEntity {
 	
 	@Id
 	@Column(name = "tag_id")

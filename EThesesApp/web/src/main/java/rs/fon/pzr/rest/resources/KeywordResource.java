@@ -3,7 +3,7 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.Keyword;
+import rs.fon.pzr.persistence.model.KeywordEntity;
 import rs.fon.pzr.core.service.KeywordService;
 import rs.fon.pzr.rest.model.request.BannedKeywordsRequest;
 import rs.fon.pzr.rest.model.request.KeywordRequest;
@@ -27,7 +27,7 @@ public class KeywordResource {
     @RequestMapping(method = RequestMethod.GET)
     public
     @ResponseBody
-    Set<Keyword> getKeywords() {
+    Set<KeywordEntity> getKeywords() {
         return keywordService.getAllKeywords();
     }
 
@@ -35,8 +35,8 @@ public class KeywordResource {
     @RequestMapping(method = RequestMethod.POST)
     public
     @ResponseBody
-    List<Keyword> addBannedKeywords(@RequestBody BannedKeywordsRequest bannedKeywords) {
-        List<Keyword> keywords = new ArrayList<>();
+    List<KeywordEntity> addBannedKeywords(@RequestBody BannedKeywordsRequest bannedKeywords) {
+        List<KeywordEntity> keywords = new ArrayList<>();
         for (String keywordValue : bannedKeywords.getKeywords()) {
             keywords.add(keywordService.addBannedKeyword(keywordValue));
         }
@@ -47,8 +47,8 @@ public class KeywordResource {
     @RequestMapping(method = RequestMethod.PUT, value = "/{keywordID}")
     public
     @ResponseBody
-    Keyword updateKeywordBannedStatus(@PathVariable("keywordID") Long keywordID, @RequestBody KeywordRequest keywordRequest) {
-        Keyword existingKeyword = keywordService.getKeyword(keywordID);
+    KeywordEntity updateKeywordBannedStatus(@PathVariable("keywordID") Long keywordID, @RequestBody KeywordRequest keywordRequest) {
+        KeywordEntity existingKeyword = keywordService.getKeyword(keywordID);
         if (existingKeyword == null) {
             throw new InvalidArgumentException("Ključna reč sa id-em: " + keywordID + " ne postoji u bazi!");
         }

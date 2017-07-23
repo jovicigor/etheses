@@ -3,7 +3,7 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.Studies;
+import rs.fon.pzr.persistence.model.StudiesEntity;
 import rs.fon.pzr.core.service.StudiesService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
 import rs.fon.pzr.rest.model.request.StudiesRequest;
@@ -29,7 +29,7 @@ public class StudiesResource {
     @ResponseBody
     List<StudiesResponseLevel1> getStudies(
             @RequestParam(value = "studiesName", required = false) String studiesName) {
-        List<Studies> studiesList = studiesService.getAllStudies();
+        List<StudiesEntity> studiesList = studiesService.getAllStudies();
         List<StudiesResponseLevel1> studiesResponseLevel1 = new ArrayList<>();
         if (studiesName != null) {
             studiesResponseLevel1.add(RestFactory
@@ -37,7 +37,7 @@ public class StudiesResource {
                             .getStudiesByName(studiesName)));
             return studiesResponseLevel1;
         }
-        for (Studies studies : studiesList) {
+        for (StudiesEntity studies : studiesList) {
             studiesResponseLevel1.add(RestFactory.createStudiesResponseLevel1(studies));
         }
         return studiesResponseLevel1;
@@ -72,7 +72,7 @@ public class StudiesResource {
         ParamaterCheck.mandatory("Naziv nivoa studija", studiesRequest.getName());
         ParamaterCheck.mandatory("Skraćeni naziv nivoa studija",
                 studiesRequest.getNameShort());
-        Studies studies = new Studies();
+        StudiesEntity studies = new StudiesEntity();
         studies.setName(studiesRequest.getName());
         studies.setNameShort(studiesRequest.getNameShort());
         return RestFactory.createStudiesResponseLevel1(studiesService.addStudies(studies));
@@ -84,7 +84,7 @@ public class StudiesResource {
     StudiesResponseLevel1 updateStudies(
             @RequestBody StudiesRequest studiesRequest,
             @PathVariable("studiesID") Long studiesID) {
-        Studies studies = studiesService.getStudies(studiesID);
+        StudiesEntity studies = studiesService.getStudies(studiesID);
         if (studies == null) {
             throw new InvalidArgumentException("Nivo studija sa id-em " + studiesID
                     + " ne postoji u bazi!");

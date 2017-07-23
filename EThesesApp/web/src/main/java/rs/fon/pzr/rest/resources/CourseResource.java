@@ -3,8 +3,8 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.Course;
-import rs.fon.pzr.persistence.model.Studies;
+import rs.fon.pzr.persistence.model.CourseEntity;
+import rs.fon.pzr.persistence.model.StudiesEntity;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.StudiesService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
@@ -36,7 +36,7 @@ public class CourseResource {
     @ResponseBody
     List<CourseResponseLevel1> getCourses(
             @RequestParam(value = "courseName", required = false) String courseName) {
-        List<Course> courseList = courseService.getAllCourses();
+        List<CourseEntity> courseList = courseService.getAllCourses();
         List<CourseResponseLevel1> courseResponseList = new ArrayList<>();
         if (courseName != null) {
             courseResponseList.add(RestFactory
@@ -44,7 +44,7 @@ public class CourseResource {
                             .getCourseByName(courseName)));
             return courseResponseList;
         }
-        for (Course course : courseList) {
+        for (CourseEntity course : courseList) {
             courseResponseList.add(RestFactory
                     .createCourseResponseLevel1(course));
         }
@@ -71,13 +71,13 @@ public class CourseResource {
         ParamaterCheck.mandatory("Skraćeni naziv smera",
                 courseRequest.getNameShort());
 
-        Course course = new Course();
+        CourseEntity course = new CourseEntity();
         course.setName(courseRequest.getName());
         course.setNameShort(courseRequest.getNameShort());
         if (courseRequest.getStudiesIDs() != null) {
-            Set<Studies> studiesList = new HashSet<>();
+            Set<StudiesEntity> studiesList = new HashSet<>();
             for (Long studiesId : courseRequest.getStudiesIDs()) {
-                Studies studies = studiesService.getStudies(studiesId);
+                StudiesEntity studies = studiesService.getStudies(studiesId);
                 if (studies != null) {
                     studiesList.add(studies);
                 }
@@ -95,7 +95,7 @@ public class CourseResource {
     CourseResponseLevel1 updateCourse(
             @RequestBody CourseRequest courseRequest,
             @PathVariable("courseID") Long courseID) {
-        Course course = courseService.getCourse(courseID);
+        CourseEntity course = courseService.getCourse(courseID);
         if (course == null) {
             throw new InvalidArgumentException("Kurs sa id-em " + courseID
                     + " ne postoji u bazi!");
@@ -108,9 +108,9 @@ public class CourseResource {
         }
 
         if (courseRequest.getStudiesIDs() != null) {
-            Set<Studies> studiesList = new HashSet<>();
+            Set<StudiesEntity> studiesList = new HashSet<>();
             for (Long studiesId : courseRequest.getStudiesIDs()) {
-                Studies studies = studiesService.getStudies(studiesId);
+                StudiesEntity studies = studiesService.getStudies(studiesId);
                 if (studies != null) {
                     studiesList.add(studies);
                 }
