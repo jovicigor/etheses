@@ -1,10 +1,10 @@
-package rs.fon.pzr.core.service.authentication;
+package rs.fon.pzr.security.authentication;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import rs.fon.pzr.core.service.authentication.ticket.InMemoryTicketCash;
-import rs.fon.pzr.core.service.authentication.ticket.SimpleTicket;
+import rs.fon.pzr.security.authentication.ticket.InMemoryTicketCash;
+import rs.fon.pzr.security.authentication.ticket.SimpleTicket;
 
 @Service
 class TicketService {

@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.service.authentication.ticket;
+package rs.fon.pzr.security.authentication.ticket;
 
 import org.springframework.stereotype.Service;
 

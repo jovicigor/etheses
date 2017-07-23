@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.service.authentication;
+package rs.fon.pzr.security.authentication;
 
 import rs.fon.pzr.core.model.User;
 

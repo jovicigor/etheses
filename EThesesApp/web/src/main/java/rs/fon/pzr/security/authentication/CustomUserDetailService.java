@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.service.authentication;
+package rs.fon.pzr.security.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
