@@ -7,7 +7,7 @@ import rs.fon.pzr.core.service.authentication.ticket.InMemoryTicketCash;
 import rs.fon.pzr.core.service.authentication.ticket.SimpleTicket;
 
 @Service
-public class TicketService {
+class TicketService {
 
     private final Logger logger = Logger.getLogger(TicketService.class);
 
