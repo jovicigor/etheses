@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.model.ticket;
+package rs.fon.pzr.core.service.authentication.ticket;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;

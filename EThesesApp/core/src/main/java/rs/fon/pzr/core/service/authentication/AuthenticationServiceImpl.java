@@ -2,12 +2,10 @@ package rs.fon.pzr.core.service.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.stereotype.Service;
 import rs.fon.pzr.core.exception.AuthenticationException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.model.User;
-import rs.fon.pzr.core.repository.UserRepository;
 import rs.fon.pzr.core.service.UserService;
 
 @Service
