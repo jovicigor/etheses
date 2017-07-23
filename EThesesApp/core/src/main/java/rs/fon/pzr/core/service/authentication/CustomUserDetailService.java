@@ -1,33 +1,32 @@
 package rs.fon.pzr.core.service.authentication;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import org.springframework.stereotype.Service;
 import rs.fon.pzr.core.model.User;
-import rs.fon.pzr.core.repository.UserRepository;
+import rs.fon.pzr.core.service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public CustomUserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        User user = userRepository.findByEmail(email);
+        User user = userService.getUser(email);
         if (user == null) {
             throw new UsernameNotFoundException("There is no user with userName: " + email);
         }
