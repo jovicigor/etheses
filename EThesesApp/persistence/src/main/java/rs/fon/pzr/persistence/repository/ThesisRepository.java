@@ -17,52 +17,52 @@ public interface ThesisRepository extends PagingAndSortingRepository<ThesisEntit
 	ThesisEntity findByName(String name);
 	
 	
-	@Query("SELECT distinct t from Thesis t where t.name like ?1 and ?3  <= ("
-			+ "SELECT count(tag2.id) from Thesis t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
+	@Query("SELECT distinct t from ThesisEntity t where t.name like ?1 and ?3  <= ("
+			+ "SELECT count(tag2.id) from ThesisEntity t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
 			+ ") and ?5  <= ("
-			+ "SELECT count(fos.id) from Thesis t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?4)"
+			+ "SELECT count(fos.id) from ThesisEntity t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?4)"
 			+ ")")
 	Page<ThesisEntity> findByNameLikeTagsAndFieldsPagable(Pageable pageRequest, String thesisName, List<String> tagValues, Long tagsMatchLimit, List<String> fieldValues, Long fieldsMatchLimit);
 	
-	@Query("SELECT distinct t from Thesis t where t.name like ?1 and t.course.name = ?4 and ?3 <= ("
-			+ "SELECT count(tag2.id) from Thesis t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
+	@Query("SELECT distinct t from ThesisEntity t where t.name like ?1 and t.course.name = ?4 and ?3 <= ("
+			+ "SELECT count(tag2.id) from ThesisEntity t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
 			+ ") and ?6  <= ("
-			+ "SELECT count(fos.id) from Thesis t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?5)"
+			+ "SELECT count(fos.id) from ThesisEntity t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?5)"
 			+ ")")
 	Page<ThesisEntity> findByNameLikeTagsFieldsAndCoursePagable(Pageable pageRequest, String thesisName, List<String> tagValues, Long matchLimit, String courseName, List<String> fieldValues, Long fieldsMatchLimit);
 	
-	@Query("SELECT distinct t from Thesis t join t.course.studies s where t.name like ?1 and s.name = ?4 and ?3 <= ("
-			+ "SELECT count(tag2.id) from Thesis t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
+	@Query("SELECT distinct t from ThesisEntity t join t.course.studies s where t.name like ?1 and s.name = ?4 and ?3 <= ("
+			+ "SELECT count(tag2.id) from ThesisEntity t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
 			+ ") and ?6  <= ("
-			+ "SELECT count(fos.id) from Thesis t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?5)"
+			+ "SELECT count(fos.id) from ThesisEntity t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?5)"
 			+ ")")
 	Page<ThesisEntity> findByNameLikeTagsFieldsAndStudiesPagable(Pageable pageRequest, String thesisName, List<String> tagValues, Long matchLimit, String studiesName, List<String> fieldValues, Long fieldsMatchLimit);
 	
 	
-	@Query("SELECT distinct t from Thesis t where t.name like ?1 and ?3  <= ("
-			+ "SELECT count(tag2.id) from Thesis t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
+	@Query("SELECT distinct t from ThesisEntity t where t.name like ?1 and ?3  <= ("
+			+ "SELECT count(tag2.id) from ThesisEntity t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
 			+ ") and ?5  <= ("
-			+ "SELECT count(fos.id) from Thesis t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?4)"
+			+ "SELECT count(fos.id) from ThesisEntity t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?4)"
 			+ ") and ?7  <= ("
-			+ "SELECT count(tk.id) from Thesis t4 left join t4.thesisKeywords tk where t4.id=t.id and tk.keyword.value in(?6)"
+			+ "SELECT count(tk.id) from ThesisEntity t4 left join t4.thesisKeywords tk where t4.id=t.id and tk.keyword.value in(?6)"
 			+ ")")
 	Page<ThesisEntity> findByNameLikeTagsFieldsAndDescriptionPagable(Pageable pageRequest, String thesisName, List<String> tagValues, Long tagsMatchLimit, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit);
 	
-	@Query("SELECT distinct t from Thesis t where t.name like ?1 and t.course.name = ?4 and ?3 <= ("
-			+ "SELECT count(tag2.id) from Thesis t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
+	@Query("SELECT distinct t from ThesisEntity t where t.name like ?1 and t.course.name = ?4 and ?3 <= ("
+			+ "SELECT count(tag2.id) from ThesisEntity t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
 			+ ") and ?6  <= ("
-			+ "SELECT count(fos.id) from Thesis t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?5)"
+			+ "SELECT count(fos.id) from ThesisEntity t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?5)"
 			+ ") and ?8  <= ("
-			+ "SELECT count(tk.id) from Thesis t4 left join t4.thesisKeywords tk where t4.id=t.id and tk.keyword.value in(?7)"
+			+ "SELECT count(tk.id) from ThesisEntity t4 left join t4.thesisKeywords tk where t4.id=t.id and tk.keyword.value in(?7)"
 			+ ")")
 	Page<ThesisEntity> findByNameLikeTagsFieldsCourseAndDescriptioinPagable(Pageable pageRequest, String thesisName, List<String> tagValues, Long matchLimit, String courseName, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit);
 	
-	@Query("SELECT distinct t from Thesis t join t.course.studies s where t.name like ?1 and s.name = ?4 and ?3 <= ("
-			+ "SELECT count(tag2.id) from Thesis t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
+	@Query("SELECT distinct t from ThesisEntity t join t.course.studies s where t.name like ?1 and s.name = ?4 and ?3 <= ("
+			+ "SELECT count(tag2.id) from ThesisEntity t2 left join t2.tags tag2 where t2.id=t.id and tag2.value in(?2)"
 			+ ") and ?6  <= ("
-			+ "SELECT count(fos.id) from Thesis t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?5)"
+			+ "SELECT count(fos.id) from ThesisEntity t3 left join t3.fieldOfStudies fos where t3.id=t.id and fos.name in(?5)"
 			+ ") and ?8  <= ("
-			+ "SELECT count(tk.id) from Thesis t4 left join t4.thesisKeywords tk where t4.id=t.id and tk.keyword.value in(?7)"
+			+ "SELECT count(tk.id) from ThesisEntity t4 left join t4.thesisKeywords tk where t4.id=t.id and tk.keyword.value in(?7)"
 			+ ")")
 	Page<ThesisEntity> findByNameLikeTagsFieldsStudiesAndDescriptionPagable(Pageable pageRequest, String thesisName, List<String> tagValues, Long matchLimit, String studiesName, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit);
 	
