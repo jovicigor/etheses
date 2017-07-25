@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.persistence.model.TFileEntity;
+import rs.fon.pzr.model.TFileEntity;
 
 public interface FileRepository extends CrudRepository<TFileEntity, Long>{
 	

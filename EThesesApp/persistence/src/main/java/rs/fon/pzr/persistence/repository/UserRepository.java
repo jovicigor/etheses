@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.persistence.model.UserEntity;
+import rs.fon.pzr.model.UserEntity;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 	

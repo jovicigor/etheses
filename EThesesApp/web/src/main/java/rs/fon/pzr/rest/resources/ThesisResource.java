@@ -7,7 +7,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.persistence.model.*;
+import rs.fon.pzr.model.*;
 import rs.fon.pzr.core.service.*;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
 import rs.fon.pzr.rest.model.request.ThesisCommentRequest;

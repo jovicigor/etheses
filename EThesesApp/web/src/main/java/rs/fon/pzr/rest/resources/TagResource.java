@@ -2,7 +2,7 @@ package rs.fon.pzr.rest.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import rs.fon.pzr.persistence.model.TagEntity;
+import rs.fon.pzr.model.TagEntity;
 import rs.fon.pzr.core.service.TagService;
 
 import java.util.Set;

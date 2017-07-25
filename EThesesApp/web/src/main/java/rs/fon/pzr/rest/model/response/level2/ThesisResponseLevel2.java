@@ -1,8 +1,8 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import rs.fon.pzr.persistence.model.FieldOfStudyEntity;
-import rs.fon.pzr.persistence.model.TFileEntity;
-import rs.fon.pzr.persistence.model.TagEntity;
+import rs.fon.pzr.model.FieldOfStudyEntity;
+import rs.fon.pzr.model.TFileEntity;
+import rs.fon.pzr.model.TagEntity;
 
 import java.util.Date;
 import java.util.HashSet;
