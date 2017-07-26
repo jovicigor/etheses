@@ -1,138 +1,105 @@
 package rs.fon.pzr.rest.model.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.Set;
 
 public class ThesisRequest {
 
-	private String name;
+    private String name;
+    private Integer grade;
+    private Date defenseDate;
+    private String description;
+    private String courseName;
+    private Long userId;
+    private String userName;
+    private String userEmail;
+    private Long mentorId;
+    private String mentorName;
+    private String mentorEmail;
+    private Set<String> tags;
+    private Set<String> fieldsOfStudy;
 
-	private Integer grade;
+    @JsonCreator
+    public ThesisRequest(@JsonProperty("name") String name,
+                         @JsonProperty("grade") Integer grade,
+                         @JsonProperty("defenseDate") Date defenseDate,
+                         @JsonProperty("description") String description,
+                         @JsonProperty("courseName") String courseName,
+                         @JsonProperty("userId") Long userId,
+                         @JsonProperty("userName") String userName,
+                         @JsonProperty("userEmail") String userEmail,
+                         @JsonProperty("mentorId") Long mentorId,
+                         @JsonProperty("mentorName") String mentorName,
+                         @JsonProperty("mentorEmail") String mentorEmail,
+                         @JsonProperty("tags") Set<String> tags,
+                         @JsonProperty("fieldsOfStudy") Set<String> fieldsOfStudy) {
+        this.name = name;
+        this.grade = grade;
+        this.defenseDate = defenseDate;
+        this.description = description;
+        this.courseName = courseName;
+        this.userId = userId;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.mentorId = mentorId;
+        this.mentorName = mentorName;
+        this.mentorEmail = mentorEmail;
+        this.tags = tags;
+        this.fieldsOfStudy = fieldsOfStudy;
+    }
 
-	private Date defenseDate;
+    public String getName() {
+        return name;
+    }
 
-	private String description;
+    public Integer getGrade() {
+        return grade;
+    }
 
-	private String courseName;
+    public Date getDefenseDate() {
+        return defenseDate;
+    }
 
-	private Long userId;
+    public String getDescription() {
+        return description;
+    }
 
-	private String userName;
+    public String getCourseName() {
+        return courseName;
+    }
 
-	private String userEmail;
+    public Long getUserId() {
+        return userId;
+    }
 
-	private Long mentorId;
+    public String getUserName() {
+        return userName;
+    }
 
-	private String mentorName;
+    public String getUserEmail() {
+        return userEmail;
+    }
 
-	private String mentorEmail;
+    public Long getMentorId() {
+        return mentorId;
+    }
 
-	private Set<String> tags;
+    public String getMentorName() {
+        return mentorName;
+    }
 
-	private Set<String> fieldsOfStudy;
+    public String getMentorEmail() {
+        return mentorEmail;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Set<String> getTags() {
+        return tags;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Integer getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Integer grade) {
-		this.grade = grade;
-	}
-
-	public Date getDefenseDate() {
-		return defenseDate;
-	}
-
-	public void setDefenseDate(Date defenseDate) {
-		this.defenseDate = defenseDate;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getCourseName() {
-		return courseName;
-	}
-
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-	public Long getMentorId() {
-		return mentorId;
-	}
-
-	public void setMentorId(Long mentorId) {
-		this.mentorId = mentorId;
-	}
-
-	public String getMentorName() {
-		return mentorName;
-	}
-
-	public void setMentorName(String mentorName) {
-		this.mentorName = mentorName;
-	}
-
-	public String getMentorEmail() {
-		return mentorEmail;
-	}
-
-	public void setMentorEmail(String mentorEmail) {
-		this.mentorEmail = mentorEmail;
-	}
-
-	public Set<String> getTags() {
-		return tags;
-	}
-
-	public void setTags(Set<String> tags) {
-		this.tags = tags;
-	}
-
-	public Set<String> getFieldsOfStudy() {
-		return fieldsOfStudy;
-	}
-
-	public void setFieldsOfStudy(Set<String> fieldsOfStudy) {
-		this.fieldsOfStudy = fieldsOfStudy;
-	}
-
+    public Set<String> getFieldsOfStudy() {
+        return fieldsOfStudy;
+    }
 }

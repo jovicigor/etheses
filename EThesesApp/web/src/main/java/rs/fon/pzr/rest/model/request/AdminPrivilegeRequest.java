@@ -1,14 +1,17 @@
 package rs.fon.pzr.rest.model.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AdminPrivilegeRequest {
-	private Boolean isAdmin;
+    private Boolean isAdmin;
 
-	public Boolean isAdmin() {
-		return isAdmin;
-	}
+    @JsonCreator
+    public AdminPrivilegeRequest(@JsonProperty("isAdmin") Boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
 
-	public void setAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
+    public Boolean isAdmin() {
+        return isAdmin;
+    }
 }

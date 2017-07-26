@@ -1,23 +1,24 @@
 package rs.fon.pzr.rest.model.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class StudiesRequest {
-	private String name;
-	
-	private String nameShort;
+    private String name;
+    private String nameShort;
 
-	public String getName() {
-		return name;
-	}
+    @JsonCreator
+    public StudiesRequest(@JsonProperty("name") String name,
+                          @JsonProperty("nameShort") String nameShort) {
+        this.name = name;
+        this.nameShort = nameShort;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getNameShort() {
-		return nameShort;
-	}
-
-	public void setNameShort(String nameShort) {
-		this.nameShort = nameShort;
-	}	
+    public String getNameShort() {
+        return nameShort;
+    }
 }
