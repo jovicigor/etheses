@@ -60,9 +60,8 @@ public class UserResource {
             @RequestBody LoginData loginData) {
         ParamaterCheck.mandatory("Email ", loginData.getEmail());
         ParamaterCheck.mandatory("Password ", loginData.getPassword());
-        UserEntity user = new UserEntity();
-        user.setEmail(loginData.getEmail());
-        user.setPassword(loginData.getPassword());
+
+        UserEntity user = new UserEntity(loginData.getEmail(), loginData.getPassword());
         user = userService.addUser(user);
         UserResponseLevel1 userResponse = new UserResponseLevel1();
         userResponse.setId(user.getId());

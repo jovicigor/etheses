@@ -6,141 +6,129 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class UserEntity {
-	@Id
-	@Column(name = "user_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "first_name")
-	private String firstName;
+    @Column(name = "first_name")
+    private String firstName;
 
-	@Column(name = "last_name")
-	private String lastName;
-	
-	@Column(name = "email")
-	private String email;
-	
-	@Column(name = "password")
-	private String password;
-	
-	@Column(name = "students_transcript")
-	private String studentsTranscript;
-	
-	@Column(name = "is_admin")
-	private boolean isAdmin;
-		
-	@ManyToOne
-	@JoinColumn(name = "course_id")
-	private CourseEntity course;
-		
-	@Column(name = "biography")
-	private String biography;
-	
-	@Column(name = "interests")
-	private String interests;
-	
-	@Column(name = "last_activity")
-	private Date lastActivity;
-	
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private Set<ThesisEntity> theses = new HashSet<>();
+    @Column(name = "last_name")
+    private String lastName;
 
-	public Long getId() {
-		return id;
-	}
+    @Embedded
+    private UserLogin userLogin;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(name = "students_transcript")
+    private String studentsTranscript;
 
-	public String getFirstName() {
-		return firstName;
-	}
+    @Column(name = "is_admin")
+    private boolean isAdmin;
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private CourseEntity course;
 
-	public String getLastName() {
-		return lastName;
-	}
+    @Column(name = "biography")
+    private String biography;
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    @Column(name = "interests")
+    private String interests;
 
-	public String getEmail() {
-		return email;
-	}
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<ThesisEntity> theses = new HashSet<>();
 
-	public void setEmail(String email) {
-		this.email = email;
-	}	
+    protected UserEntity() {
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public UserEntity(String email, String password) {
+        this.userLogin = new UserLogin(email, password);
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getStudentsTranscript() {
-		return studentsTranscript;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setStudentsTranscript(String studentsTranscript) {
-		this.studentsTranscript = studentsTranscript;
-	}	
-	
-	public boolean isAdmin() {
-		return isAdmin;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public CourseEntity getCourse() {
-		return course;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setCourse(CourseEntity course) {
-		this.course = course;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getBiography() {
-		return biography;
-	}
+    public String getEmail() {
+        return userLogin.getEmail();
+    }
 
-	public void setBiography(String biography) {
-		this.biography = biography;
-	}
+    public String getPassword() {
+        return userLogin.getPassword();
+    }
 
-	public String getInterests() {
-		return interests;
-	}
+    public void setPassword(String password) {
+        userLogin.setPassword(password);
+    }
 
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
+    public String getStudentsTranscript() {
+        return studentsTranscript;
+    }
 
-	public Date getLastActivity() {
-		return lastActivity;
-	}
+    public void setStudentsTranscript(String studentsTranscript) {
+        this.studentsTranscript = studentsTranscript;
+    }
 
-	public void setLastActivity(Date lastActivity) {
-		this.lastActivity = lastActivity;
-	}
+    public boolean isAdmin() {
+        return isAdmin;
+    }
 
-	public Set<ThesisEntity> getTheses() {
-		return theses;
-	}
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
 
-	public void setTheses(Set<ThesisEntity> theses) {
-		this.theses = theses;
-	}
+    public CourseEntity getCourse() {
+        return course;
+    }
 
+    public void setCourse(CourseEntity course) {
+        this.course = course;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
+
+    public Set<ThesisEntity> getTheses() {
+        return theses;
+    }
+
+    public void setTheses(Set<ThesisEntity> theses) {
+        this.theses = theses;
+    }
 }

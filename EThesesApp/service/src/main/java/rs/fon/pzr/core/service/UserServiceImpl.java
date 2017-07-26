@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getUser(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByUserLoginEmail(email);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserEntity addUser(UserEntity user) {
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        if (userRepository.findByUserLoginEmail(user.getEmail()) != null) {
             throw new InvalidArgumentException("Korisnik sa email-om "
                     + user.getEmail() + " je već registrovan!");
         }
