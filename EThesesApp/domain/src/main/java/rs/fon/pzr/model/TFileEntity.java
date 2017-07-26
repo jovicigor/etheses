@@ -5,50 +5,31 @@ import javax.persistence.*;
 @Entity
 @Table(name = "file")
 public class TFileEntity {
-	
-	@Id
-	@Column(name = "file_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	@Column(name = "file_name")
-	private String fileName;
-	
-	@Column(name = "thesis_name")
-	private String thesisName;
-	
-	@Column(name="download_count")
-	private Integer downloadCount = 0;
+    @Id
+    @Column(name = "file_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "file_name")
+    private String fileName;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    protected TFileEntity() {
+    }
 
-	public String getFileName() {
-		return fileName;
-	}
+    public TFileEntity(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}	
+    public Long getId() {
+        return id;
+    }
 
-	public String getThesisName() {
-		return thesisName;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setThesisName(String thesisName) {
-		this.thesisName = thesisName;
-	}
-
-	public Integer getDownloadCount() {
-		return downloadCount;
-	}
-
-	public void setDownloadCount(Integer downloadCount) {
-		this.downloadCount = downloadCount;
-	}	
+    public String getFileName() {
+        return fileName;
+    }
 }

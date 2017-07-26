@@ -178,7 +178,7 @@ public class ThesisServiceImpl implements ThesisService {
             }
         } catch (Exception e) {
             logger.error(e);
-                throw new InvalidArgumentException(
+            throw new InvalidArgumentException(
                     "Prosledjeni parametri nisu ispravni.");
         }
     }
@@ -242,9 +242,7 @@ public class ThesisServiceImpl implements ThesisService {
                     + file.getOriginalFilename()
                     + " već postoji. Molimo izaberite drugo ime fajla.");
         }
-        TFileEntity tFile = new TFileEntity();
-        tFile.setThesisName(thesis.getName());
-        tFile.setFileName(file.getOriginalFilename());
+        TFileEntity tFile = new TFileEntity(file.getOriginalFilename());
         thesis.setFile(tFile);
         logger.debug(tFile.getFileName());
         try {
@@ -314,7 +312,6 @@ public class ThesisServiceImpl implements ThesisService {
                     + " se ne nalazi na lokaciji " + thesisFilesFolder
                     + existingTFile.getFileName() + "!");
         }
-        existingTFile.setDownloadCount(existingTFile.getDownloadCount() + 1);
         fileRepository.save(existingTFile);
         return file;
     }
@@ -335,7 +332,6 @@ public class ThesisServiceImpl implements ThesisService {
                     + " se ne nalazi na lokaciji " + thesisFilesFolder
                     + tFile.getFileName() + "!");
         }
-        tFile.setDownloadCount(tFile.getDownloadCount() + 1);
         fileRepository.save(tFile);
         return file;
     }

@@ -247,9 +247,6 @@ public class ThesisResource {
         }
         if (thesisRequest.getName() != null) {
             thesis.setName(thesisRequest.getName());
-            if (thesis.getFile() != null) {
-                thesis.getFile().setThesisName(thesisRequest.getName());
-            }
         }
         if (thesisRequest.getCourseName() != null) {
             CourseEntity course = courseService.getCourseByName(thesisRequest
