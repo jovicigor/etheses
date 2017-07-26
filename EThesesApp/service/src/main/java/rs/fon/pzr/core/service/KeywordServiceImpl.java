@@ -18,28 +18,11 @@ import rs.fon.pzr.persistence.repository.KeywordRepository;
 @Service
 public class KeywordServiceImpl implements KeywordService {
 
-    private final Logger logger = Logger.getLogger(KeywordServiceImpl.class);
-
     private final KeywordRepository keywordRepository;
 
     @Autowired
     public KeywordServiceImpl(KeywordRepository keywordRepository) {
         this.keywordRepository = keywordRepository;
-    }
-
-    @Override
-    public KeywordEntity getKeyword(Long id) {
-        return keywordRepository.findOne(id);
-    }
-
-    @Override
-    public KeywordEntity getKeywordByValue(String value) {
-        return keywordRepository.findByValue(value);
-    }
-
-    @Override
-    public Set<KeywordEntity> getAllKeywords() {
-        return keywordRepository.findAll();
     }
 
     @Override
@@ -51,47 +34,6 @@ public class KeywordServiceImpl implements KeywordService {
             return existingKeyword;
         }
         return keywordRepository.save(keyword);
-    }
-
-    @Override
-    @Transactional
-    public KeywordEntity updateKeyword(KeywordEntity keyword) {
-        KeywordEntity existingKeyword = keywordRepository.findOne(keyword.getId());
-        if (existingKeyword == null) {
-            throw new InvalidArgumentException("Ključna reč sa id-em "
-                    + keyword.getId() + " ne postoji u bazi!");
-        }
-        return keywordRepository.save(keyword);
-    }
-
-    @Transactional
-    @Override
-    public KeywordEntity addBannedKeyword(String value) {
-        value = value.toLowerCase();
-        value = value.replaceAll("\\s+", "");
-
-        KeywordEntity keyword = keywordRepository.findByValue(value);
-        if (keyword != null) {
-            keyword.ban();
-            return keywordRepository.save(keyword);
-        }
-        keyword = KeywordEntity.createBannedKeyword(value);
-        return keywordRepository.save(keyword);
-    }
-
-    @Override
-    @Transactional
-    public void removeKeyword(Long id) {
-        KeywordEntity keyword = keywordRepository.findOne(id);
-        if (keyword == null) {
-            throw new InvalidArgumentException("Ključna reč sa id-em " + id
-                    + " ne postoji u bazi!");
-        }
-        if (keywordRepository.numberOfConnectedTheses(id) > 0) {
-            throw new InvalidArgumentException(
-                    "Ne može se obrisati ključna reč koja je povezana sa postojećim radovima");
-        }
-        keywordRepository.delete(id);
     }
 
     public Map<String, Integer> extractWordsWithCount(String input) {
@@ -108,20 +50,5 @@ public class KeywordServiceImpl implements KeywordService {
             }
         }
         return words;
-    }
-
-    @Override
-    @Transactional
-    public Integer deleteUnConnectedUnBannedKeywords() {
-        logger.info("Deleting unconnected and unbanned keywords.");
-        Integer numDeleted = 0;
-        try {
-            numDeleted = keywordRepository.deleteUnconnectedUnBannedKeywords();
-        } catch (Exception e) {
-            logger.debug(e.getMessage());
-        }
-        logger.info("Deleted " + numDeleted
-                + " unconnected and unbanned keywords.");
-        return numDeleted;
     }
 }

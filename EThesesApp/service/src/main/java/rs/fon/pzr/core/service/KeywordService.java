@@ -7,23 +7,7 @@ import rs.fon.pzr.model.KeywordEntity;
 
 public interface KeywordService {
 
-	KeywordEntity getKeyword(Long id);
+    KeywordEntity addKeyword(KeywordEntity keyword);
 
-	KeywordEntity getKeywordByValue(String value);
-
-	Set<KeywordEntity> getAllKeywords();
-
-	KeywordEntity addKeyword(KeywordEntity keyword);
-	
-	KeywordEntity addBannedKeyword(String value);
-	
-	KeywordEntity updateKeyword(KeywordEntity keyword);
-
-	void removeKeyword(Long id);
-
-	Map<String, Integer> extractWordsWithCount(String text);
-	
-	Integer deleteUnConnectedUnBannedKeywords();
-
-
+    Map<String, Integer> extractWordsWithCount(String text);
 }
