@@ -178,7 +178,7 @@ public class ThesisServiceImpl implements ThesisService {
             }
         } catch (Exception e) {
             logger.error(e);
-            throw new InvalidArgumentException(
+                throw new InvalidArgumentException(
                     "Prosledjeni parametri nisu ispravni.");
         }
     }
