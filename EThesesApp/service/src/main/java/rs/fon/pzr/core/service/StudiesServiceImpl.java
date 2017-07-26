@@ -1,6 +1,7 @@
 package rs.fon.pzr.core.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,16 @@ public class StudiesServiceImpl implements StudiesService {
     }
 
     @Override
-    public StudiesEntity getStudies(Long id) {
-        return studiesRepository.findOne(id);
+    public Optional<StudiesEntity> getStudies(Long id) {
+        StudiesEntity studies = studiesRepository.findOne(id);
+
+        return Optional.ofNullable(studies);
     }
 
     @Override
-    public StudiesEntity getStudiesByName(String name) {
-        return studiesRepository.findByName(name);
+    public Optional<StudiesEntity> getStudiesByName(String name) {
+        StudiesEntity studies = studiesRepository.findByName(name);
+        return Optional.ofNullable(studies);
     }
 
     @Override

@@ -13,6 +13,7 @@ import rs.fon.pzr.rest.model.util.RestFactory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,34 +35,27 @@ public class StudiesResource {
         List<StudiesEntity> studiesList = studiesService.getAllStudies();
         List<StudiesResponseLevel1> studiesResponseLevel1 = new ArrayList<>();
         if (studiesName != null) {
-            studiesResponseLevel1.add(RestFactory
-                    .createStudiesResponseLevel1(studiesService
-                            .getStudiesByName(studiesName)));
+            studiesService
+                    .getStudiesByName(studiesName)
+                    .map(RestFactory::createStudiesResponseLevel1)
+                    .ifPresent(studiesResponseLevel1::add);
             return studiesResponseLevel1;
         }
-        studiesResponseLevel1.addAll(studiesList.stream().map(RestFactory::createStudiesResponseLevel1).collect(Collectors.toList()));
+        studiesResponseLevel1.addAll(studiesList
+                .stream()
+                .map(RestFactory::createStudiesResponseLevel1)
+                .collect(Collectors.toList()));
         return studiesResponseLevel1;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{studiesID}")
     public
     @ResponseBody
-    StudiesResponseLevel1 getStudiesById(
-            @PathVariable("studiesID") Long id) {
-        return RestFactory.createStudiesResponseLevel1(studiesService.getStudies(id));
+    StudiesResponseLevel1 getStudiesById(@PathVariable("studiesID") Long id) {
+        return studiesService.getStudies(id)
+                .map(RestFactory::createStudiesResponseLevel1)
+                .orElse(null);
     }
-
-	/*
-     * @RequestMapping(method = RequestMethod.GET, value =
-	 * "/{courseID}/subjects") public @ResponseBody List<SubjectResponse>
-	 * getCourseSubjects(@PathVariable("courseID") Long courseID) {
-	 * List<SubjectResponse> subjectResponseList = new
-	 * ArrayList<SubjectResponse>(); Set<Subject> subjectList =
-	 * courseService.getCourseSubjects(courseID); for(Subject
-	 * subject:subjectList){
-	 * subjectResponseList.add(RestFactory.createSubjectResponse(subject)); }
-	 * return subjectResponseList; }
-	 */
 
     // CREATE
     @RequestMapping(method = RequestMethod.POST)
@@ -83,11 +77,11 @@ public class StudiesResource {
     StudiesResponseLevel1 updateStudies(
             @RequestBody StudiesRequest studiesRequest,
             @PathVariable("studiesID") Long studiesID) {
-        StudiesEntity studies = studiesService.getStudies(studiesID);
-        if (studies == null) {
-            throw new InvalidArgumentException("Nivo studija sa id-em " + studiesID
-                    + " ne postoji u bazi!");
-        }
+        StudiesEntity studies = studiesService.getStudies(studiesID)
+                .orElseThrow(() ->
+                        new InvalidArgumentException("Nivo studija sa id-em " + studiesID
+                                + " ne postoji u bazi!"));
+
         if (studiesRequest.getName() != null) {
             studies.setName(studiesRequest.getName());
         }

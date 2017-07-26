@@ -1,21 +1,22 @@
 package rs.fon.pzr.core.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import rs.fon.pzr.model.StudiesEntity;
 
 public interface StudiesService {
 
-	StudiesEntity getStudies(Long id);
-	
-	StudiesEntity getStudiesByName(String name);
+    Optional<StudiesEntity> getStudies(Long id);
 
-	List<StudiesEntity> getAllStudies();
+    Optional<StudiesEntity> getStudiesByName(String name);
 
-	StudiesEntity addStudies(StudiesEntity studies);
-	
-	StudiesEntity updateStudies(StudiesEntity studies);
-	
-	void removeStudies(Long studiesID);
-	
+    List<StudiesEntity> getAllStudies();
+
+    StudiesEntity addStudies(StudiesEntity studies);
+
+    StudiesEntity updateStudies(StudiesEntity studies);
+
+    void removeStudies(Long studiesID);
+
 }

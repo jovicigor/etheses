@@ -77,17 +77,15 @@ public class CourseResource {
 
         Set<StudiesEntity> studiesList = new HashSet<>();
         if (courseRequest.getStudiesIDs() != null) {
-            for (Long studiesId : courseRequest.getStudiesIDs()) {
-                StudiesEntity studies = studiesService.getStudies(studiesId);
-                if (studies != null) {
-                    studiesList.add(studies);
-                }
-            }
+            studiesList = courseRequest.getStudiesIDs().stream()
+                    .map(studiesService::getStudies)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet());
         }
-        CourseEntity course = new CourseEntity(courseName, courseNameShort, studiesList);
+        CourseEntity newCourse = courseService.addCourse(new CourseEntity(courseName, courseNameShort, studiesList));
 
-        return RestFactory.createCourseResponseLevel1(courseService
-                .addCourse(course));
+        return RestFactory.createCourseResponseLevel1(newCourse);
     }
 
     // UPDATE
@@ -108,18 +106,16 @@ public class CourseResource {
                 .ifPresent(course::setNameShort);
 
         if (courseRequest.getStudiesIDs() != null) {
-            Set<StudiesEntity> studiesList = new HashSet<>();
-            for (Long studiesId : courseRequest.getStudiesIDs()) {
-                StudiesEntity studies = studiesService.getStudies(studiesId);
-                if (studies != null) {
-                    studiesList.add(studies);
-                }
-            }
-            course.updateStudies(studiesList);
+            Set<StudiesEntity> studies = courseRequest.getStudiesIDs().stream()
+                    .map(studiesService::getStudies)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet());
+            course.updateStudies(studies);
         }
 
-        return RestFactory.createCourseResponseLevel1(courseService
-                .updateCourse(course));
+        CourseEntity updatedCourse = courseService.updateCourse(course);
+        return RestFactory.createCourseResponseLevel1(updatedCourse);
     }
 
     // DELETE
