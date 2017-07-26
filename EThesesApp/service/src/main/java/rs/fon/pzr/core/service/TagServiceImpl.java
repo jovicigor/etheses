@@ -44,8 +44,7 @@ public class TagServiceImpl implements TagService {
         if (tag != null) {
             return tag;
         }
-        tag = new TagEntity();
-        tag.setValue(value);
+        tag = new TagEntity(value);
         return tagRepository.save(tag);
     }
 
