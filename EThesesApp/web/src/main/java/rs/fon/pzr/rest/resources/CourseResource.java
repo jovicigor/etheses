@@ -11,11 +11,10 @@ import rs.fon.pzr.rest.model.request.CourseRequest;
 import rs.fon.pzr.rest.model.response.level1.CourseResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.singletonList;
 
 @RestController
 @RequestMapping(value = "/courses")
@@ -37,15 +36,20 @@ public class CourseResource {
     List<CourseResponseLevel1> getCourses(
             @RequestParam(value = "courseName", required = false) String courseName) {
         List<CourseEntity> courseList = courseService.getAllCourses();
-        List<CourseResponseLevel1> courseResponseList = new ArrayList<>();
+        List<CourseResponseLevel1> retval;
         if (courseName != null) {
-            courseResponseList.add(RestFactory
-                    .createCourseResponseLevel1(courseService
-                            .getCourseByName(courseName)));
-            return courseResponseList;
+            retval = courseService
+                    .getCourseByName(courseName)
+                    .map(RestFactory::createCourseResponseLevel1)
+                    .map(Collections::singletonList)
+                    .orElse(Collections.emptyList());
+        } else {
+            retval = courseList.stream()
+                    .map(RestFactory::createCourseResponseLevel1)
+                    .collect(Collectors.toList());
         }
-        courseResponseList.addAll(courseList.stream().map(RestFactory::createCourseResponseLevel1).collect(Collectors.toList()));
-        return courseResponseList;
+
+        return retval;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{courseID}")
@@ -53,8 +57,9 @@ public class CourseResource {
     @ResponseBody
     CourseResponseLevel1 getCourseById(
             @PathVariable("courseID") Long id) {
-        return RestFactory.createCourseResponseLevel1(courseService
-                .getCourse(id));
+        return courseService.getCourse(id)
+                .map(RestFactory::createCourseResponseLevel1)
+                .orElse(null);
     }
 
 
@@ -92,11 +97,10 @@ public class CourseResource {
     CourseResponseLevel1 updateCourse(
             @RequestBody CourseRequest courseRequest,
             @PathVariable("courseID") Long courseID) {
-        CourseEntity course = courseService.getCourse(courseID);
-        if (course == null) {
-            throw new InvalidArgumentException("Kurs sa id-em " + courseID
-                    + " ne postoji u bazi!");
-        }
+        CourseEntity course = courseService.getCourse(courseID)
+                .orElseThrow(() -> new InvalidArgumentException("Kurs sa id-em " + courseID
+                        + " ne postoji u bazi!"));
+
         courseRequest.getName()
                 .ifPresent(course::setName);
 

@@ -138,10 +138,10 @@ public class ThesisResource {
         thesis.setUserName(thesisRequest.getUserName());
         thesis.setMentorEmail(thesisRequest.getMentorEmail());
         thesis.setMentorName(thesisRequest.getMentorName());
-        if (thesisRequest.getCourseName() != null) {
-            CourseEntity course = courseService.getCourseByName(thesisRequest
-                    .getCourseName());
-            thesis.setCourse(course);
+        String courseName = thesisRequest.getCourseName();
+        if (courseName != null) {
+            courseService.getCourseByName(courseName)
+                    .ifPresent(thesis::setCourse);
         }
         if (thesisRequest.getUserId() != null) {
             UserEntity user1 = userService.getUser(thesisRequest.getUserId());
@@ -243,10 +243,10 @@ public class ThesisResource {
         if (thesisRequest.getName() != null) {
             thesis.setName(thesisRequest.getName());
         }
-        if (thesisRequest.getCourseName() != null) {
-            CourseEntity course = courseService.getCourseByName(thesisRequest
-                    .getCourseName());
-            thesis.setCourse(course);
+        String courseName = thesisRequest.getCourseName();
+        if (courseName != null) {
+            courseService.getCourseByName(courseName)
+                    .ifPresent(thesis::setCourse);
         }
 
         return RestFactory.createThesisResponseLevel1(thesisService

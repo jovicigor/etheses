@@ -1,6 +1,7 @@
 package rs.fon.pzr.core.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseEntity getCourse(Long id) {
-        return courseRepository.findOne(id);
+    public Optional<CourseEntity> getCourse(Long id) {
+        CourseEntity course = courseRepository.findOne(id);
+        return Optional.ofNullable(course);
     }
 
     @Override
-    public CourseEntity getCourseByName(String name) {
-        return courseRepository.findByName(name);
+    public Optional<CourseEntity> getCourseByName(String name) {
+        CourseEntity course = courseRepository.findByName(name);
+        return Optional.ofNullable(course);
     }
 
     @Override

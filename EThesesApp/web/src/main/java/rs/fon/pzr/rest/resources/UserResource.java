@@ -85,10 +85,11 @@ public class UserResource {
         if (userRequest.getBiography() != null) {
             user.setBiography(userRequest.getBiography());
         }
-        if (userRequest.getCourseName() != null) {
-            CourseEntity course = courseService.getCourseByName(userRequest
-                    .getCourseName());
-            user.setCourse(course);
+        String courseName = userRequest
+                .getCourseName();
+        if (courseName != null) {
+            courseService.getCourseByName(courseName)
+                    .ifPresent(user::setCourse);
         }
         if (userRequest.getFirstName() != null) {
             user.setFirstName(userRequest.getFirstName());
