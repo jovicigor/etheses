@@ -350,11 +350,7 @@ public class ThesisServiceImpl implements ThesisService {
     @Override
     public ThesisComment addComment(ThesisComment thesisComment) {
         try {
-            org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-                    .getContext().getAuthentication().getPrincipal();
-            String email = user.getUsername();
-            UserEntity loggedInUser = userService.getUser(email);
-            thesisComment.setAuthor(loggedInUser);
+
         } catch (Exception e) {
             throw new InvalidTicketException(
                     "Morate biti ulogovani kako bi ostavili komentar!");

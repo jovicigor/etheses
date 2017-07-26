@@ -5,65 +5,58 @@ import java.util.Date;
 
 
 @Entity
-@Table(name="thesis_comment")
+@Table(name = "thesis_comment")
 public class ThesisComment {
-	@Id
-	@Column(name = "thesis_comment_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @Column(name = "thesis_comment_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name="comment_message")
-	private String message;
-	
-	@Column(name = "date_posted")
-	private Date datePosted;
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private UserEntity author;
-	
-	@ManyToOne
-	@JoinColumn(name = "thesis_id")
-	private ThesisEntity thesis;
+    @Column(name = "comment_message")
+    private String message;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "date_posted")
+    private Date datePosted;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity author;
 
-	public String getMessage() {
-		return message;
-	}
+    @ManyToOne
+    @JoinColumn(name = "thesis_id")
+    private ThesisEntity thesis;
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    protected ThesisComment() {
+    }
 
-	public Date getDatePosted() {
-		return datePosted;
-	}
+    public ThesisComment(String message, Date datePosted, UserEntity author, ThesisEntity thesis) {
+        this.message = message;
+        this.datePosted = datePosted;
+        this.author = author;
+        this.thesis = thesis;
+    }
 
-	public void setDatePosted(Date datePosted) {
-		this.datePosted = datePosted;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public UserEntity getAuthor() {
-		return author;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setAuthor(UserEntity author) {
-		this.author = author;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public ThesisEntity getThesis() {
-		return thesis;
-	}
+    public Date getDatePosted() {
+        return datePosted;
+    }
 
-	public void setThesis(ThesisEntity thesis) {
-		this.thesis = thesis;
-	}	
-	
+    public UserEntity getAuthor() {
+        return author;
+    }
+
+    public ThesisEntity getThesis() {
+        return thesis;
+    }
 }

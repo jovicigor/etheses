@@ -3,6 +3,7 @@ package rs.fon.pzr.rest.resources;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -288,17 +289,19 @@ public class ThesisResource {
     ThesisCommentResponseLevel1 createComment(
             @PathVariable("thesisID") Long thesisId,
             @RequestBody ThesisCommentRequest thesisCommentRequest) {
+        String message = thesisCommentRequest.getMessage();
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        String email = user.getUsername();
+        UserEntity loggedInUser = userService.getUser(email);
+
         ParamaterCheck.mandatory("Sadržaj komentara",
-                thesisCommentRequest.getMessage());
-
-        ThesisComment thesisComment = new ThesisComment();
-
+                message);
         ThesisEntity thesis = thesisService.getThesis(thesisId);
-        thesisComment.setThesis(thesis);
-        thesisComment.setMessage(thesisCommentRequest.getMessage());
-        thesisComment.setDatePosted(new Date());
-        return RestFactory.createThesisCommentResponseLevel1(thesisService
-                .addComment(thesisComment));
+        ThesisComment thesisComment = new ThesisComment(message, new Date(), loggedInUser, thesis);
+
+        ThesisComment newComment = thesisService.addComment(thesisComment);
+        return RestFactory.createThesisCommentResponseLevel1(newComment);
     }
 
     // DELETE
