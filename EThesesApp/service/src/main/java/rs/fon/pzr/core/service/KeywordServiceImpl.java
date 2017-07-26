@@ -45,9 +45,6 @@ public class KeywordServiceImpl implements KeywordService {
     @Override
     @Transactional
     public KeywordEntity addKeyword(KeywordEntity keyword) {
-        keyword.setValue(keyword.getValue().toLowerCase());
-        keyword.setValue(keyword.getValue().replaceAll("\\s+", ""));
-
         KeywordEntity existingKeyword = keywordRepository.findByValue(keyword
                 .getValue());
         if (existingKeyword != null) {
@@ -75,12 +72,10 @@ public class KeywordServiceImpl implements KeywordService {
 
         KeywordEntity keyword = keywordRepository.findByValue(value);
         if (keyword != null) {
-            keyword.setBanned(true);
+            keyword.ban();
             return keywordRepository.save(keyword);
         }
-        keyword = new KeywordEntity();
-        keyword.setValue(value);
-        keyword.setBanned(true);
+        keyword = KeywordEntity.createBannedKeyword(value);
         return keywordRepository.save(keyword);
     }
 

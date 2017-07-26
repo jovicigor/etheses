@@ -22,6 +22,8 @@ import java.io.*;
 import java.net.URLConnection;
 import java.util.*;
 
+import static rs.fon.pzr.model.KeywordEntity.createNotBannedKeyword;
+
 @RestController
 @RequestMapping(value = "/theses")
 public class ThesisResource {
@@ -122,8 +124,7 @@ public class ThesisResource {
                     .extractWordsWithCount(thesisRequest.getDescription());
 
             for (Map.Entry<String, Integer> entry : keywords.entrySet()) {
-                KeywordEntity keyword = new KeywordEntity();
-                keyword.setValue(entry.getKey());
+                KeywordEntity keyword = createNotBannedKeyword(entry.getKey());
                 // add or return existing
                 keyword = keywordService.addKeyword(keyword);
 
@@ -195,8 +196,7 @@ public class ThesisResource {
                         .extractWordsWithCount(description);
 
                 for (Map.Entry<String, Integer> entry : keywords.entrySet()) {
-                    KeywordEntity keyword = new KeywordEntity();
-                    keyword.setValue(entry.getKey());
+                    KeywordEntity keyword = createNotBannedKeyword(entry.getKey());
                     // added or returned existing
                     keyword = keywordService.addKeyword(keyword);
 

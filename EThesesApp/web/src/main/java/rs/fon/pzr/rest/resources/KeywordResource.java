@@ -52,7 +52,7 @@ public class KeywordResource {
         if (existingKeyword == null) {
             throw new InvalidArgumentException("Ključna reč sa id-em: " + keywordID + " ne postoji u bazi!");
         }
-        existingKeyword.setBanned(keywordRequest.getBanned());
+        existingKeyword.ban();
         return keywordService.updateKeyword(existingKeyword);
     }
 
