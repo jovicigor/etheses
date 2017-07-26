@@ -13,6 +13,7 @@ import rs.fon.pzr.rest.model.util.RestFactory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/studies")
@@ -38,9 +39,7 @@ public class StudiesResource {
                             .getStudiesByName(studiesName)));
             return studiesResponseLevel1;
         }
-        for (StudiesEntity studies : studiesList) {
-            studiesResponseLevel1.add(RestFactory.createStudiesResponseLevel1(studies));
-        }
+        studiesResponseLevel1.addAll(studiesList.stream().map(RestFactory::createStudiesResponseLevel1).collect(Collectors.toList()));
         return studiesResponseLevel1;
     }
 

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLConnection;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static rs.fon.pzr.model.KeywordEntity.createNotBannedKeyword;
 
@@ -53,24 +54,18 @@ public class ThesisResource {
     @ResponseBody
     List<ThesisResponseLevel1> getThesises(
             @RequestParam(value = "userID", required = false) Long userID) {
-        List<ThesisResponseLevel1> thesisResponseList = new ArrayList<>();
 
         if (userID != null) {
             List<ThesisEntity> userThesis = thesisService.getThesisByUserId(userID);
-            for (ThesisEntity thesis : userThesis) {
-                thesisResponseList.add(RestFactory
-                        .createThesisResponseLevel1(thesis));
-            }
-            return thesisResponseList;
+            return userThesis.stream()
+                    .map(RestFactory::createThesisResponseLevel1)
+                    .collect(Collectors.toList());
         }
-
         List<ThesisEntity> thesisList = thesisService.getAllThesis();
 
-        for (ThesisEntity thesis : thesisList) {
-            thesisResponseList.add(RestFactory
-                    .createThesisResponseLevel1(thesis));
-        }
-        return thesisResponseList;
+        return thesisList.stream()
+                .map(RestFactory::createThesisResponseLevel1)
+                .collect(Collectors.toList());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/advanced_search")
@@ -90,8 +85,10 @@ public class ThesisResource {
             @RequestParam(value = "descriptionKeys", required = false) List<String> descriptioinKeys,
             @RequestParam(value = "descriptionMatchLimit", required = false) Long descriptionMatchLimit) {
         Page<ThesisEntity> thesisPage = thesisService.advancedSearch(pageNumber,
-                pageSize, thesisName, tagValues, matchLimit, courseName,
-                studiesName, sortField, fieldValues, fieldMatchLimit, descriptioinKeys, descriptionMatchLimit);
+                pageSize, thesisName, tagValues,
+                matchLimit, courseName, studiesName,
+                sortField, fieldValues, fieldMatchLimit, descriptioinKeys, descriptionMatchLimit);
+
         return RestFactory.CreateThesisPageResponse(thesisPage);
     }
 
@@ -151,17 +148,15 @@ public class ThesisResource {
             thesis.setUser(user1);
         }
         if (thesisRequest.getTags() != null) {
-            Set<TagEntity> tagList = new HashSet<>();
-            for (String tagValue : thesisRequest.getTags()) {
-                tagList.add(tagService.addTag(tagValue));
-            }
+            Set<TagEntity> tagList = thesisRequest.getTags().stream()
+                    .map(tagService::addTag)
+                    .collect(Collectors.toSet());
             thesis.setTags(tagList);
         }
         if (thesisRequest.getFieldsOfStudy() != null) {
-            Set<FieldOfStudyEntity> fieldOfStudiesList = new HashSet<>();
-            for (String fieldOfStudyName : thesisRequest.getFieldsOfStudy()) {
-                fieldOfStudiesList.add(fieldOfStudyService.addFieldOfStudy(fieldOfStudyName));
-            }
+            Set<FieldOfStudyEntity> fieldOfStudiesList = thesisRequest.getFieldsOfStudy().stream()
+                    .map(fieldOfStudyService::addFieldOfStudy)
+                    .collect(Collectors.toSet());
             thesis.setFieldOfStudies(fieldOfStudiesList);
         }
         if (thesisRequest.getMentorId() != null) {
@@ -229,17 +224,16 @@ public class ThesisResource {
             thesis.setMentor(mentor);
         }
         if (thesisRequest.getTags() != null) {
-            Set<TagEntity> tagList = new HashSet<>();
-            for (String tagValue : thesisRequest.getTags()) {
-                tagList.add(tagService.addTag(tagValue));
-            }
+            Set<TagEntity> tagList = thesisRequest.getTags()
+                    .stream()
+                    .map(tagService::addTag)
+                    .collect(Collectors.toSet());
             thesis.setTags(tagList);
         }
         if (thesisRequest.getFieldsOfStudy() != null) {
-            Set<FieldOfStudyEntity> fieldOfStudiesList = new HashSet<>();
-            for (String fieldOfStudyName : thesisRequest.getFieldsOfStudy()) {
-                fieldOfStudiesList.add(fieldOfStudyService.addFieldOfStudy(fieldOfStudyName));
-            }
+            Set<FieldOfStudyEntity> fieldOfStudiesList = thesisRequest.getFieldsOfStudy().stream()
+                    .map(fieldOfStudyService::addFieldOfStudy)
+                    .collect(Collectors.toSet());
             thesis.setFieldOfStudies(fieldOfStudiesList);
         }
         if (thesisRequest.getUserId() != null) {
@@ -274,12 +268,9 @@ public class ThesisResource {
             @PathVariable("thesisID") Long thesisId) {
         Set<ThesisComment> thesisComments = thesisService
                 .getAllComments(thesisId);
-        Set<ThesisCommentResponseLevel1> thesisCommentResponses = new HashSet<>();
-        for (ThesisComment thesisComment : thesisComments) {
-            thesisCommentResponses.add(RestFactory
-                    .createThesisCommentResponseLevel1(thesisComment));
-        }
-        return thesisCommentResponses;
+        return thesisComments.stream()
+                .map(RestFactory::createThesisCommentResponseLevel1)
+                .collect(Collectors.toSet());
     }
 
     // CREATE

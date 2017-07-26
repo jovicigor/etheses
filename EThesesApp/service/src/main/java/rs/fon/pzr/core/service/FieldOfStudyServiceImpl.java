@@ -26,11 +26,6 @@ public class FieldOfStudyServiceImpl implements FieldOfStudyService {
     }
 
     @Override
-    public FieldOfStudyEntity getgetFieldOfStudyByName(String name) {
-        return fieldOfStudyRepository.findByName(name);
-    }
-
-    @Override
     public Set<FieldOfStudyEntity> getAllFieldsOfStudy() {
         return fieldOfStudyRepository.findAll();
     }

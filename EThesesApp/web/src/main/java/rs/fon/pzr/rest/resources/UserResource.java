@@ -16,6 +16,7 @@ import rs.fon.pzr.rest.model.util.RestFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -36,11 +37,9 @@ public class UserResource {
     @ResponseBody
     List<UserResponseLevel1> getUsers() {
         List<UserEntity> userList = userService.getAllUsers();
-        List<UserResponseLevel1> userResponseList = new ArrayList<>();
-        for (UserEntity user : userList) {
-            userResponseList.add(RestFactory.createUserResponseLevel1(user));
-        }
-        return userResponseList;
+        return userList.stream()
+                .map(RestFactory::createUserResponseLevel1)
+                .collect(Collectors.toList());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{userID}")

@@ -7,7 +7,6 @@ import rs.fon.pzr.model.CourseEntity;
 import rs.fon.pzr.model.StudiesEntity;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.StudiesService;
-import rs.fon.pzr.core.service.util.ParamaterCheck;
 import rs.fon.pzr.rest.model.request.CourseRequest;
 import rs.fon.pzr.rest.model.response.level1.CourseResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/courses")
@@ -44,10 +44,7 @@ public class CourseResource {
                             .getCourseByName(courseName)));
             return courseResponseList;
         }
-        for (CourseEntity course : courseList) {
-            courseResponseList.add(RestFactory
-                    .createCourseResponseLevel1(course));
-        }
+        courseResponseList.addAll(courseList.stream().map(RestFactory::createCourseResponseLevel1).collect(Collectors.toList()));
         return courseResponseList;
     }
 

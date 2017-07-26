@@ -349,12 +349,6 @@ public class ThesisServiceImpl implements ThesisService {
     @Transactional
     @Override
     public ThesisComment addComment(ThesisComment thesisComment) {
-        try {
-
-        } catch (Exception e) {
-            throw new InvalidTicketException(
-                    "Morate biti ulogovani kako bi ostavili komentar!");
-        }
         return commentRepository.save(thesisComment);
     }
 

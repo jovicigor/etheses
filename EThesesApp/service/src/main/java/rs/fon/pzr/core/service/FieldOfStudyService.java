@@ -6,16 +6,14 @@ import rs.fon.pzr.model.FieldOfStudyEntity;
 
 public interface FieldOfStudyService {
 
-	FieldOfStudyEntity getFieldOfStudy(Long id);
-	
-	FieldOfStudyEntity getgetFieldOfStudyByName(String name);
-	
-	Set<FieldOfStudyEntity> getAllFieldsOfStudy();
-	
-	FieldOfStudyEntity addFieldOfStudy(String name);
-	
-	void removeFieldOfStudy(Long id);
+    FieldOfStudyEntity getFieldOfStudy(Long id);
 
-	FieldOfStudyEntity updateFieldOfStudy(FieldOfStudyEntity fieldOfStudy);
-	
+    Set<FieldOfStudyEntity> getAllFieldsOfStudy();
+
+    FieldOfStudyEntity addFieldOfStudy(String name);
+
+    void removeFieldOfStudy(Long id);
+
+    FieldOfStudyEntity updateFieldOfStudy(FieldOfStudyEntity fieldOfStudy);
+
 }

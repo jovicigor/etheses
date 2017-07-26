@@ -6,15 +6,13 @@ import rs.fon.pzr.rest.model.response.level1.*;
 import rs.fon.pzr.rest.model.response.level2.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class RestFactory {
 
     public static ThesisPageResponse CreateThesisPageResponse(Page<ThesisEntity> thesisPage) {
         ThesisPageResponse thesisPageResponse = new ThesisPageResponse();
-        List<ThesisResponseLevel1> thesisResponseLevel1List = new ArrayList<>();
-        for (ThesisEntity thesis : thesisPage.getContent()) {
-            thesisResponseLevel1List.add(createThesisResponseLevel1(thesis));
-        }
+        List<ThesisResponseLevel1> thesisResponseLevel1List = thesisPage.getContent().stream().map(RestFactory::createThesisResponseLevel1).collect(Collectors.toList());
         thesisPageResponse.setNumber(thesisPage.getNumber() + 1);
         thesisPageResponse.setNumberOfElements(thesisPage.getNumberOfElements());
         thesisPageResponse.setSize(thesisPage.getSize());
@@ -31,11 +29,7 @@ public class RestFactory {
         }
         ThesisResponseLevel1 thesisResponseLevel1 = new ThesisResponseLevel1();
 
-        Set<ThesisCommentResponseLevel2> thesisCommentResponseLevel2List = new HashSet<>();
-        for (ThesisComment comment : thesis.getComments()) {
-            thesisCommentResponseLevel2List
-                    .add(createThesisCommentResponseLevel2(comment));
-        }
+        Set<ThesisCommentResponseLevel2> thesisCommentResponseLevel2List = thesis.getComments().stream().map(RestFactory::createThesisCommentResponseLevel2).collect(Collectors.toSet());
         thesisResponseLevel1.setComments(thesisCommentResponseLevel2List);
 
         thesisResponseLevel1.setDatePosted(thesis.getDatePosted());
@@ -66,10 +60,7 @@ public class RestFactory {
             return null;
         }
         ThesisResponseLevel2 thesisResponseLevel2 = new ThesisResponseLevel2();
-        Set<Long> commentIDs = new HashSet<>();
-        for (ThesisComment comment : thesis.getComments()) {
-            commentIDs.add(comment.getId());
-        }
+        Set<Long> commentIDs = thesis.getComments().stream().map(ThesisComment::getId).collect(Collectors.toSet());
         thesisResponseLevel2.setCommentIDs(commentIDs);
         thesisResponseLevel2.setFile(thesis.getFile());
         thesisResponseLevel2.setDatePosted(thesis.getDatePosted());
@@ -154,10 +145,10 @@ public class RestFactory {
         userResponseLevel1.setInterests(user.getInterests());
         userResponseLevel1.setLastName(user.getLastName());
         userResponseLevel1.setStudentsTranscript(user.getStudentsTranscript());
-        Set<ThesisResponseLevel2> thesisResponseLevel2 = new HashSet<>();
-        for (ThesisEntity thesis : user.getTheses()) {
-            thesisResponseLevel2.add(createThesisResponseLevel2(thesis));
-        }
+        Set<ThesisResponseLevel2> thesisResponseLevel2 = user.getTheses().
+                stream()
+                .map(RestFactory::createThesisResponseLevel2)
+                .collect(Collectors.toSet());
         userResponseLevel1.setTheses(thesisResponseLevel2);
 
         return userResponseLevel1;
@@ -181,10 +172,7 @@ public class RestFactory {
         userResponseLevel2.setInterests(user.getInterests());
         userResponseLevel2.setLastName(user.getLastName());
         userResponseLevel2.setStudentsTranscript(user.getStudentsTranscript());
-        List<Long> thesisIDs = new ArrayList<>();
-        for (ThesisEntity thesis : user.getTheses()) {
-            thesisIDs.add(thesis.getId());
-        }
+        List<Long> thesisIDs = user.getTheses().stream().map(ThesisEntity::getId).collect(Collectors.toList());
         userResponseLevel2.setThesisIDs(thesisIDs);
 
         return userResponseLevel2;
@@ -201,11 +189,7 @@ public class RestFactory {
         courseResponseLevel1.setNameShort(course.getNameShort());
         Collection<StudiesEntity> studies = course.getStudies();
         if (studies != null) {
-            Set<StudiesResponseLevel2> studiesResponseLevel2 = new HashSet<>();
-            for (StudiesEntity studiesLevel : studies) {
-                studiesResponseLevel2
-                        .add(createStudiesResponseLevel2(studiesLevel));
-            }
+            Set<StudiesResponseLevel2> studiesResponseLevel2 = studies.stream().map(RestFactory::createStudiesResponseLevel2).collect(Collectors.toSet());
             courseResponseLevel1.setStudies(studiesResponseLevel2);
         }
         return courseResponseLevel1;
@@ -222,10 +206,7 @@ public class RestFactory {
         courseResponseLevel2.setNameShort(course.getNameShort());
         Collection<StudiesEntity> studies = course.getStudies();
         if (studies != null) {
-            Set<Long> studiesIDs = new HashSet<>();
-            for (StudiesEntity studiesLevel : studies) {
-                studiesIDs.add(studiesLevel.getId());
-            }
+            Set<Long> studiesIDs = studies.stream().map(StudiesEntity::getId).collect(Collectors.toSet());
             courseResponseLevel2.setStudiesIDs(studiesIDs);
         }
         return courseResponseLevel2;
@@ -242,10 +223,7 @@ public class RestFactory {
         studiesResponseLevel1.setNameShort(studies.getNameShort());
         Collection<CourseEntity> courses = studies.getCourses();
         if (courses != null) {
-            Set<CourseResponseLevel2> courseResponseLevel1 = new HashSet<>();
-            for (CourseEntity course : courses) {
-                courseResponseLevel1.add(createCourseResponseLevel2(course));
-            }
+            Set<CourseResponseLevel2> courseResponseLevel1 = courses.stream().map(RestFactory::createCourseResponseLevel2).collect(Collectors.toSet());
             studiesResponseLevel1.setCourses(courseResponseLevel1);
         }
         return studiesResponseLevel1;
@@ -262,10 +240,7 @@ public class RestFactory {
         studiesResponseLevel2.setNameShort(studies.getNameShort());
         Collection<CourseEntity> courses = studies.getCourses();
         if (courses != null) {
-            Set<Long> courseIDs = new HashSet<>();
-            for (CourseEntity subject : courses) {
-                courseIDs.add(subject.getId());
-            }
+            Set<Long> courseIDs = courses.stream().map(CourseEntity::getId).collect(Collectors.toSet());
             studiesResponseLevel2.setCourseIDs(courseIDs);
         }
         return studiesResponseLevel2;

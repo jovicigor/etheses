@@ -22,10 +22,10 @@ public class InMemoryTicketCash {
     }
 
     public void removeExpired() {
-        for (Map.Entry<String, SimpleTicket> entry : ticketCash.entrySet()) {
-            if (entry.getValue().isExpired()) {
-                ticketCash.remove(entry.getKey());
-            }
-        }
+        ticketCash.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isExpired())
+                .map(Map.Entry::getKey)
+                .forEach(ticketCash::remove);
     }
 }
