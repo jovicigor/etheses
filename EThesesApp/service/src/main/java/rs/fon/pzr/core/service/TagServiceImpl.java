@@ -1,5 +1,6 @@
 package rs.fon.pzr.core.service;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,6 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public TagEntity getTag(Long id) {
-        return tagRepository.findOne(id);
-    }
-
-    @Override
-    public TagEntity getTagByValue(String value) {
-        return tagRepository.findByValue(value);
-    }
-
-    @Override
     public Set<TagEntity> getAllTags() {
         return tagRepository.findAll();
     }
@@ -38,14 +29,12 @@ public class TagServiceImpl implements TagService {
     @Transactional
     @Override
     public TagEntity addTag(String value) {
-        value = value.toLowerCase();
-        value = value.replaceAll("\\s+", "");
-        TagEntity tag = tagRepository.findByValue(value);
-        if (tag != null) {
-            return tag;
+        value = value.toLowerCase().replaceAll("\\s+", "");
+        Optional<TagEntity> tag = tagRepository.findByValue(value);
+        if (tag.isPresent()) {
+            return tag.get();
         }
-        tag = new TagEntity(value);
-        return tagRepository.save(tag);
+        return tagRepository.save(new TagEntity(value));
     }
 
     @Transactional

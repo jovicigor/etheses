@@ -6,14 +6,10 @@ import rs.fon.pzr.model.TagEntity;
 
 public interface TagService {
 
-	TagEntity getTag(Long id);
-	
-	TagEntity getTagByValue(String value);
-	
-	Set<TagEntity> getAllTags();
-	
-	TagEntity addTag(String value);
-	
-	void removeTag(Long tagId);
-	
+    Set<TagEntity> getAllTags();
+
+    TagEntity addTag(String value);
+
+    void removeTag(Long tagId);
+
 }
