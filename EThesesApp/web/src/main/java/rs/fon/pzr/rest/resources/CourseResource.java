@@ -67,23 +67,23 @@ public class CourseResource {
     @ResponseBody
     CourseResponseLevel1 addCourse(
             @RequestBody CourseRequest courseRequest) {
-        ParamaterCheck.mandatory("Naziv smera", courseRequest.getName());
-        ParamaterCheck.mandatory("Skraćeni naziv smera",
-                courseRequest.getNameShort());
+        String courseName = courseRequest.getName()
+                .orElseThrow(() -> new InvalidArgumentException("Naziv smera je obavezno polje!"));
+        String courseNameShort = courseRequest.getNameShort()
+                .orElseThrow(() -> new InvalidArgumentException("Skraceni naziv smera je obavezno polje!"));
 
-        CourseEntity course = new CourseEntity();
-        course.setName(courseRequest.getName());
-        course.setNameShort(courseRequest.getNameShort());
+
+        Set<StudiesEntity> studiesList = new HashSet<>();
         if (courseRequest.getStudiesIDs() != null) {
-            Set<StudiesEntity> studiesList = new HashSet<>();
             for (Long studiesId : courseRequest.getStudiesIDs()) {
                 StudiesEntity studies = studiesService.getStudies(studiesId);
                 if (studies != null) {
                     studiesList.add(studies);
                 }
             }
-            course.setStudies(studiesList);
         }
+        CourseEntity course = new CourseEntity(courseName, courseNameShort, studiesList);
+
         return RestFactory.createCourseResponseLevel1(courseService
                 .addCourse(course));
     }
@@ -100,12 +100,11 @@ public class CourseResource {
             throw new InvalidArgumentException("Kurs sa id-em " + courseID
                     + " ne postoji u bazi!");
         }
-        if (courseRequest.getName() != null) {
-            course.setName(courseRequest.getName());
-        }
-        if (courseRequest.getNameShort() != null) {
-            course.setNameShort(courseRequest.getNameShort());
-        }
+        courseRequest.getName()
+                .ifPresent(course::setName);
+
+        courseRequest.getNameShort()
+                .ifPresent(course::setNameShort);
 
         if (courseRequest.getStudiesIDs() != null) {
             Set<StudiesEntity> studiesList = new HashSet<>();
@@ -117,6 +116,7 @@ public class CourseResource {
             }
             course.setStudies(studiesList);
         }
+
         return RestFactory.createCourseResponseLevel1(courseService
                 .updateCourse(course));
     }
