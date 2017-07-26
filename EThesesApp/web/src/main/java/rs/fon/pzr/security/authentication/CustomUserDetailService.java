@@ -26,10 +26,8 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
 
-        UserEntity user = userService.getUser(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("There is no user with userName: " + email);
-        }
+        UserEntity user = userService.getUser(email)
+                .orElseThrow(() -> new UsernameNotFoundException("There is no user with userName: " + email));
 
         List<SimpleGrantedAuthority> authList = new ArrayList<>();
         if (user.isAdmin()) {

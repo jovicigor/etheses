@@ -2,6 +2,7 @@ package rs.fon.pzr.core.service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getUser(Long userId) {
-        return userRepository.findOne(userId);
+    public Optional<UserEntity> getUser(Long userId) {
+        UserEntity user = userRepository.findOne(userId);
+        return Optional.ofNullable(user);
     }
 
     @Override
-    public UserEntity getUser(String email) {
-        return userRepository.findByUserLoginEmail(email);
+    public Optional<UserEntity> getUser(String email) {
+        UserEntity user = userRepository.findByUserLoginEmail(email);
+        return Optional.ofNullable(user);
     }
 
     @Override
@@ -78,7 +81,7 @@ public class UserServiceImpl implements UserService {
             org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                     .getContext().getAuthentication().getPrincipal();
             String email = springUser.getUsername();
-            UserEntity loggedInUser = getUser(email);
+            UserEntity loggedInUser = getUser(email).orElseThrow(() -> new InvalidTicketException("not logged in"));
             if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), user.getId())) {
                 throw new Exception();
             }
@@ -101,7 +104,7 @@ public class UserServiceImpl implements UserService {
             org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                     .getContext().getAuthentication().getPrincipal();
             String email = springUser.getUsername();
-            UserEntity loggedInUser = getUser(email);
+            UserEntity loggedInUser = getUser(email).orElseThrow(() -> new InvalidTicketException("not logged in"));
             if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), user.getId())) {
                 throw new Exception();
             }

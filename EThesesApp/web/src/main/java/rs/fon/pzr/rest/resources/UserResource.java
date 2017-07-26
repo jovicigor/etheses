@@ -16,6 +16,7 @@ import rs.fon.pzr.rest.model.util.RestFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,8 +48,9 @@ public class UserResource {
     @ResponseBody
     UserResponseLevel1 getUser(
             @PathVariable("userID") Long userID) {
-        return RestFactory.createUserResponseLevel1(
-                userService.getUser(userID));
+        return userService.getUser(userID)
+                .map(RestFactory::createUserResponseLevel1)
+                .orElse(null);
     }
 
     // CREATE
@@ -76,11 +78,9 @@ public class UserResource {
             @RequestBody UserRequest userRequest,
             @PathVariable("userID") Long userID) {
 
-        UserEntity user = userService.getUser(userID);
-        if (user == null) {
-            throw new InvalidArgumentException("Korisnik sa id-em " + userID
-                    + " ne postoji u bazi!");
-        }
+        UserEntity user = userService.getUser(userID)
+                .orElseThrow(() -> new InvalidArgumentException("Korisnik sa id-em " + userID
+                        + " ne postoji u bazi!"));
 
         if (userRequest.getBiography() != null) {
             user.setBiography(userRequest.getBiography());
@@ -115,11 +115,10 @@ public class UserResource {
             @PathVariable("userID") Long userID,
             @RequestBody AdminPrivilegeRequest adminPrivilegeRequest) {
         ParamaterCheck.mandatory("admin", adminPrivilegeRequest.isAdmin());
-        UserEntity user = userService.getUser(userID);
-        if (user == null) {
-            throw new InvalidArgumentException("Korisnik sa id-em " + userID
-                    + " ne postoji u bazi!");
-        }
+        UserEntity user = userService.getUser(userID)
+                .orElseThrow(() -> new InvalidArgumentException("Korisnik sa id-em " + userID
+                        + " ne postoji u bazi!"));
+
         user.setAdmin(adminPrivilegeRequest.isAdmin());
         return RestFactory.createUserResponseLevel1(
                 userService.updateUser(user));

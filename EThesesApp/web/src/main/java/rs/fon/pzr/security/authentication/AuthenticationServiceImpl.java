@@ -27,10 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (email == null || password == null) {
             throw new AuthenticationException();
         }
-        UserEntity user = userService.getUser(email);
-        if (user == null) {
-            throw new AuthenticationException();
-        }
+        UserEntity user = userService.getUser(email).orElseThrow(AuthenticationException::new);
 
         String encodedPassword = user.getPassword();
         boolean matches = passwordEncoder.matches(password, encodedPassword);
@@ -51,7 +48,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new InvalidTicketException("Provided ticket is not valid! Your ticket may be expired.");
         }
         ticketService.prolongTicket(ticket);
-        UserEntity user = userService.getUser(userId);
+        UserEntity user = userService.getUser(userId)
+                .orElseThrow(() -> new InvalidTicketException("Must provide a valid ticket!"));
         return user.getEmail();
 
     }
@@ -65,7 +63,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (userId == null) {
             throw new InvalidTicketException("Must provide a valid ticket!");
         }
-        return userService.getUser(userId);
+        return userService.getUser(userId)
+                .orElseThrow(() -> new InvalidTicketException("Must provide a valid ticket!"));
     }
 
     @Override

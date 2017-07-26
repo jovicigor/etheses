@@ -8,6 +8,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
+import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.service.*;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
 import rs.fon.pzr.model.*;
@@ -144,8 +145,8 @@ public class ThesisResource {
                     .ifPresent(thesis::setCourse);
         }
         if (thesisRequest.getUserId() != null) {
-            UserEntity user1 = userService.getUser(thesisRequest.getUserId());
-            thesis.setUser(user1);
+            userService.getUser(thesisRequest.getUserId())
+                    .ifPresent(thesis::setUser);
         }
         if (thesisRequest.getTags() != null) {
             Set<TagEntity> tagList = thesisRequest.getTags().stream()
@@ -160,8 +161,8 @@ public class ThesisResource {
             thesis.setFieldOfStudies(fieldOfStudiesList);
         }
         if (thesisRequest.getMentorId() != null) {
-            UserEntity mentor = userService.getUser(thesisRequest.getMentorId());
-            thesis.setMentor(mentor);
+            userService.getUser(thesisRequest.getMentorId())
+                    .ifPresent(thesis::setMentor);
         }
         return RestFactory
                 .createThesisResponseLevel1(thesisService.addThesis(thesis));
@@ -218,8 +219,8 @@ public class ThesisResource {
             thesis.setMentorName(thesisRequest.getMentorName());
         }
         if (thesisRequest.getMentorId() != null) {
-            UserEntity mentor = userService.getUser(thesisRequest.getMentorId());
-            thesis.setMentor(mentor);
+            userService.getUser(thesisRequest.getMentorId())
+                    .ifPresent(thesis::setMentor);
         }
         if (thesisRequest.getTags() != null) {
             Set<TagEntity> tagList = thesisRequest.getTags()
@@ -235,8 +236,8 @@ public class ThesisResource {
             thesis.setFieldOfStudies(fieldOfStudiesList);
         }
         if (thesisRequest.getUserId() != null) {
-            UserEntity user = userService.getUser(thesisRequest.getUserId());
-            thesis.setUser(user);
+            userService.getUser(thesisRequest.getUserId())
+                    .ifPresent(thesis::setUser);
         }
         if (thesisRequest.getName() != null) {
             thesis.setName(thesisRequest.getName());
@@ -282,7 +283,9 @@ public class ThesisResource {
         org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         String email = user.getUsername();
-        UserEntity loggedInUser = userService.getUser(email);
+        UserEntity loggedInUser = userService.getUser(email)
+                .orElseThrow(() -> new InvalidTicketException("Must provide a valid ticket!"));
+
 
         ParamaterCheck.mandatory("Sadržaj komentara", message);
         ThesisEntity thesis = thesisService.getThesis(thesisId)

@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
+import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.exception.PzrRuntimeException;
 import rs.fon.pzr.model.TFileEntity;
 import rs.fon.pzr.model.ThesisEntity;
@@ -364,7 +365,7 @@ public class ThesisServiceImpl implements ThesisService {
             org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                     .getContext().getAuthentication().getPrincipal();
             String email = user.getUsername();
-            UserEntity loggedInUser = userService.getUser(email);
+            UserEntity loggedInUser = userService.getUser(email).orElseThrow(() -> new InvalidTicketException("not logged in"));
             ThesisComment thesisComment = commentRepository.findOne(commentId);
             if (!loggedInUser.isAdmin()
                     && !Objects.equals(thesisComment.getAuthor().getId(), loggedInUser
