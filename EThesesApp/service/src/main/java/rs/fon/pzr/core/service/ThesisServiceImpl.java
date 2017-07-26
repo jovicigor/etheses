@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -18,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.exception.PzrRuntimeException;
 import rs.fon.pzr.model.TFileEntity;
 import rs.fon.pzr.model.ThesisEntity;
@@ -55,8 +55,11 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public ThesisEntity getThesis(Long id) {
-        return thesisRepository.findOne(id);
+    public Optional<ThesisEntity> getThesis(Long id) {
+        ThesisEntity thesis = thesisRepository.findOne(id);
+        thesis.updateViewCount();
+        thesis = thesisRepository.save(thesis);
+        return Optional.ofNullable(thesis);
     }
 
     @Override
@@ -226,11 +229,10 @@ public class ThesisServiceImpl implements ThesisService {
         if (file.isEmpty()) {
             throw new InvalidArgumentException("Fajl je prazan!");
         }
-        ThesisEntity thesis = getThesis(thesisId);
-        if (thesis == null) {
-            throw new InvalidArgumentException("Rad sa id-em " + thesisId
-                    + " ne postoji u bazi!");
-        }
+        ThesisEntity thesis = getThesis(thesisId)
+                .orElseThrow(() -> new InvalidArgumentException("Rad sa id-em " + thesisId
+                        + " ne postoji u bazi!"));
+
         TFileEntity existingTFile = thesis.getFile();
         if (existingTFile != null) {
             throw new InvalidArgumentException("Rad " + thesis.getName()
@@ -291,11 +293,10 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Override
     public File getThesisFile(Long thesisId) {
-        ThesisEntity thesis = getThesis(thesisId);
-        if (thesis == null) {
-            throw new InvalidArgumentException("Rad sa id-em " + thesisId
-                    + " ne postoji u bazi!");
-        }
+        ThesisEntity thesis = getThesis(thesisId)
+                .orElseThrow(() ->
+                        new InvalidArgumentException("Rad sa id-em " + thesisId + " ne postoji u bazi!"));
+
         TFileEntity existingTFile = thesis.getFile();
         if (existingTFile == null) {
             throw new InvalidArgumentException("Rad " + thesis.getName()

@@ -192,8 +192,8 @@ public class ThesisEntity {
         return viewCount;
     }
 
-    public void setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
+    public void updateViewCount() {
+        this.viewCount++;
     }
 
     public Set<ThesisKeywordEntity> getThesisKeywords() {

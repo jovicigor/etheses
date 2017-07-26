@@ -8,9 +8,9 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.model.*;
 import rs.fon.pzr.core.service.*;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
+import rs.fon.pzr.model.*;
 import rs.fon.pzr.rest.model.request.ThesisCommentRequest;
 import rs.fon.pzr.rest.model.request.ThesisRequest;
 import rs.fon.pzr.rest.model.response.level1.ThesisCommentResponseLevel1;
@@ -97,10 +97,10 @@ public class ThesisResource {
     @ResponseBody
     ThesisResponseLevel1 getThesis(
             @PathVariable("thesisID") Long thesisId) {
-        ThesisEntity thesis = thesisService.getThesis(thesisId);
-        thesis.setViewCount(thesis.getViewCount() + 1);
-        thesis = thesisService.updateThesis(thesis);
-        return RestFactory.createThesisResponseLevel1(thesis);
+        Optional<ThesisEntity> thesis = thesisService.getThesis(thesisId);
+
+        return thesis.map(RestFactory::createThesisResponseLevel1)
+                .orElse(null);
     }
 
     // CREATE
@@ -174,11 +174,9 @@ public class ThesisResource {
             @RequestBody ThesisRequest thesisRequest,
             @PathVariable("thesisID") Long thesisID) {
 
-        ThesisEntity thesis = thesisService.getThesis(thesisID);
-        if (thesis == null) {
-            throw new InvalidArgumentException("Predmet sa id-em " + thesisID
-                    + " ne postoji u bazi!");
-        }
+        ThesisEntity thesis = thesisService.getThesis(thesisID)
+                .orElseThrow(() -> new InvalidArgumentException("Predmet sa id-em " + thesisID
+                        + " ne postoji u bazi!"));
 
         if (thesisRequest.getDefenseDate() != null) {
             thesis.setDefenseDate(thesisRequest.getDefenseDate());
@@ -286,9 +284,9 @@ public class ThesisResource {
         String email = user.getUsername();
         UserEntity loggedInUser = userService.getUser(email);
 
-        ParamaterCheck.mandatory("Sadržaj komentara",
-                message);
-        ThesisEntity thesis = thesisService.getThesis(thesisId);
+        ParamaterCheck.mandatory("Sadržaj komentara", message);
+        ThesisEntity thesis = thesisService.getThesis(thesisId)
+                .orElseThrow(() -> new InvalidArgumentException("THesis doesn't exist"));
         ThesisComment thesisComment = new ThesisComment(message, new Date(), loggedInUser, thesis);
 
         ThesisComment newComment = thesisService.addComment(thesisComment);
