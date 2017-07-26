@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -276,18 +277,16 @@ public class ThesisResource {
     @RequestMapping(method = RequestMethod.POST, value = "/{thesisID}/comments")
     public
     @ResponseBody
-    ThesisCommentResponseLevel1 createComment(
-            @PathVariable("thesisID") Long thesisId,
-            @RequestBody ThesisCommentRequest thesisCommentRequest) {
-        String message = thesisCommentRequest.getMessage();
-        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
+    ThesisCommentResponseLevel1 createComment(@PathVariable("thesisID") Long thesisId,
+                                              @RequestBody ThesisCommentRequest thesisCommentRequest) {
+        String message = thesisCommentRequest.getMessage()
+                .orElseThrow(() -> new InvalidArgumentException("message je obavezno polje!"));
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String email = user.getUsername();
         UserEntity loggedInUser = userService.getUser(email)
                 .orElseThrow(() -> new InvalidTicketException("Must provide a valid ticket!"));
 
-
-        ParamaterCheck.mandatory("Sadržaj komentara", message);
         ThesisEntity thesis = thesisService.getThesis(thesisId)
                 .orElseThrow(() -> new InvalidArgumentException("THesis doesn't exist"));
         ThesisComment thesisComment = new ThesisComment(message, new Date(), loggedInUser, thesis);
@@ -296,13 +295,11 @@ public class ThesisResource {
         return RestFactory.createThesisCommentResponseLevel1(newComment);
     }
 
-    // DELETE
     @RequestMapping(method = RequestMethod.DELETE, value = "/comments/{commentID}")
     public void removeComment(@PathVariable("commentID") Long commentID) {
         thesisService.removeComment(commentID);
     }
 
-    // FILE
     @RequestMapping(value = "/files", method = RequestMethod.GET)
     public
     @ResponseBody
@@ -310,7 +307,6 @@ public class ThesisResource {
         return thesisService.getAllFileRecords();
     }
 
-    // FILE
     @RequestMapping(value = "/files/{fileID}/download", method = RequestMethod.GET)
     public void downloadFileById(HttpServletResponse response,
                                  @PathVariable("fileID") Long fileID) throws IOException {
