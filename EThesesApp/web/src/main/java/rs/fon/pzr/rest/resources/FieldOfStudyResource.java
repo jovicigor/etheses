@@ -8,6 +8,7 @@ import rs.fon.pzr.core.service.FieldOfStudyService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
 import rs.fon.pzr.rest.model.request.FieldOfStudyRequest;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -21,7 +22,6 @@ public class FieldOfStudyResource {
         this.fieldOfStudyService = fieldOfStudyService;
     }
 
-    // READ
     @RequestMapping(method = RequestMethod.GET)
     public
     @ResponseBody
@@ -29,14 +29,14 @@ public class FieldOfStudyResource {
         return fieldOfStudyService.getAllFieldsOfStudy();
     }
 
-    // CREATE
     @RequestMapping(method = RequestMethod.POST)
     public
     @ResponseBody
     FieldOfStudyEntity addFieldOfStudy(
             @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
-        ParamaterCheck.mandatory("Naziv oblasti", fieldOfStudyRequest.getName());
-        return fieldOfStudyService.addFieldOfStudy(fieldOfStudyRequest.getName());
+        String fieldName = fieldOfStudyRequest.getName()
+                .orElseThrow(() -> new InvalidArgumentException("Naziv oblasti je obavezno polje!"));
+        return fieldOfStudyService.addFieldOfStudy(fieldName);
     }
 
     // UPDATE
@@ -49,14 +49,12 @@ public class FieldOfStudyResource {
                 .orElseThrow(() -> new InvalidArgumentException("Oblast sa id-em " + fieldOfStudyID
                         + " ne postoji u bazi!"));
 
-        if (fieldOfStudyRequest.getName() != null) {
-            fieldOfStudy.setName(fieldOfStudyRequest.getName());
-        }
-        return fieldOfStudyService.updateFieldOfStudy(fieldOfStudy);
+        fieldOfStudyRequest.getName()
+                .ifPresent(fieldOfStudy::setName);
 
+        return fieldOfStudyService.updateFieldOfStudy(fieldOfStudy);
     }
 
-    // DELETE
     @RequestMapping(method = RequestMethod.DELETE, value = "/{fieldOfStudyID}")
     public void deleteTag(@PathVariable("fieldOfStudyID") Long fieldOfStudyID) {
         fieldOfStudyService.removeFieldOfStudy(fieldOfStudyID);

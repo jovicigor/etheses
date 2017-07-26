@@ -3,6 +3,8 @@ package rs.fon.pzr.rest.model.request;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Optional;
+
 public class FieldOfStudyRequest {
     private String name;
 
@@ -11,7 +13,7 @@ public class FieldOfStudyRequest {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
+    public Optional<String> getName() {
+        return Optional.ofNullable(name);
     }
 }
