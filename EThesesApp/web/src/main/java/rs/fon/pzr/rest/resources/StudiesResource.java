@@ -57,18 +57,19 @@ public class StudiesResource {
                 .orElse(null);
     }
 
-    // CREATE
     @RequestMapping(method = RequestMethod.POST)
     public
     @ResponseBody
     StudiesResponseLevel1 addStudies(
             @RequestBody StudiesRequest studiesRequest) {
-        ParamaterCheck.mandatory("Naziv nivoa studija", studiesRequest.getName());
-        ParamaterCheck.mandatory("Skraćeni naziv nivoa studija",
-                studiesRequest.getNameShort());
-        StudiesEntity studies = new StudiesEntity(studiesRequest.getName(), studiesRequest.getNameShort(), new HashSet<>());
+        String name = studiesRequest.getName()
+                .orElseThrow(() -> new InvalidArgumentException("Studies name je obavezno polje!"));
+        String nameShort = studiesRequest.getNameShort()
+                .orElseThrow(() -> new InvalidArgumentException("Studies short name je obavezno polje!"));
 
-        return RestFactory.createStudiesResponseLevel1(studiesService.addStudies(studies));
+        StudiesEntity newStudies = studiesService.addStudies(new StudiesEntity(name, nameShort, new HashSet<>()));
+
+        return RestFactory.createStudiesResponseLevel1(newStudies);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{studiesID}")
@@ -82,12 +83,11 @@ public class StudiesResource {
                         new InvalidArgumentException("Nivo studija sa id-em " + studiesID
                                 + " ne postoji u bazi!"));
 
-        if (studiesRequest.getName() != null) {
-            studies.setName(studiesRequest.getName());
-        }
-        if (studiesRequest.getNameShort() != null) {
-            studies.setNameShort(studiesRequest.getNameShort());
-        }
+        studiesRequest.getName()
+                .ifPresent(studies::setName);
+        studiesRequest.getNameShort()
+                .ifPresent(studies::setNameShort);
+
         return RestFactory.createStudiesResponseLevel1(studiesService.updateStudies(studies));
     }
 
