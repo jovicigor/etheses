@@ -1,5 +1,6 @@
 package rs.fon.pzr.core.service;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,9 @@ public class FieldOfStudyServiceImpl implements FieldOfStudyService {
     }
 
     @Override
-    public FieldOfStudyEntity getFieldOfStudy(Long id) {
-        return fieldOfStudyRepository.findOne(id);
+    public Optional<FieldOfStudyEntity> getFieldOfStudy(Long id) {
+        FieldOfStudyEntity fieldOfStudy = fieldOfStudyRepository.findOne(id);
+        return Optional.ofNullable(fieldOfStudy);
     }
 
     @Override

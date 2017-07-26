@@ -45,11 +45,10 @@ public class FieldOfStudyResource {
     @ResponseBody
     FieldOfStudyEntity updateFieldOfStudy(@PathVariable("fieldOfStudyID") Long fieldOfStudyID,
                                           @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
-        FieldOfStudyEntity fieldOfStudy = fieldOfStudyService.getFieldOfStudy(fieldOfStudyID);
-        if (fieldOfStudy == null) {
-            throw new InvalidArgumentException("Oblast sa id-em " + fieldOfStudyID
-                    + " ne postoji u bazi!");
-        }
+        FieldOfStudyEntity fieldOfStudy = fieldOfStudyService.getFieldOfStudy(fieldOfStudyID)
+                .orElseThrow(() -> new InvalidArgumentException("Oblast sa id-em " + fieldOfStudyID
+                        + " ne postoji u bazi!"));
+
         if (fieldOfStudyRequest.getName() != null) {
             fieldOfStudy.setName(fieldOfStudyRequest.getName());
         }
