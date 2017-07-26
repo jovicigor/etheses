@@ -42,8 +42,8 @@ public class FieldOfStudyServiceImpl implements FieldOfStudyService {
         if (fieldOfStudy != null) {
             return fieldOfStudy;
         }
-        fieldOfStudy = new FieldOfStudyEntity();
-        fieldOfStudy.setName(name);
+        fieldOfStudy = new FieldOfStudyEntity(name);
+
         return fieldOfStudyRepository.save(fieldOfStudy);
     }
 
