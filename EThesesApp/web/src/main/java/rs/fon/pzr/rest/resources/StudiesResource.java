@@ -11,6 +11,7 @@ import rs.fon.pzr.rest.model.response.level1.StudiesResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -72,9 +73,8 @@ public class StudiesResource {
         ParamaterCheck.mandatory("Naziv nivoa studija", studiesRequest.getName());
         ParamaterCheck.mandatory("Skraćeni naziv nivoa studija",
                 studiesRequest.getNameShort());
-        StudiesEntity studies = new StudiesEntity();
-        studies.setName(studiesRequest.getName());
-        studies.setNameShort(studiesRequest.getNameShort());
+        StudiesEntity studies = new StudiesEntity(studiesRequest.getName(), studiesRequest.getNameShort(), new HashSet<>());
+
         return RestFactory.createStudiesResponseLevel1(studiesService.addStudies(studies));
     }
 

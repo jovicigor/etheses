@@ -240,7 +240,7 @@ public class RestFactory {
         studiesResponseLevel1.setId(studies.getId());
         studiesResponseLevel1.setName(studies.getName());
         studiesResponseLevel1.setNameShort(studies.getNameShort());
-        Set<CourseEntity> courses = studies.getCourses();
+        Collection<CourseEntity> courses = studies.getCourses();
         if (courses != null) {
             Set<CourseResponseLevel2> courseResponseLevel1 = new HashSet<>();
             for (CourseEntity course : courses) {
@@ -260,7 +260,7 @@ public class RestFactory {
         studiesResponseLevel2.setId(studies.getId());
         studiesResponseLevel2.setName(studies.getName());
         studiesResponseLevel2.setNameShort(studies.getNameShort());
-        Set<CourseEntity> courses = studies.getCourses();
+        Collection<CourseEntity> courses = studies.getCourses();
         if (courses != null) {
             Set<Long> courseIDs = new HashSet<>();
             for (CourseEntity subject : courses) {
