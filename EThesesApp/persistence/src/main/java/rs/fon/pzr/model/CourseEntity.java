@@ -1,7 +1,10 @@
 package rs.fon.pzr.model;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +44,7 @@ public class CourseEntity {
         this.nameShort = nameShort;
         this.studies = studies;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -66,11 +69,12 @@ public class CourseEntity {
         this.nameShort = nameShort;
     }
 
-    public Set<StudiesEntity> getStudies() {
-        return studies;
+    public Collection<StudiesEntity> getStudies() {
+        return new HashSet<>(studies);
     }
 
-    public void setStudies(Set<StudiesEntity> studies) {
-        this.studies = studies;
+    public void updateStudies(Collection<StudiesEntity> studies) {
+        this.studies = studies.stream()
+                .collect(Collectors.toSet());
     }
 }

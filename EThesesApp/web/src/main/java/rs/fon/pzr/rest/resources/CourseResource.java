@@ -114,7 +114,7 @@ public class CourseResource {
                     studiesList.add(studies);
                 }
             }
-            course.setStudies(studiesList);
+            course.updateStudies(studiesList);
         }
 
         return RestFactory.createCourseResponseLevel1(courseService
