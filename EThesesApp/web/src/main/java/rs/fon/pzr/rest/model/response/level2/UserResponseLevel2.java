@@ -1,107 +1,80 @@
 package rs.fon.pzr.rest.model.response.level2;
 
+import rs.fon.pzr.model.ThesisEntity;
+import rs.fon.pzr.model.UserEntity;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserResponseLevel2 {
 
-	private Long id;
+    private final Long id;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
+    private final String studentsTranscript;
+    private final boolean isAdmin;
+    private final Long courseId;
+    private final List<Long> thesisIDs;
+    private final String biography;
+    private final String interests;
 
-	private String firstName;
+    public UserResponseLevel2(UserEntity author) {
+        id = author.getId();
+        firstName = author.getFirstName();
+        lastName = author.getLastName();
+        email = author.getEmail();
+        studentsTranscript = author.getStudentsTranscript();
+        isAdmin = author.isAdmin();
+        if (author.getCourse() != null)
+            courseId = author.getCourse().getId();
+        else {
+            courseId = null;
+        }
+        thesisIDs = author.getTheses().stream()
+                .map(ThesisEntity::getId)
+                .collect(Collectors.toList());
+        biography = author.getBiography();
+        interests = author.getInterests();
+    }
 
-	private String lastName;
+    public Long getId() {
+        return id;
+    }
 
-	private String email;
+    public String getFirstName() {
+        return firstName;
+    }
 
-	private String studentsTranscript;
+    public String getLastName() {
+        return lastName;
+    }
 
-	private boolean isAdmin;
+    public String getEmail() {
+        return email;
+    }
 
-	private Long courseId;
+    public String getStudentsTranscript() {
+        return studentsTranscript;
+    }
 
-	private List<Long> thesisIDs;
+    public boolean isAdmin() {
+        return isAdmin;
+    }
 
-	private String biography;
+    public Long getCourseId() {
+        return courseId;
+    }
 
-	private String interests;
+    public List<Long> getThesisIDs() {
+        return thesisIDs;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getBiography() {
+        return biography;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getStudentsTranscript() {
-		return studentsTranscript;
-	}
-
-	public void setStudentsTranscript(String studentsTranscript) {
-		this.studentsTranscript = studentsTranscript;
-	}
-
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
-	public List<Long> getThesisIDs() {
-		return thesisIDs;
-	}
-
-	public void setThesisIDs(List<Long> thesisIDs) {
-		this.thesisIDs = thesisIDs;
-	}
-
-	public String getBiography() {
-		return biography;
-	}
-
-	public void setBiography(String biography) {
-		this.biography = biography;
-	}
-
-	public String getInterests() {
-		return interests;
-	}
-
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
-
+    public String getInterests() {
+        return interests;
+    }
 }

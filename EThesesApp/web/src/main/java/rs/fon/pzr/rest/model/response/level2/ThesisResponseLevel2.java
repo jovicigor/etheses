@@ -1,191 +1,139 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import rs.fon.pzr.model.FieldOfStudyEntity;
-import rs.fon.pzr.model.TFileEntity;
-import rs.fon.pzr.model.TagEntity;
+import rs.fon.pzr.model.*;
+import rs.fon.pzr.rest.model.response.level1.FieldOfStudyResponse;
+import rs.fon.pzr.rest.model.response.level1.TagResponse;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ThesisResponseLevel2 {
-	private Long id;
+    private final Long id;
+    private final String name;
+    private final Integer grade;
+    private final Date datePosted;
+    private final Date defenseDate;
+    private final String description;
+    private final Long courseId;
+    private final Long userId;
+    private final String userName;
+    private final String userEmail;
+    private final Integer viewCount;
+    private final Long mentorId;
+    private final String mentorName;
+    private final String mentorEmail;
+    private final Set<TagResponse> tags;
+    private final Set<FieldOfStudyResponse> fieldsOfStudy;
+    private final Set<Long> commentIDs;
+    private final TFileEntity file;
 
-	private String name;
+    public ThesisResponseLevel2(ThesisEntity thesis) {
+        id = thesis.getId();
+        name = thesis.getName();
+        grade = thesis.getGrade();
+        datePosted = thesis.getDatePosted();
+        defenseDate = thesis.getDefenseDate();
+        description = thesis.getDescription();
+        if (thesis.getCourse() != null)
+            courseId = thesis.getCourse().getId();
+        else
+            courseId = null;
+        if (thesis.getUser() != null)
+            userId = thesis.getUser().getId();
+        else
+            userId = null;
+        userName = thesis.getUserName();
+        userEmail = thesis.getUserEmail();
+        viewCount = thesis.getViewCount();
+        if (thesis.getMentor() != null)
+            mentorId = thesis.getMentor().getId();
+        else
+            mentorId = null;
+        mentorName = thesis.getMentorName();
+        mentorEmail = thesis.getMentorEmail();
+        tags = thesis.getTags().stream()
+                .map(TagResponse::new)
+                .collect(Collectors.toSet());
+        fieldsOfStudy = thesis.getFieldOfStudies().stream()
+                .map(FieldOfStudyResponse::new)
+                .collect(Collectors.toSet());
+        commentIDs = thesis.getComments().stream()
+                .map(ThesisComment::getId)
+                .collect(Collectors.toSet());
+        file = thesis.getFile();
+    }
 
-	private Integer grade;
+    public Long getId() {
+        return id;
+    }
 
-	private Date datePosted;
+    public String getName() {
+        return name;
+    }
 
-	private Date defenseDate;
+    public Integer getGrade() {
+        return grade;
+    }
 
-	private String description;
+    public Date getDatePosted() {
+        return datePosted;
+    }
 
-	private Long courseId;
+    public Date getDefenseDate() {
+        return defenseDate;
+    }
 
-	private Long userId;
+    public String getDescription() {
+        return description;
+    }
 
-	private String userName;
+    public Long getCourseId() {
+        return courseId;
+    }
 
-	private String userEmail;
-	
-	private Integer viewCount = 0;
+    public Long getUserId() {
+        return userId;
+    }
 
-	private Long mentorId;
-	
-	private String mentorName;
+    public String getUserName() {
+        return userName;
+    }
 
-	private String mentorEmail;
+    public String getUserEmail() {
+        return userEmail;
+    }
 
-	private Set<TagEntity> tags = new HashSet<>();
-	
-	private Set<FieldOfStudyEntity> fieldsOfStudy = new HashSet<>();
+    public Integer getViewCount() {
+        return viewCount;
+    }
 
-	private Set<Long> commentIDs = new HashSet<>();
+    public Long getMentorId() {
+        return mentorId;
+    }
 
-	private TFileEntity file;
+    public String getMentorName() {
+        return mentorName;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getMentorEmail() {
+        return mentorEmail;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Set<TagResponse> getTags() {
+        return tags;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Set<FieldOfStudyResponse> getFieldsOfStudy() {
+        return fieldsOfStudy;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Set<Long> getCommentIDs() {
+        return commentIDs;
+    }
 
-	public Integer getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Integer grade) {
-		this.grade = grade;
-	}
-
-	public Date getDatePosted() {
-		return datePosted;
-	}
-
-	public void setDatePosted(Date datePosted) {
-		this.datePosted = datePosted;
-	}
-
-	public Date getDefenseDate() {
-		return defenseDate;
-	}
-
-	public void setDefenseDate(Date defenseDate) {
-		this.defenseDate = defenseDate;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}	
-
-	public Long getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}	
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-	public Long getMentorId() {
-		return mentorId;
-	}
-
-	public void setMentorId(Long mentorId) {
-		this.mentorId = mentorId;
-	}	
-
-	public String getMentorName() {
-		return mentorName;
-	}
-
-	public void setMentorName(String mentorName) {
-		this.mentorName = mentorName;
-	}
-
-	public String getMentorEmail() {
-		return mentorEmail;
-	}
-
-	public void setMentorEmail(String mentorEmail) {
-		this.mentorEmail = mentorEmail;
-	}
-
-	public Set<TagEntity> getTags() {
-		return tags;
-	}
-
-	public void setTags(Set<TagEntity> tags) {
-		this.tags = tags;
-	}	
-
-	public Set<FieldOfStudyEntity> getFieldsOfStudy() {
-		return fieldsOfStudy;
-	}
-
-	public void setFieldsOfStudy(Set<FieldOfStudyEntity> fieldsOfStudy) {
-		this.fieldsOfStudy = fieldsOfStudy;
-	}
-
-	public Set<Long> getCommentIDs() {
-		return commentIDs;
-	}
-
-	public void setCommentIDs(Set<Long> commentIDs) {
-		this.commentIDs = commentIDs;
-	}
-
-	public TFileEntity getFile() {
-		return file;
-	}
-
-	public void setFile(TFileEntity file) {
-		this.file = file;
-	}
-
-	public Integer getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(Integer viewCount) {
-		this.viewCount = viewCount;
-	}	
+    public TFileEntity getFile() {
+        return file;
+    }
 }

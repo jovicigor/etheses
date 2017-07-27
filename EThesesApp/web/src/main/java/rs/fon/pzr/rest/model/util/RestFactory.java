@@ -59,57 +59,17 @@ public class RestFactory {
         if (thesis == null) {
             return null;
         }
-        ThesisResponseLevel2 thesisResponseLevel2 = new ThesisResponseLevel2();
-        Set<Long> commentIDs = thesis.getComments().stream().map(ThesisComment::getId).collect(Collectors.toSet());
-        thesisResponseLevel2.setCommentIDs(commentIDs);
-        thesisResponseLevel2.setFile(thesis.getFile());
-        thesisResponseLevel2.setDatePosted(thesis.getDatePosted());
-        thesisResponseLevel2.setDefenseDate(thesis.getDefenseDate());
-        thesisResponseLevel2.setDescription(thesis.getDescription());
-        thesisResponseLevel2.setGrade(thesis.getGrade());
-        thesisResponseLevel2.setId(thesis.getId());
-        UserEntity mentor = thesis.getMentor();
-        if (mentor != null) {
-            thesisResponseLevel2.setMentorId(mentor.getId());
-        }
-        thesisResponseLevel2.setMentorEmail(thesis.getMentorEmail());
-        thesisResponseLevel2.setMentorName(thesis.getMentorName());
-        thesisResponseLevel2.setName(thesis.getName());
-        CourseEntity course = thesis.getCourse();
-        if (course != null) {
-            thesisResponseLevel2.setCourseId(course.getId());
-        }
-        thesisResponseLevel2.setTags(thesis.getTags());
-        thesisResponseLevel2.setFieldsOfStudy(thesis.getFieldOfStudies());
-        UserEntity user = thesis.getUser();
-        if (user != null) {
-            thesisResponseLevel2.setUserId(user.getId());
-        }
-        thesisResponseLevel2.setUserEmail(thesis.getUserEmail());
-        thesisResponseLevel2.setUserName(thesis.getUserName());
-        thesisResponseLevel2.setViewCount(thesis.getViewCount());
-        return thesisResponseLevel2;
+        return new ThesisResponseLevel2(thesis);
     }
 
-    public static ThesisCommentResponseLevel1 createThesisCommentResponseLevel1(
-            ThesisComment comment) {
+    public static ThesisCommentResponseLevel1 createThesisCommentResponseLevel1(ThesisComment comment) {
         if (comment == null) {
             return null;
         }
-        ThesisCommentResponseLevel1 thesisCommentResponseLevel1 = new ThesisCommentResponseLevel1();
-        thesisCommentResponseLevel1.setAuthor(createUserResponseLevel2(
-                comment.getAuthor()));
-        thesisCommentResponseLevel1.setDatePosted(comment.getDatePosted());
-        thesisCommentResponseLevel1.setId(comment.getId());
-        thesisCommentResponseLevel1.setMessage(comment.getMessage());
-        thesisCommentResponseLevel1.setThesis(createThesisResponseLevel2(
-                comment.getThesis()));
-
-        return thesisCommentResponseLevel1;
+        return new ThesisCommentResponseLevel1(comment);
     }
 
-    private static ThesisCommentResponseLevel2 createThesisCommentResponseLevel2(
-            ThesisComment comment) {
+    private static ThesisCommentResponseLevel2 createThesisCommentResponseLevel2(ThesisComment comment) {
         if (comment == null) {
             return null;
         }
@@ -159,23 +119,7 @@ public class RestFactory {
         if (user == null) {
             return null;
         }
-        UserResponseLevel2 userResponseLevel2 = new UserResponseLevel2();
-        userResponseLevel2.setAdmin(user.isAdmin());
-        userResponseLevel2.setBiography(user.getBiography());
-        CourseEntity course = user.getCourse();
-        if (course != null) {
-            userResponseLevel2.setCourseId(course.getId());
-        }
-        userResponseLevel2.setEmail(user.getEmail());
-        userResponseLevel2.setFirstName(user.getFirstName());
-        userResponseLevel2.setId(user.getId());
-        userResponseLevel2.setInterests(user.getInterests());
-        userResponseLevel2.setLastName(user.getLastName());
-        userResponseLevel2.setStudentsTranscript(user.getStudentsTranscript());
-        List<Long> thesisIDs = user.getTheses().stream().map(ThesisEntity::getId).collect(Collectors.toList());
-        userResponseLevel2.setThesisIDs(thesisIDs);
-
-        return userResponseLevel2;
+        return new UserResponseLevel2(user);
     }
 
 
