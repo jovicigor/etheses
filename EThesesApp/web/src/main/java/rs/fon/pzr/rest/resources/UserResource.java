@@ -3,20 +3,17 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.model.CourseEntity;
-import rs.fon.pzr.model.UserEntity;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.UserService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
+import rs.fon.pzr.model.UserEntity;
 import rs.fon.pzr.rest.model.LoginData;
 import rs.fon.pzr.rest.model.request.AdminPrivilegeRequest;
 import rs.fon.pzr.rest.model.request.UserRequest;
 import rs.fon.pzr.rest.model.response.level1.UserResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,33 +29,27 @@ public class UserResource {
         this.courseService = courseService;
     }
 
-    // READ
-    @RequestMapping(method = RequestMethod.GET)
-    public
+    @GetMapping
     @ResponseBody
-    List<UserResponseLevel1> getUsers() {
+    public List<UserResponseLevel1> getUsers() {
         List<UserEntity> userList = userService.getAllUsers();
+
         return userList.stream()
                 .map(RestFactory::createUserResponseLevel1)
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{userID}")
-    public
+    @GetMapping(value = "/{userID}")
     @ResponseBody
-    UserResponseLevel1 getUser(
-            @PathVariable("userID") Long userID) {
+    public UserResponseLevel1 getUser(@PathVariable("userID") Long userID) {
         return userService.getUser(userID)
                 .map(RestFactory::createUserResponseLevel1)
                 .orElse(null);
     }
 
-    // CREATE
-    @RequestMapping(method = RequestMethod.POST)
-    public
+    @PostMapping
     @ResponseBody
-    UserResponseLevel1 addUser(
-            @RequestBody LoginData loginData) {
+    public UserResponseLevel1 addUser(@RequestBody LoginData loginData) {
         ParamaterCheck.mandatory("Email ", loginData.getEmail());
         ParamaterCheck.mandatory("Password ", loginData.getPassword());
 
@@ -67,16 +58,14 @@ public class UserResource {
         UserResponseLevel1 userResponse = new UserResponseLevel1();
         userResponse.setId(user.getId());
         userResponse.setEmail(user.getEmail());
+
         return userResponse;
     }
 
-    // UPDATE
-    @RequestMapping(method = RequestMethod.PUT, value = "/{userID}")
-    public
+    @PutMapping(value = "/{userID}")
     @ResponseBody
-    UserResponseLevel1 updateUser(
-            @RequestBody UserRequest userRequest,
-            @PathVariable("userID") Long userID) {
+    public UserResponseLevel1 updateUser(@RequestBody UserRequest userRequest,
+                                         @PathVariable("userID") Long userID) {
 
         UserEntity user = userService.getUser(userID)
                 .orElseThrow(() -> new InvalidArgumentException("Korisnik sa id-em " + userID
@@ -108,12 +97,10 @@ public class UserResource {
 
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{userID}/admin")
-    public
+    @PutMapping(value = "/{userID}/admin")
     @ResponseBody
-    UserResponseLevel1 changeAdminPrivilege(
-            @PathVariable("userID") Long userID,
-            @RequestBody AdminPrivilegeRequest adminPrivilegeRequest) {
+    public UserResponseLevel1 changeAdminPrivilege(@PathVariable("userID") Long userID,
+                                                   @RequestBody AdminPrivilegeRequest adminPrivilegeRequest) {
         ParamaterCheck.mandatory("admin", adminPrivilegeRequest.isAdmin());
         UserEntity user = userService.getUser(userID)
                 .orElseThrow(() -> new InvalidArgumentException("Korisnik sa id-em " + userID
@@ -124,8 +111,7 @@ public class UserResource {
                 userService.updateUser(user));
     }
 
-    // DELETE
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{userID}")
+    @DeleteMapping(value = "/{userID}")
     public void deleteUser(@PathVariable("userID") Long userID) {
         userService.deleteUser(userID);
     }

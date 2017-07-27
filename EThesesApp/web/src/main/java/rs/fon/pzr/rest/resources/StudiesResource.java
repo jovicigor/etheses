@@ -27,13 +27,13 @@ public class StudiesResource {
         this.studiesService = studiesService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public
+    @GetMapping
     @ResponseBody
-    List<StudiesResponseLevel1> getStudies(
-            @RequestParam(value = "studiesName", required = false) String studiesName) {
+    public List<StudiesResponseLevel1> getStudies(@RequestParam(value = "studiesName", required = false)
+                                                          String studiesName) {
         List<StudiesEntity> studiesList = studiesService.getAllStudies();
         List<StudiesResponseLevel1> studiesResponseLevel1 = new ArrayList<>();
+
         if (studiesName != null) {
             studiesService
                     .getStudiesByName(studiesName)
@@ -45,23 +45,21 @@ public class StudiesResource {
                 .stream()
                 .map(RestFactory::createStudiesResponseLevel1)
                 .collect(Collectors.toList()));
+
         return studiesResponseLevel1;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{studiesID}")
-    public
+    @GetMapping(value = "/{studiesID}")
     @ResponseBody
-    StudiesResponseLevel1 getStudiesById(@PathVariable("studiesID") Long id) {
+    public StudiesResponseLevel1 getStudiesById(@PathVariable("studiesID") Long id) {
         return studiesService.getStudies(id)
                 .map(RestFactory::createStudiesResponseLevel1)
                 .orElse(null);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public
+    @PostMapping
     @ResponseBody
-    StudiesResponseLevel1 addStudies(
-            @RequestBody StudiesRequest studiesRequest) {
+    public StudiesResponseLevel1 addStudies(@RequestBody StudiesRequest studiesRequest) {
         String name = studiesRequest.getName()
                 .orElseThrow(() -> new InvalidArgumentException("Studies name je obavezno polje!"));
         String nameShort = studiesRequest.getNameShort()
@@ -72,12 +70,10 @@ public class StudiesResource {
         return RestFactory.createStudiesResponseLevel1(newStudies);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{studiesID}")
-    public
+    @PutMapping(value = "/{studiesID}")
     @ResponseBody
-    StudiesResponseLevel1 updateStudies(
-            @RequestBody StudiesRequest studiesRequest,
-            @PathVariable("studiesID") Long studiesID) {
+    public StudiesResponseLevel1 updateStudies(@RequestBody StudiesRequest studiesRequest,
+                                               @PathVariable("studiesID") Long studiesID) {
         StudiesEntity studies = studiesService.getStudies(studiesID)
                 .orElseThrow(() ->
                         new InvalidArgumentException("Nivo studija sa id-em " + studiesID
@@ -91,7 +87,7 @@ public class StudiesResource {
         return RestFactory.createStudiesResponseLevel1(studiesService.updateStudies(studies));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{studiesID}")
+    @DeleteMapping(value = "/{studiesID}")
     public void removeStudies(@PathVariable("studiesID") Long studiesID) {
         studiesService.removeStudies(studiesID);
     }
