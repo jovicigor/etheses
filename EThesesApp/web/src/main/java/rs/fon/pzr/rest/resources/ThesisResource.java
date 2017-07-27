@@ -50,12 +50,9 @@ public class ThesisResource {
         this.fieldOfStudyService = fieldOfStudyService;
     }
 
-    // READ
-    @RequestMapping(method = RequestMethod.GET)
-    public
+    @GetMapping
     @ResponseBody
-    List<ThesisResponseLevel1> getThesises(
-            @RequestParam(value = "userID", required = false) Long userID) {
+    public List<ThesisResponseLevel1> getThesises(@RequestParam(value = "userID", required = false) Long userID) {
 
         if (userID != null) {
             List<ThesisEntity> userThesis = thesisService.getThesisByUserId(userID);
@@ -70,10 +67,9 @@ public class ThesisResource {
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/advanced_search")
-    public
+    @GetMapping(value = "/advanced_search")
     @ResponseBody
-    ThesisPageResponse advancedSearch(
+    public ThesisPageResponse advancedSearch(
             @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", required = false) Integer pageSize,
             @RequestParam(value = "thesisName", required = false) String thesisName,
@@ -94,22 +90,18 @@ public class ThesisResource {
         return RestFactory.CreateThesisPageResponse(thesisPage);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{thesisID}")
-    public
+    @GetMapping(value = "/{thesisID}")
     @ResponseBody
-    ThesisResponseLevel1 getThesis(
-            @PathVariable("thesisID") Long thesisId) {
+    public ThesisResponseLevel1 getThesis(@PathVariable("thesisID") Long thesisId) {
         Optional<ThesisEntity> thesis = thesisService.getThesis(thesisId);
 
         return thesis.map(RestFactory::createThesisResponseLevel1)
                 .orElse(null);
     }
 
-    // CREATE
-    @RequestMapping(method = RequestMethod.POST)
-    public
+    @PostMapping
     @ResponseBody
-    ThesisResponseLevel1 addThesis(
+    public ThesisResponseLevel1 addThesis(
             @RequestBody ThesisRequest thesisRequest) {
         ParamaterCheck.mandatory("Naziv rada", thesisRequest.getName());
 
@@ -169,10 +161,9 @@ public class ThesisResource {
                 .createThesisResponseLevel1(thesisService.addThesis(thesis));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{thesisID}")
-    public
+    @PutMapping(value = "/{thesisID}")
     @ResponseBody
-    ThesisResponseLevel1 updateThesis(
+    public ThesisResponseLevel1 updateThesis(
             @RequestBody ThesisRequest thesisRequest,
             @PathVariable("thesisID") Long thesisID) {
 
@@ -253,18 +244,14 @@ public class ThesisResource {
                 .updateThesis(thesis));
     }
 
-    // DELETE
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{thesisID}")
+    @DeleteMapping(value = "/{thesisID}")
     public void removeThesis(@PathVariable("thesisID") Long thesisID) {
         thesisService.removeThesis(thesisID);
     }
 
-    // COMMENT
-    // READ
-    @RequestMapping(method = RequestMethod.GET, value = "/{thesisID}/comments")
-    public
+    @GetMapping(value = "/{thesisID}/comments")
     @ResponseBody
-    Set<ThesisCommentResponseLevel1> getComments(
+    public Set<ThesisCommentResponseLevel1> getComments(
             @PathVariable("thesisID") Long thesisId) {
         Set<ThesisComment> thesisComments = thesisService
                 .getAllComments(thesisId);
@@ -273,12 +260,10 @@ public class ThesisResource {
                 .collect(Collectors.toSet());
     }
 
-    // CREATE
-    @RequestMapping(method = RequestMethod.POST, value = "/{thesisID}/comments")
-    public
+    @PostMapping(value = "/{thesisID}/comments")
     @ResponseBody
-    ThesisCommentResponseLevel1 createComment(@PathVariable("thesisID") Long thesisId,
-                                              @RequestBody ThesisCommentRequest thesisCommentRequest) {
+    public ThesisCommentResponseLevel1 createComment(@PathVariable("thesisID") Long thesisId,
+                                                     @RequestBody ThesisCommentRequest thesisCommentRequest) {
         String message = thesisCommentRequest.getMessage()
                 .orElseThrow(() -> new InvalidArgumentException("message je obavezno polje!"));
 
@@ -295,19 +280,18 @@ public class ThesisResource {
         return RestFactory.createThesisCommentResponseLevel1(newComment);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/comments/{commentID}")
+    @DeleteMapping(value = "/comments/{commentID}")
     public void removeComment(@PathVariable("commentID") Long commentID) {
         thesisService.removeComment(commentID);
     }
 
-    @RequestMapping(value = "/files", method = RequestMethod.GET)
-    public
+    @GetMapping(value = "/files")
     @ResponseBody
-    Set<TFileEntity> getAllFileRecords() {
+    public Set<TFileEntity> getAllFileRecords() {
         return thesisService.getAllFileRecords();
     }
 
-    @RequestMapping(value = "/files/{fileID}/download", method = RequestMethod.GET)
+    @GetMapping(value = "/files/{fileID}/download")
     public void downloadFileById(HttpServletResponse response,
                                  @PathVariable("fileID") Long fileID) throws IOException {
         File file = thesisService.getFileById(fileID);
@@ -343,19 +327,18 @@ public class ThesisResource {
         FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
 
-    @RequestMapping(value = "/files/{fileID}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/files/{fileID}")
     public void removeFileById(@PathVariable("fileID") Long fileID) {
         thesisService.removeFile(fileID);
     }
 
-    @RequestMapping(value = "/{thesisID}/upload", method = RequestMethod.POST)
+    @PostMapping(value = "/{thesisID}/upload")
     public TFileEntity uploadThesisFile(@PathVariable("thesisID") Long thesisID,
                                         @RequestParam("file") MultipartFile file) {
         return thesisService.addFile(thesisID, file);
     }
 
-    // TODO: Consider deleting endpoint(same purpose as downloadFileById)
-    @RequestMapping(value = "/{thesisID}/download", method = RequestMethod.GET)
+    @GetMapping(value = "/{thesisID}/download")
     public void downloadThesisFile(HttpServletResponse response,
                                    @PathVariable("thesisID") Long thesisID) throws IOException {
 

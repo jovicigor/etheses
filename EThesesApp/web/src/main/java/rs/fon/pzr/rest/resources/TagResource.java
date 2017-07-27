@@ -18,13 +18,13 @@ public class TagResource {
         this.tagService = tagService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     @ResponseBody
     public Set<TagEntity> getTags() {
         return tagService.getAllTags();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{tagID}")
+    @DeleteMapping(value = "/{tagID}")
     public void deleteTag(@PathVariable("tagID") Long tagID) {
         tagService.removeTag(tagID);
     }
