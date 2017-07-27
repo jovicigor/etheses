@@ -1,48 +1,40 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import java.util.HashSet;
+import rs.fon.pzr.model.CourseEntity;
+import rs.fon.pzr.model.StudiesEntity;
+
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CourseResponseLevel2 {
-	
-	private Long id;
-	
-	private String name;
-	
-	private String nameShort;
-	
-	private Set<Long> studiesIDs = new HashSet<>();
 
-	public Long getId() {
-		return id;
-	}
+    private final Long id;
+    private final String name;
+    private final String nameShort;
+    private final Set<Long> studiesIDs;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public CourseResponseLevel2(CourseEntity courseEntity) {
+        id = courseEntity.getId();
+        name = courseEntity.getName();
+        nameShort = courseEntity.getNameShort();
+        studiesIDs = courseEntity.getStudies().stream()
+                .map(StudiesEntity::getId)
+                .collect(Collectors.toSet());
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getNameShort() {
-		return nameShort;
-	}
+    public String getNameShort() {
+        return nameShort;
+    }
 
-	public void setNameShort(String nameShort) {
-		this.nameShort = nameShort;
-	}	
-
-	public Set<Long> getStudiesIDs() {
-		return studiesIDs;
-	}
-
-	public void setStudiesIDs(Set<Long> studiesIDs) {
-		this.studiesIDs = studiesIDs;
-	}
-	
+    public Set<Long> getStudiesIDs() {
+        return studiesIDs;
+    }
 }

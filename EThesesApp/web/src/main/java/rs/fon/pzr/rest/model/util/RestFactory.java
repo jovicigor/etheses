@@ -183,33 +183,14 @@ public class RestFactory {
         if (course == null) {
             return null;
         }
-        CourseResponseLevel1 courseResponseLevel1 = new CourseResponseLevel1();
-        courseResponseLevel1.setId(course.getId());
-        courseResponseLevel1.setName(course.getName());
-        courseResponseLevel1.setNameShort(course.getNameShort());
-        Collection<StudiesEntity> studies = course.getStudies();
-        if (studies != null) {
-            Set<StudiesResponseLevel2> studiesResponseLevel2 = studies.stream().map(RestFactory::createStudiesResponseLevel2).collect(Collectors.toSet());
-            courseResponseLevel1.setStudies(studiesResponseLevel2);
-        }
-        return courseResponseLevel1;
-
+        return new CourseResponseLevel1(course);
     }
 
     private static CourseResponseLevel2 createCourseResponseLevel2(CourseEntity course) {
         if (course == null) {
             return null;
         }
-        CourseResponseLevel2 courseResponseLevel2 = new CourseResponseLevel2();
-        courseResponseLevel2.setId(course.getId());
-        courseResponseLevel2.setName(course.getName());
-        courseResponseLevel2.setNameShort(course.getNameShort());
-        Collection<StudiesEntity> studies = course.getStudies();
-        if (studies != null) {
-            Set<Long> studiesIDs = studies.stream().map(StudiesEntity::getId).collect(Collectors.toSet());
-            courseResponseLevel2.setStudiesIDs(studiesIDs);
-        }
-        return courseResponseLevel2;
+        return new CourseResponseLevel2(course);
 
     }
 
@@ -217,33 +198,6 @@ public class RestFactory {
         if (studies == null) {
             return null;
         }
-        StudiesResponseLevel1 studiesResponseLevel1 = new StudiesResponseLevel1();
-        studiesResponseLevel1.setId(studies.getId());
-        studiesResponseLevel1.setName(studies.getName());
-        studiesResponseLevel1.setNameShort(studies.getNameShort());
-        Collection<CourseEntity> courses = studies.getCourses();
-        if (courses != null) {
-            Set<CourseResponseLevel2> courseResponseLevel1 = courses.stream().map(RestFactory::createCourseResponseLevel2).collect(Collectors.toSet());
-            studiesResponseLevel1.setCourses(courseResponseLevel1);
-        }
-        return studiesResponseLevel1;
-
-    }
-
-    private static StudiesResponseLevel2 createStudiesResponseLevel2(StudiesEntity studies) {
-        if (studies == null) {
-            return null;
-        }
-        StudiesResponseLevel2 studiesResponseLevel2 = new StudiesResponseLevel2();
-        studiesResponseLevel2.setId(studies.getId());
-        studiesResponseLevel2.setName(studies.getName());
-        studiesResponseLevel2.setNameShort(studies.getNameShort());
-        Collection<CourseEntity> courses = studies.getCourses();
-        if (courses != null) {
-            Set<Long> courseIDs = courses.stream().map(CourseEntity::getId).collect(Collectors.toSet());
-            studiesResponseLevel2.setCourseIDs(courseIDs);
-        }
-        return studiesResponseLevel2;
-
+        return new StudiesResponseLevel1(studies);
     }
 }
