@@ -2,6 +2,7 @@ package rs.fon.pzr.model.thesis;
 
 import rs.fon.pzr.model.studies.Course;
 import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.type.Email;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -82,7 +83,7 @@ public class Thesis {
     protected Thesis() {
     }
 
-    public Thesis(String name, Integer grade, Date datePosted, String description, Course course, UserEntity user, String userName, String userEmail, UserEntity mentor, String mentorName, String mentorEmail, Collection<Tag> tags, Collection<FieldOfStudy> fieldOfStudies, Collection<ThesisKeyword> thesisKeywords) {
+    public Thesis(String name, Integer grade, Date datePosted, String description, Course course, UserEntity user, String userName, Email userEmail, UserEntity mentor, String mentorName, Email mentorEmail, Collection<Tag> tags, Collection<FieldOfStudy> fieldOfStudies, Collection<ThesisKeyword> thesisKeywords) {
         this.name = name;
         this.grade = grade;
         this.datePosted = datePosted;
@@ -91,11 +92,11 @@ public class Thesis {
         this.course = course;
         this.user = user;
         this.userName = userName;
-        this.userEmail = userEmail;
+        this.userEmail = userEmail.asString();
         this.viewCount = 0;
         this.mentor = mentor;
         this.mentorName = mentorName;
-        this.mentorEmail = mentorEmail;
+        this.mentorEmail = mentorEmail.asString();
         this.comments = comments.stream().collect(Collectors.toSet());
         this.tags = tags.stream().collect(Collectors.toSet());
         this.fieldOfStudies = fieldOfStudies.stream().collect(Collectors.toSet());

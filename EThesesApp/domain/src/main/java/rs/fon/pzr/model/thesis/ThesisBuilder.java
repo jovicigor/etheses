@@ -1,26 +1,27 @@
 package rs.fon.pzr.model.thesis;
 
-import rs.fon.pzr.guards.NullGuard;
 import rs.fon.pzr.model.studies.Course;
 import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.type.Email;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Set;
 
 public class ThesisBuilder {
+    private static final String EMPTY = "";
+
     private String name;
     private Integer grade;
     private Date defenseDate;
-    private String description;
+    private String description = EMPTY;
     private Course course;
     private UserEntity user;
-    private String userName;
-    private String userEmail;
+    private String userName = EMPTY;
+    private Email userEmail;
     private UserEntity mentor;
-    private String mentorName;
-    private String mentorEmail;
+    private String mentorName = EMPTY;
+    private Email mentorEmail;
     private Collection<Tag> tags = Collections.emptyList();
     private Collection<FieldOfStudy> fieldOfStudies = Collections.emptyList();
     private Collection<ThesisKeyword> thesisKeywords = Collections.emptyList();
@@ -60,7 +61,7 @@ public class ThesisBuilder {
         return this;
     }
 
-    public ThesisBuilder withUserEmail(String userEmail) {
+    public ThesisBuilder withUserEmail(Email userEmail) {
         this.userEmail = userEmail;
         return this;
     }
@@ -76,7 +77,7 @@ public class ThesisBuilder {
         return this;
     }
 
-    public ThesisBuilder withMentorEmail(String mentorEmail) {
+    public ThesisBuilder withMentorEmail(Email mentorEmail) {
         this.mentorEmail = mentorEmail;
         return this;
     }
@@ -95,5 +96,4 @@ public class ThesisBuilder {
 //        TODO INTRODUCE GUARDS
         return new Thesis(name, grade, defenseDate, description, course, user, userName, userEmail, mentor, mentorName, mentorEmail, tags, fieldOfStudies, thesisKeywords);
     }
-
 }

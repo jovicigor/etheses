@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import rs.fon.pzr.core.service.*;
 import rs.fon.pzr.model.thesis.*;
 import rs.fon.pzr.rest.model.request.ThesisRequest;
+import rs.fon.pzr.type.Email;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -50,10 +51,14 @@ public class CreateThesisOperation {
         thesisRequest.getDescription()
                 .ifPresent(thesisBuilder::withDescription);
         thesisRequest.getUserEmail()
+                .filter(Email::isValid)
+                .map(Email::fromString)
                 .ifPresent(thesisBuilder::withUserEmail);
         thesisRequest.getUserName()
                 .ifPresent(thesisBuilder::withUserName);
         thesisRequest.getMentorEmail()
+                .filter(Email::isValid)
+                .map(Email::fromString)
                 .ifPresent(thesisBuilder::withMentorEmail);
         thesisRequest.getMentorName()
                 .ifPresent(thesisBuilder::withMentorName);

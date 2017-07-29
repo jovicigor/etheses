@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.service.*;
-import rs.fon.pzr.model.thesis.*;
+import rs.fon.pzr.model.thesis.FieldOfStudy;
+import rs.fon.pzr.model.thesis.Keyword;
+import rs.fon.pzr.model.thesis.Tag;
+import rs.fon.pzr.model.thesis.Thesis;
 import rs.fon.pzr.rest.model.request.ThesisRequest;
-import rs.fon.pzr.rest.model.util.RestFactory;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
