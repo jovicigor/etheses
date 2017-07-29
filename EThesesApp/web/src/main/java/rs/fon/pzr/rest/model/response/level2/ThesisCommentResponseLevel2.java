@@ -1,57 +1,42 @@
 package rs.fon.pzr.rest.model.response.level2;
 
+import rs.fon.pzr.model.ThesisComment;
+
 import java.util.Date;
 
 public class ThesisCommentResponseLevel2 {
 
-	private Long id;
+    private final Long id;
+    private final String message;
+    private final Date datePosted;
+    private final Long authorId;
+    private final Long thesisId;
 
-	private String message;
-	
-	private Date datePosted;
-	
-	private Long authorId;
-	
-	private Long thesisId;
+    public ThesisCommentResponseLevel2(ThesisComment thesisComment) {
+        id = thesisComment.getId();
+        message = thesisComment.getMessage();
+        datePosted = thesisComment.getDatePosted();
+        authorId = thesisComment.getAuthor().getId();
+        thesisId = thesisComment.getThesis().getId();
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public Date getDatePosted() {
+        return datePosted;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public Long getAuthorId() {
+        return authorId;
+    }
 
-	public Date getDatePosted() {
-		return datePosted;
-	}
-
-	public void setDatePosted(Date datePosted) {
-		this.datePosted = datePosted;
-	}	
-
-	public Long getAuthorId() {
-		return authorId;
-	}
-
-	public void setAuthorId(Long authorId) {
-		this.authorId = authorId;
-	}
-
-	public Long getThesisId() {
-		return thesisId;
-	}
-
-	public void setThesisId(Long thesisId) {
-		this.thesisId = thesisId;
-	}
-	
+    public Long getThesisId() {
+        return thesisId;
+    }
 }

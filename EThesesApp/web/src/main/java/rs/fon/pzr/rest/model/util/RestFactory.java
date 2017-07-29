@@ -27,32 +27,8 @@ public class RestFactory {
         if (thesis == null) {
             return null;
         }
-        ThesisResponseLevel1 thesisResponseLevel1 = new ThesisResponseLevel1();
 
-        Set<ThesisCommentResponseLevel2> thesisCommentResponseLevel2List = thesis.getComments().stream().map(RestFactory::createThesisCommentResponseLevel2).collect(Collectors.toSet());
-        thesisResponseLevel1.setComments(thesisCommentResponseLevel2List);
-
-        thesisResponseLevel1.setDatePosted(thesis.getDatePosted());
-        thesisResponseLevel1.setDefenseDate(thesis.getDefenseDate());
-        thesisResponseLevel1.setDescription(thesis.getDescription());
-        thesisResponseLevel1.setFile(thesis.getFile());
-        thesisResponseLevel1.setGrade(thesis.getGrade());
-        thesisResponseLevel1.setId(thesis.getId());
-        thesisResponseLevel1.setMentor(createUserResponseLevel2(
-                thesis.getMentor()));
-        thesisResponseLevel1.setMentorName(thesis.getMentorName());
-        thesisResponseLevel1.setMentorEmail(thesis.getMentorEmail());
-        thesisResponseLevel1.setName(thesis.getName());
-        thesisResponseLevel1.setCourse(createCourseResponseLevel2(thesis
-                .getCourse()));
-        thesisResponseLevel1.setTags(thesis.getTags());
-        thesisResponseLevel1.setFieldsOfStudy(thesis.getFieldOfStudies());
-        thesisResponseLevel1.setUser(createUserResponseLevel2(thesis.getUser()));
-        thesisResponseLevel1.setUserEmail(thesis.getUserEmail());
-        thesisResponseLevel1.setUserName(thesis.getUserName());
-        thesisResponseLevel1.setViewCount(thesis.getViewCount());
-
-        return thesisResponseLevel1;
+        return new ThesisResponseLevel1(thesis);
     }
 
     private static ThesisResponseLevel2 createThesisResponseLevel2(ThesisEntity thesis) {
@@ -67,27 +43,6 @@ public class RestFactory {
             return null;
         }
         return new ThesisCommentResponseLevel1(comment);
-    }
-
-    private static ThesisCommentResponseLevel2 createThesisCommentResponseLevel2(ThesisComment comment) {
-        if (comment == null) {
-            return null;
-        }
-        ThesisCommentResponseLevel2 thesisCommentResponseLevel2 = new ThesisCommentResponseLevel2();
-        UserEntity author = comment.getAuthor();
-        if (author != null) {
-            thesisCommentResponseLevel2.setAuthorId(author.getId());
-        }
-        thesisCommentResponseLevel2.setDatePosted(comment.getDatePosted());
-        thesisCommentResponseLevel2.setId(comment.getId());
-        thesisCommentResponseLevel2.setMessage(comment.getMessage());
-        ThesisEntity thesis = comment.getThesis();
-        if (thesis != null) {
-            thesisCommentResponseLevel2.setThesisId(thesis.getId());
-        }
-
-        return thesisCommentResponseLevel2;
-
     }
 
     public static UserResponseLevel1 createUserResponseLevel1(UserEntity user) {
