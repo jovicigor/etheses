@@ -29,10 +29,6 @@ public class KeywordEntity {
         this.banned = banned;
     }
 
-    public static KeywordEntity createBannedKeyword(String value) {
-        return new KeywordEntity(value, true);
-    }
-
     public static KeywordEntity createNotBannedKeyword(String value) {
         return new KeywordEntity(value, false);
     }
@@ -48,9 +44,4 @@ public class KeywordEntity {
     public String getValue() {
         return value;
     }
-
-    public void ban() {
-        this.banned = true;
-    }
-
 }
