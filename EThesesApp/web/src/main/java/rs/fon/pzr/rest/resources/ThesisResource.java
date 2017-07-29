@@ -274,7 +274,12 @@ public class ThesisResource {
 
         ThesisEntity thesis = thesisService.getThesis(thesisId)
                 .orElseThrow(() -> new InvalidArgumentException("THesis doesn't exist"));
-        ThesisComment thesisComment = new ThesisComment(message, new Date(), loggedInUser, thesis);
+
+        ThesisComment thesisComment = new ThesisCommentBuilder()
+                .withMessage(message)
+                .withAuthor(loggedInUser)
+                .withThesis(thesis)
+                .build();
 
         ThesisComment newComment = thesisService.addComment(thesisComment);
         return RestFactory.createThesisCommentResponseLevel1(newComment);
