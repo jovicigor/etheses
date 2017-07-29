@@ -28,7 +28,7 @@ public class Password {
         return new Password(password);
     }
 
-    public String asString() {
+    public String asEncodedString() {
         return password;
     }
 }

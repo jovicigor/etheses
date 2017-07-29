@@ -22,7 +22,7 @@ public class UserCredentials {
 
     public UserCredentials(Email email, Password password) {
         this.email = email.asString();
-        this.password = password.asString();
+        this.password = password.asEncodedString();
     }
 
     public String getPassword() {
