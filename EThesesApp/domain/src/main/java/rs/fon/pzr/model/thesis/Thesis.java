@@ -167,12 +167,12 @@ public class Thesis {
         this.mentor = mentor;
     }
 
-    public Set<ThesisComment> getComments() {
-        return comments;
+    public Collection<ThesisComment> getComments() {
+        return new HashSet<>(comments);
     }
 
-    public Set<Tag> getTags() {
-        return tags;
+    public Collection<Tag> getTags() {
+        return new HashSet<>(tags);
     }
 
     public void setTags(Collection<Tag> tags) {
@@ -219,11 +219,7 @@ public class Thesis {
         this.viewCount++;
     }
 
-    public Set<ThesisKeyword> getThesisKeywords() {
-        return thesisKeywords;
-    }
-
-    public Set<FieldOfStudy> getFieldOfStudies() {
+    public Collection<FieldOfStudy> getFieldOfStudies() {
         return fieldOfStudies;
     }
 

@@ -55,11 +55,11 @@ public class UpdateThesisOperation {
         thesisRequest.getUserEmail()
                 .ifPresent(thesis::setUserEmail);
         thesisRequest.getUserName()
-                .ifPresent(thesis::setUserEmail);
+                .ifPresent(thesis::setUserName);
         thesisRequest.getMentorEmail()
                 .ifPresent(thesis::setMentorEmail);
         thesisRequest.getMentorName()
-                .ifPresent(thesis::setMentorEmail);
+                .ifPresent(thesis::setMentorName);
         thesisRequest.getMentorId()
                 .flatMap(userService::getUser)
                 .ifPresent(thesis::setMentor);
