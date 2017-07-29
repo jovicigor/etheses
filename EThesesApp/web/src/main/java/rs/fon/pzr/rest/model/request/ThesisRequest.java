@@ -2,12 +2,14 @@ package rs.fon.pzr.rest.model.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
 
 public class ThesisRequest {
-
+    @NotEmpty
     private String name;
     private Integer grade;
     private Date defenseDate;
@@ -55,44 +57,44 @@ public class ThesisRequest {
         return name;
     }
 
-    public Integer getGrade() {
-        return grade;
+    public Optional<Integer> getGrade() {
+        return Optional.ofNullable(grade);
     }
 
-    public Date getDefenseDate() {
-        return defenseDate;
+    public Optional<Date> getDefenseDate() {
+        return Optional.ofNullable(defenseDate);
     }
 
-    public String getDescription() {
-        return description;
+    public Optional<String> getDescription() {
+        return Optional.ofNullable(description);
     }
 
-    public String getCourseName() {
-        return courseName;
+    public Optional<String> getCourseName() {
+        return Optional.ofNullable(courseName);
     }
 
-    public Long getUserId() {
-        return userId;
+    public Optional<Long> getUserId() {
+        return Optional.ofNullable(userId);
     }
 
-    public String getUserName() {
-        return userName;
+    public Optional<String> getUserName() {
+        return Optional.ofNullable(userName);
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public Optional<String> getUserEmail() {
+        return Optional.ofNullable(userEmail);
     }
 
-    public Long getMentorId() {
-        return mentorId;
+    public Optional<Long> getMentorId() {
+        return Optional.ofNullable(mentorId);
     }
 
-    public String getMentorName() {
-        return mentorName;
+    public Optional<String> getMentorName() {
+        return Optional.ofNullable(mentorName);
     }
 
-    public String getMentorEmail() {
-        return mentorEmail;
+    public Optional<String> getMentorEmail() {
+        return Optional.ofNullable(mentorEmail);
     }
 
     public Set<String> getTags() {

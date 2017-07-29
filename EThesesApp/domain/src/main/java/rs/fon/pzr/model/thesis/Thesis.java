@@ -4,14 +4,15 @@ import rs.fon.pzr.model.studies.Course;
 import rs.fon.pzr.model.user.UserEntity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "thesis")
 public class Thesis {
-
 
     @Id
     @Column(name = "thesis_id")
@@ -78,6 +79,28 @@ public class Thesis {
     @OneToMany(mappedBy = "thesis", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ThesisKeyword> thesisKeywords = new HashSet<>();
 
+    protected Thesis() {
+    }
+
+    public Thesis(String name, Integer grade, Date datePosted, String description, Course course, UserEntity user, String userName, String userEmail, UserEntity mentor, String mentorName, String mentorEmail, Collection<Tag> tags, Collection<FieldOfStudy> fieldOfStudies, Collection<ThesisKeyword> thesisKeywords) {
+        this.name = name;
+        this.grade = grade;
+        this.datePosted = datePosted;
+        this.defenseDate = new Date();
+        this.description = description;
+        this.course = course;
+        this.user = user;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.viewCount = 0;
+        this.mentor = mentor;
+        this.mentorName = mentorName;
+        this.mentorEmail = mentorEmail;
+        this.comments = comments.stream().collect(Collectors.toSet());
+        this.tags = tags.stream().collect(Collectors.toSet());
+        this.fieldOfStudies = fieldOfStudies.stream().collect(Collectors.toSet());
+        this.thesisKeywords = thesisKeywords.stream().collect(Collectors.toSet());
+    }
 
     public Long getId() {
         return id;
@@ -124,6 +147,7 @@ public class Thesis {
     }
 
     public void setDescription(String description) {
+        thesisKeywords.clear();
         this.description = description;
     }
 
@@ -147,16 +171,12 @@ public class Thesis {
         return comments;
     }
 
-    public void setComments(Set<ThesisComment> comments) {
-        this.comments = comments;
-    }
-
     public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
+    public void setTags(Collection<Tag> tags) {
+        this.tags = tags.stream().collect(Collectors.toSet());
     }
 
     public UserEntity getUser() {
@@ -203,10 +223,6 @@ public class Thesis {
         return thesisKeywords;
     }
 
-    public void setThesisKeywords(Set<ThesisKeyword> thesisKeywords) {
-        this.thesisKeywords = thesisKeywords;
-    }
-
     public Set<FieldOfStudy> getFieldOfStudies() {
         return fieldOfStudies;
     }
@@ -229,5 +245,13 @@ public class Thesis {
 
     public void setMentorEmail(String mentorEmail) {
         this.mentorEmail = mentorEmail;
+    }
+
+    public void addKeyword(Keyword keyword, int keywordFrequency) {
+        ThesisKeyword thesisKeywod = new ThesisKeyword();
+        thesisKeywod.setCount(keywordFrequency);
+        thesisKeywod.setKeyword(keyword);
+        thesisKeywod.setThesis(this);
+        this.thesisKeywords.add(thesisKeywod);
     }
 }

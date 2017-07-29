@@ -1,4 +1,4 @@
-package rs.fon.pzr.rest.resources;
+package rs.fon.pzr.rest.resources.thesis;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,14 @@ import rs.fon.pzr.rest.model.response.level1.ThesisCommentResponseLevel1;
 import rs.fon.pzr.rest.model.response.level1.ThesisPageResponse;
 import rs.fon.pzr.rest.model.response.level1.ThesisResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
+import rs.fon.pzr.rest.resources.thesis.operations.CreateThesisOperation;
+import rs.fon.pzr.rest.resources.thesis.operations.UpdateThesisOperation;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLConnection;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static rs.fon.pzr.model.thesis.Keyword.createNotBannedKeyword;
 
 @RestController
 @RequestMapping(value = "/theses")
@@ -36,25 +36,22 @@ public class ThesisResource {
     private final Logger logger = Logger.getLogger(ThesisResource.class);
     private final ThesisService thesisService;
     private final UserService userService;
-    private final CourseService courseService;
-    private final TagService tagService;
-    private final FieldOfStudyService fieldOfStudyService;
-    private final KeywordService keywordService;
+
+    private final CreateThesisOperation createThesisOperation;
+    private final UpdateThesisOperation updateThesisOperation;
 
     @Autowired
-    public ThesisResource(KeywordService keywordService, UserService userService, TagService tagService, ThesisService thesisService, CourseService courseService, FieldOfStudyService fieldOfStudyService) {
-        this.keywordService = keywordService;
+    public ThesisResource(UserService userService, ThesisService thesisService,
+                          CreateThesisOperation createThesisOperation, UpdateThesisOperation updateThesisOperation) {
         this.userService = userService;
-        this.tagService = tagService;
         this.thesisService = thesisService;
-        this.courseService = courseService;
-        this.fieldOfStudyService = fieldOfStudyService;
+        this.createThesisOperation = createThesisOperation;
+        this.updateThesisOperation = updateThesisOperation;
     }
 
     @GetMapping
     @ResponseBody
     public List<ThesisResponseLevel1> getThesises(@RequestParam(value = "userID", required = false) Long userID) {
-
         if (userID != null) {
             List<Thesis> userThesis = thesisService.getThesisByUserId(userID);
             return userThesis.stream()
@@ -96,151 +93,26 @@ public class ThesisResource {
     public ThesisResponseLevel1 getThesis(@PathVariable("thesisID") Long thesisId) {
         Optional<Thesis> thesis = thesisService.getThesis(thesisId);
 
-        return thesis.map(RestFactory::createThesisResponseLevel1)
-                .orElse(null);
+        return thesis.map(RestFactory::createThesisResponseLevel1).orElse(null);
     }
 
     @PostMapping
     @ResponseBody
-    public ThesisResponseLevel1 addThesis(
-            @RequestBody ThesisRequest thesisRequest) {
+    public ThesisResponseLevel1 addThesis(@RequestBody ThesisRequest thesisRequest) {
         ParamaterCheck.mandatory("Naziv rada", thesisRequest.getName());
 
-        Thesis thesis = new Thesis();
-        thesis.setName(thesisRequest.getName());
-        thesis.setDatePosted(new Date());
-        thesis.setDefenseDate(thesisRequest.getDefenseDate());
-        String description = thesisRequest.getDescription();
-        thesis.setDescription(description);
-        if (description != null && !description.isEmpty()) {
-            Map<String, Integer> keywords = keywordService
-                    .extractWordsWithCount(thesisRequest.getDescription());
+        Thesis thesis = createThesisOperation.execute(thesisRequest);
 
-            for (Map.Entry<String, Integer> entry : keywords.entrySet()) {
-                Keyword keyword = createNotBannedKeyword(entry.getKey());
-                // add or return existing
-                keyword = keywordService.addKeyword(keyword);
-
-                ThesisKeyword thesisKeywod = new ThesisKeyword();
-                thesisKeywod.setCount(entry.getValue());
-                thesisKeywod.setKeyword(keyword);
-                thesisKeywod.setThesis(thesis);
-                thesis.getThesisKeywords().add(thesisKeywod);
-            }
-        }
-        thesis.setGrade(thesisRequest.getGrade());
-        thesis.setUserEmail(thesisRequest.getUserEmail());
-        thesis.setUserName(thesisRequest.getUserName());
-        thesis.setMentorEmail(thesisRequest.getMentorEmail());
-        thesis.setMentorName(thesisRequest.getMentorName());
-        String courseName = thesisRequest.getCourseName();
-        if (courseName != null) {
-            courseService.getCourseByName(courseName)
-                    .ifPresent(thesis::setCourse);
-        }
-        if (thesisRequest.getUserId() != null) {
-            userService.getUser(thesisRequest.getUserId())
-                    .ifPresent(thesis::setUser);
-        }
-        if (thesisRequest.getTags() != null) {
-            Set<Tag> tagList = thesisRequest.getTags().stream()
-                    .map(tagService::addTag)
-                    .collect(Collectors.toSet());
-            thesis.setTags(tagList);
-        }
-        if (thesisRequest.getFieldsOfStudy() != null) {
-            Set<FieldOfStudy> fieldOfStudiesList = thesisRequest.getFieldsOfStudy().stream()
-                    .map(fieldOfStudyService::addFieldOfStudy)
-                    .collect(Collectors.toSet());
-            thesis.setFieldOfStudies(fieldOfStudiesList);
-        }
-        if (thesisRequest.getMentorId() != null) {
-            userService.getUser(thesisRequest.getMentorId())
-                    .ifPresent(thesis::setMentor);
-        }
-        return RestFactory
-                .createThesisResponseLevel1(thesisService.addThesis(thesis));
+        return RestFactory.createThesisResponseLevel1(thesisService.addThesis(thesis));
     }
+
 
     @PutMapping(value = "/{thesisID}")
     @ResponseBody
-    public ThesisResponseLevel1 updateThesis(
-            @RequestBody ThesisRequest thesisRequest,
-            @PathVariable("thesisID") Long thesisID) {
+    public ThesisResponseLevel1 updateThesis(@RequestBody ThesisRequest thesisRequest,
+                                             @PathVariable("thesisID") Long thesisID) {
 
-        Thesis thesis = thesisService.getThesis(thesisID)
-                .orElseThrow(() -> new InvalidArgumentException("Predmet sa id-em " + thesisID
-                        + " ne postoji u bazi!"));
-
-        if (thesisRequest.getDefenseDate() != null) {
-            thesis.setDefenseDate(thesisRequest.getDefenseDate());
-        }
-        String description = thesisRequest.getDescription();
-        if (description != null && !description.equals(thesis.getDescription())) {
-            thesis.setDescription(description);
-            thesis.getThesisKeywords().clear();
-            if (!description.isEmpty()) {
-                Map<String, Integer> keywords = keywordService
-                        .extractWordsWithCount(description);
-
-                for (Map.Entry<String, Integer> entry : keywords.entrySet()) {
-                    Keyword keyword = createNotBannedKeyword(entry.getKey());
-                    // added or returned existing
-                    keyword = keywordService.addKeyword(keyword);
-
-                    ThesisKeyword thesisKeywod = new ThesisKeyword();
-                    thesisKeywod.setCount(entry.getValue());
-                    thesisKeywod.setKeyword(keyword);
-                    thesisKeywod.setThesis(thesis);
-                    thesis.getThesisKeywords().add(thesisKeywod);
-                }
-            }
-        }
-        if (thesisRequest.getGrade() != null) {
-            thesis.setGrade(thesisRequest.getGrade());
-        }
-        if (thesisRequest.getUserEmail() != null) {
-            thesis.setUserEmail(thesisRequest.getUserEmail());
-        }
-        if (thesisRequest.getUserName() != null) {
-            thesis.setUserName(thesisRequest.getUserName());
-        }
-        if (thesisRequest.getMentorEmail() != null) {
-            thesis.setMentorEmail(thesisRequest.getMentorEmail());
-        }
-        if (thesisRequest.getMentorName() != null) {
-            thesis.setMentorName(thesisRequest.getMentorName());
-        }
-        if (thesisRequest.getMentorId() != null) {
-            userService.getUser(thesisRequest.getMentorId())
-                    .ifPresent(thesis::setMentor);
-        }
-        if (thesisRequest.getTags() != null) {
-            Set<Tag> tagList = thesisRequest.getTags()
-                    .stream()
-                    .map(tagService::addTag)
-                    .collect(Collectors.toSet());
-            thesis.setTags(tagList);
-        }
-        if (thesisRequest.getFieldsOfStudy() != null) {
-            Set<FieldOfStudy> fieldOfStudiesList = thesisRequest.getFieldsOfStudy().stream()
-                    .map(fieldOfStudyService::addFieldOfStudy)
-                    .collect(Collectors.toSet());
-            thesis.setFieldOfStudies(fieldOfStudiesList);
-        }
-        if (thesisRequest.getUserId() != null) {
-            userService.getUser(thesisRequest.getUserId())
-                    .ifPresent(thesis::setUser);
-        }
-        if (thesisRequest.getName() != null) {
-            thesis.setName(thesisRequest.getName());
-        }
-        String courseName = thesisRequest.getCourseName();
-        if (courseName != null) {
-            courseService.getCourseByName(courseName)
-                    .ifPresent(thesis::setCourse);
-        }
-
+        Thesis thesis = updateThesisOperation.execute(thesisRequest, thesisID);
         return RestFactory.createThesisResponseLevel1(thesisService
                 .updateThesis(thesis));
     }
