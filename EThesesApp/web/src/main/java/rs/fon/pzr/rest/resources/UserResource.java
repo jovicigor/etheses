@@ -69,11 +69,7 @@ public class UserResource {
         UserEntity user = UserEntity.createUserWithCredentials(credentials);
 
         user = userService.addUser(user);
-        UserResponseLevel1 userResponse = new UserResponseLevel1();
-        userResponse.setId(user.getId());
-        userResponse.setEmail(user.getEmail().asString());
-
-        return userResponse;
+        return new UserResponseLevel1(user);
     }
 
     @PutMapping(value = "/{userID}")
