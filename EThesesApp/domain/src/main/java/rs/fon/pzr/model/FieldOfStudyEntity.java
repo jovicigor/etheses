@@ -1,5 +1,7 @@
 package rs.fon.pzr.model;
 
+import rs.fon.pzr.guards.NullGuard;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,10 +16,15 @@ public class FieldOfStudyEntity {
     @Column(name = "name")
     private String name;
 
+    public static FieldOfStudyEntity createFieldOfStudy(String name) {
+        NullGuard.validate("field of study name", name);
+        return new FieldOfStudyEntity(name);
+    }
+
     protected FieldOfStudyEntity() {
     }
 
-    public FieldOfStudyEntity(String name) {
+    private FieldOfStudyEntity(String name) {
         this.name = name;
     }
 
