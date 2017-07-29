@@ -6,6 +6,7 @@ import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.StudiesService;
 import rs.fon.pzr.model.CourseEntity;
+import rs.fon.pzr.model.CourseEntityBuilder;
 import rs.fon.pzr.model.StudiesEntity;
 import rs.fon.pzr.rest.model.request.CourseRequest;
 import rs.fon.pzr.rest.model.response.level1.CourseResponseLevel1;
@@ -72,9 +73,14 @@ public class CourseResource {
                     .map(Optional::get)
                     .collect(Collectors.toSet());
         }
-        CourseEntity newCourse = courseService.addCourse(new CourseEntity(courseName, courseNameShort, studiesList));
+        CourseEntity course = new CourseEntityBuilder()
+                .withName(courseName)
+                .withNameShort(courseNameShort)
+                .withStudies(studiesList)
+                .build();
+        CourseEntity newCourse = courseService.addCourse(course);
 
-        return RestFactory.createCourseResponseLevel1(newCourse);
+        return new CourseResponseLevel1(newCourse);
     }
 
     @PutMapping(value = "/{courseID}")

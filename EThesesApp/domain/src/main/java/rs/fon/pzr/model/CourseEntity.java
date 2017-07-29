@@ -28,10 +28,10 @@ public class CourseEntity {
     protected CourseEntity() {
     }
 
-    public CourseEntity(String name, String nameShort, Set<StudiesEntity> studies) {
+    CourseEntity(String name, String nameShort, Collection<StudiesEntity> studies) {
         this.name = name;
         this.nameShort = nameShort;
-        this.studies = studies;
+        this.studies = studies.stream().collect(Collectors.toSet());
     }
 
     public Long getId() {
