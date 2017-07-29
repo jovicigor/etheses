@@ -47,14 +47,14 @@ public class ThesisResponseLevel1 {
         else
             user = null;
         userName = thesis.getUserName();
-        userEmail = thesis.getUserEmail();
+        userEmail = thesis.getUserEmail().asString();
         viewCount = thesis.getViewCount();
         if (thesis.getMentor() != null)
             mentor = new UserResponseLevel2(thesis.getMentor());
         else
             mentor = null;
         mentorName = thesis.getName();
-        mentorEmail = thesis.getMentorEmail();
+        mentorEmail = thesis.getMentorEmail().asString();
         tags = thesis.getTags().stream()
                 .map(TagResponse::new)
                 .collect(Collectors.toSet());

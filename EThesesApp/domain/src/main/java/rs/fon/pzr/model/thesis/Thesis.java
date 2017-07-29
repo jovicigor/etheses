@@ -204,8 +204,8 @@ public class Thesis {
         this.userName = userName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public Email getUserEmail() {
+        return Email.fromString(userEmail);
     }
 
     public void setUserEmail(String userEmail) {
@@ -221,7 +221,7 @@ public class Thesis {
     }
 
     public Collection<FieldOfStudy> getFieldOfStudies() {
-        return fieldOfStudies;
+        return new HashSet<>(fieldOfStudies);
     }
 
     public void setFieldOfStudies(Set<FieldOfStudy> fieldOfStudies) {
@@ -236,8 +236,8 @@ public class Thesis {
         this.mentorName = mentorName;
     }
 
-    public String getMentorEmail() {
-        return mentorEmail;
+    public Email getMentorEmail() {
+        return Email.fromString(mentorEmail);
     }
 
     public void setMentorEmail(String mentorEmail) {
