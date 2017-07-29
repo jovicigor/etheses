@@ -5,15 +5,13 @@ import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.model.StudiesEntity;
 import rs.fon.pzr.core.service.StudiesService;
-import rs.fon.pzr.core.service.util.ParamaterCheck;
+import rs.fon.pzr.model.StudiesEntityBuilder;
 import rs.fon.pzr.rest.model.request.StudiesRequest;
 import rs.fon.pzr.rest.model.response.level1.StudiesResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -65,9 +63,13 @@ public class StudiesResource {
         String nameShort = studiesRequest.getNameShort()
                 .orElseThrow(() -> new InvalidArgumentException("Studies short name je obavezno polje!"));
 
-        StudiesEntity newStudies = studiesService.addStudies(new StudiesEntity(name, nameShort, new HashSet<>()));
+        StudiesEntity studies = new StudiesEntityBuilder()
+                .withName(name)
+                .withNameShort(nameShort)
+                .build();
+        studies = studiesService.addStudies(studies);
 
-        return RestFactory.createStudiesResponseLevel1(newStudies);
+        return RestFactory.createStudiesResponseLevel1(studies);
     }
 
     @PutMapping(value = "/{studiesID}")

@@ -27,7 +27,7 @@ public class StudiesEntity {
     protected StudiesEntity() {
     }
 
-    public StudiesEntity(String name, String nameShort, Collection<CourseEntity> courses) {
+    StudiesEntity(String name, String nameShort, Collection<CourseEntity> courses) {
         this.name = name;
         this.nameShort = nameShort;
         this.courses = courses.stream().collect(Collectors.toSet());
