@@ -27,7 +27,7 @@ import java.net.URLConnection;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static rs.fon.pzr.model.thesis.KeywordEntity.createNotBannedKeyword;
+import static rs.fon.pzr.model.thesis.Keyword.createNotBannedKeyword;
 
 @RestController
 @RequestMapping(value = "/theses")
@@ -56,12 +56,12 @@ public class ThesisResource {
     public List<ThesisResponseLevel1> getThesises(@RequestParam(value = "userID", required = false) Long userID) {
 
         if (userID != null) {
-            List<ThesisEntity> userThesis = thesisService.getThesisByUserId(userID);
+            List<Thesis> userThesis = thesisService.getThesisByUserId(userID);
             return userThesis.stream()
                     .map(RestFactory::createThesisResponseLevel1)
                     .collect(Collectors.toList());
         }
-        List<ThesisEntity> thesisList = thesisService.getAllThesis();
+        List<Thesis> thesisList = thesisService.getAllThesis();
 
         return thesisList.stream()
                 .map(RestFactory::createThesisResponseLevel1)
@@ -83,7 +83,7 @@ public class ThesisResource {
             @RequestParam(value = "fieldMatchLimit", required = false) Long fieldMatchLimit,
             @RequestParam(value = "descriptionKeys", required = false) List<String> descriptioinKeys,
             @RequestParam(value = "descriptionMatchLimit", required = false) Long descriptionMatchLimit) {
-        Page<ThesisEntity> thesisPage = thesisService.advancedSearch(pageNumber,
+        Page<Thesis> thesisPage = thesisService.advancedSearch(pageNumber,
                 pageSize, thesisName, tagValues,
                 matchLimit, courseName, studiesName,
                 sortField, fieldValues, fieldMatchLimit, descriptioinKeys, descriptionMatchLimit);
@@ -94,7 +94,7 @@ public class ThesisResource {
     @GetMapping(value = "/{thesisID}")
     @ResponseBody
     public ThesisResponseLevel1 getThesis(@PathVariable("thesisID") Long thesisId) {
-        Optional<ThesisEntity> thesis = thesisService.getThesis(thesisId);
+        Optional<Thesis> thesis = thesisService.getThesis(thesisId);
 
         return thesis.map(RestFactory::createThesisResponseLevel1)
                 .orElse(null);
@@ -106,7 +106,7 @@ public class ThesisResource {
             @RequestBody ThesisRequest thesisRequest) {
         ParamaterCheck.mandatory("Naziv rada", thesisRequest.getName());
 
-        ThesisEntity thesis = new ThesisEntity();
+        Thesis thesis = new Thesis();
         thesis.setName(thesisRequest.getName());
         thesis.setDatePosted(new Date());
         thesis.setDefenseDate(thesisRequest.getDefenseDate());
@@ -117,11 +117,11 @@ public class ThesisResource {
                     .extractWordsWithCount(thesisRequest.getDescription());
 
             for (Map.Entry<String, Integer> entry : keywords.entrySet()) {
-                KeywordEntity keyword = createNotBannedKeyword(entry.getKey());
+                Keyword keyword = createNotBannedKeyword(entry.getKey());
                 // add or return existing
                 keyword = keywordService.addKeyword(keyword);
 
-                ThesisKeywordEntity thesisKeywod = new ThesisKeywordEntity();
+                ThesisKeyword thesisKeywod = new ThesisKeyword();
                 thesisKeywod.setCount(entry.getValue());
                 thesisKeywod.setKeyword(keyword);
                 thesisKeywod.setThesis(thesis);
@@ -143,13 +143,13 @@ public class ThesisResource {
                     .ifPresent(thesis::setUser);
         }
         if (thesisRequest.getTags() != null) {
-            Set<TagEntity> tagList = thesisRequest.getTags().stream()
+            Set<Tag> tagList = thesisRequest.getTags().stream()
                     .map(tagService::addTag)
                     .collect(Collectors.toSet());
             thesis.setTags(tagList);
         }
         if (thesisRequest.getFieldsOfStudy() != null) {
-            Set<FieldOfStudyEntity> fieldOfStudiesList = thesisRequest.getFieldsOfStudy().stream()
+            Set<FieldOfStudy> fieldOfStudiesList = thesisRequest.getFieldsOfStudy().stream()
                     .map(fieldOfStudyService::addFieldOfStudy)
                     .collect(Collectors.toSet());
             thesis.setFieldOfStudies(fieldOfStudiesList);
@@ -168,7 +168,7 @@ public class ThesisResource {
             @RequestBody ThesisRequest thesisRequest,
             @PathVariable("thesisID") Long thesisID) {
 
-        ThesisEntity thesis = thesisService.getThesis(thesisID)
+        Thesis thesis = thesisService.getThesis(thesisID)
                 .orElseThrow(() -> new InvalidArgumentException("Predmet sa id-em " + thesisID
                         + " ne postoji u bazi!"));
 
@@ -184,11 +184,11 @@ public class ThesisResource {
                         .extractWordsWithCount(description);
 
                 for (Map.Entry<String, Integer> entry : keywords.entrySet()) {
-                    KeywordEntity keyword = createNotBannedKeyword(entry.getKey());
+                    Keyword keyword = createNotBannedKeyword(entry.getKey());
                     // added or returned existing
                     keyword = keywordService.addKeyword(keyword);
 
-                    ThesisKeywordEntity thesisKeywod = new ThesisKeywordEntity();
+                    ThesisKeyword thesisKeywod = new ThesisKeyword();
                     thesisKeywod.setCount(entry.getValue());
                     thesisKeywod.setKeyword(keyword);
                     thesisKeywod.setThesis(thesis);
@@ -216,14 +216,14 @@ public class ThesisResource {
                     .ifPresent(thesis::setMentor);
         }
         if (thesisRequest.getTags() != null) {
-            Set<TagEntity> tagList = thesisRequest.getTags()
+            Set<Tag> tagList = thesisRequest.getTags()
                     .stream()
                     .map(tagService::addTag)
                     .collect(Collectors.toSet());
             thesis.setTags(tagList);
         }
         if (thesisRequest.getFieldsOfStudy() != null) {
-            Set<FieldOfStudyEntity> fieldOfStudiesList = thesisRequest.getFieldsOfStudy().stream()
+            Set<FieldOfStudy> fieldOfStudiesList = thesisRequest.getFieldsOfStudy().stream()
                     .map(fieldOfStudyService::addFieldOfStudy)
                     .collect(Collectors.toSet());
             thesis.setFieldOfStudies(fieldOfStudiesList);
@@ -273,7 +273,7 @@ public class ThesisResource {
         UserEntity loggedInUser = userService.getUser(email)
                 .orElseThrow(() -> new InvalidTicketException("Must provide a valid ticket!"));
 
-        ThesisEntity thesis = thesisService.getThesis(thesisId)
+        Thesis thesis = thesisService.getThesis(thesisId)
                 .orElseThrow(() -> new InvalidArgumentException("THesis doesn't exist"));
 
         ThesisComment thesisComment = new ThesisCommentBuilder()
@@ -293,7 +293,7 @@ public class ThesisResource {
 
     @GetMapping(value = "/files")
     @ResponseBody
-    public Set<TFileEntity> getAllFileRecords() {
+    public Set<TFile> getAllFileRecords() {
         return thesisService.getAllFileRecords();
     }
 
@@ -339,8 +339,8 @@ public class ThesisResource {
     }
 
     @PostMapping(value = "/{thesisID}/upload")
-    public TFileEntity uploadThesisFile(@PathVariable("thesisID") Long thesisID,
-                                        @RequestParam("file") MultipartFile file) {
+    public TFile uploadThesisFile(@PathVariable("thesisID") Long thesisID,
+                                  @RequestParam("file") MultipartFile file) {
         return thesisService.addFile(thesisID, file);
     }
 

@@ -26,12 +26,12 @@ public class ThesisComment {
 
     @ManyToOne
     @JoinColumn(name = "thesis_id")
-    private ThesisEntity thesis;
+    private Thesis thesis;
 
     protected ThesisComment() {
     }
 
-    public ThesisComment(String message, Date datePosted, UserEntity author, ThesisEntity thesis) {
+    public ThesisComment(String message, Date datePosted, UserEntity author, Thesis thesis) {
         this.message = message;
         this.datePosted = datePosted;
         this.author = author;
@@ -58,7 +58,7 @@ public class ThesisComment {
         return author;
     }
 
-    public ThesisEntity getThesis() {
+    public Thesis getThesis() {
         return thesis;
     }
 }

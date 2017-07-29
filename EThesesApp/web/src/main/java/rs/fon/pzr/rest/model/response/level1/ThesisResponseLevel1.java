@@ -1,7 +1,7 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.thesis.TFileEntity;
-import rs.fon.pzr.model.thesis.ThesisEntity;
+import rs.fon.pzr.model.thesis.TFile;
+import rs.fon.pzr.model.thesis.Thesis;
 import rs.fon.pzr.rest.model.response.level2.CourseResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.ThesisCommentResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.UserResponseLevel2;
@@ -29,9 +29,9 @@ public class ThesisResponseLevel1 {
     private final Set<TagResponse> tags;
     private final Set<FieldOfStudyResponse> fieldsOfStudy;
     private final Set<ThesisCommentResponseLevel2> comments;
-    private final TFileEntity file;
+    private final TFile file;
 
-    public ThesisResponseLevel1(ThesisEntity thesis) {
+    public ThesisResponseLevel1(Thesis thesis) {
         id = thesis.getId();
         name = thesis.getName();
         grade = thesis.getGrade();
@@ -135,7 +135,7 @@ public class ThesisResponseLevel1 {
         return comments;
     }
 
-    public TFileEntity getFile() {
+    public TFile getFile() {
         return file;
     }
 }

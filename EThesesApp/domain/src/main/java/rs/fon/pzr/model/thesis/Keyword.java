@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "keyword")
-public class KeywordEntity {
+public class Keyword {
 
     @Id
     @Column(name = "keyword_id")
@@ -17,10 +17,10 @@ public class KeywordEntity {
     @Column(name = "is_banned")
     private boolean banned;
 
-    protected KeywordEntity() {
+    protected Keyword() {
     }
 
-    private KeywordEntity(String value, boolean banned) {
+    private Keyword(String value, boolean banned) {
         if (value == null) {
             throw new IllegalStateException("Keyword value cannot be null");
         }
@@ -29,8 +29,8 @@ public class KeywordEntity {
         this.banned = banned;
     }
 
-    public static KeywordEntity createNotBannedKeyword(String value) {
-        return new KeywordEntity(value, false);
+    public static Keyword createNotBannedKeyword(String value) {
+        return new Keyword(value, false);
     }
 
     public Long getId() {

@@ -1,6 +1,6 @@
 package rs.fon.pzr.model.thesis;
 
-import rs.fon.pzr.model.studies.CourseEntity;
+import rs.fon.pzr.model.studies.Course;
 import rs.fon.pzr.model.user.UserEntity;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "thesis")
-public class ThesisEntity {
+public class Thesis {
 
 
     @Id
@@ -35,11 +35,11 @@ public class ThesisEntity {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    private CourseEntity course;
+    private Course course;
 
     @ManyToOne
     @JoinColumn(name = "file_id")
-    private TFileEntity file;
+    private TFile file;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -69,14 +69,14 @@ public class ThesisEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "thesis_tag", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "tag_id")})
-    private Set<TagEntity> tags = new HashSet<>();
+    private Set<Tag> tags = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "thesis_field_of_study", joinColumns = {@JoinColumn(name = "thesis_id")}, inverseJoinColumns = {@JoinColumn(name = "field_of_study_id")})
-    private Set<FieldOfStudyEntity> fieldOfStudies = new HashSet<>();
+    private Set<FieldOfStudy> fieldOfStudies = new HashSet<>();
 
     @OneToMany(mappedBy = "thesis", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ThesisKeywordEntity> thesisKeywords = new HashSet<>();
+    private Set<ThesisKeyword> thesisKeywords = new HashSet<>();
 
 
     public Long getId() {
@@ -127,11 +127,11 @@ public class ThesisEntity {
         this.description = description;
     }
 
-    public CourseEntity getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(CourseEntity course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 
@@ -151,11 +151,11 @@ public class ThesisEntity {
         this.comments = comments;
     }
 
-    public Set<TagEntity> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<TagEntity> tags) {
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 
@@ -167,11 +167,11 @@ public class ThesisEntity {
         this.user = user;
     }
 
-    public TFileEntity getFile() {
+    public TFile getFile() {
         return file;
     }
 
-    public void setFile(TFileEntity file) {
+    public void setFile(TFile file) {
         this.file = file;
     }
 
@@ -199,19 +199,19 @@ public class ThesisEntity {
         this.viewCount++;
     }
 
-    public Set<ThesisKeywordEntity> getThesisKeywords() {
+    public Set<ThesisKeyword> getThesisKeywords() {
         return thesisKeywords;
     }
 
-    public void setThesisKeywords(Set<ThesisKeywordEntity> thesisKeywords) {
+    public void setThesisKeywords(Set<ThesisKeyword> thesisKeywords) {
         this.thesisKeywords = thesisKeywords;
     }
 
-    public Set<FieldOfStudyEntity> getFieldOfStudies() {
+    public Set<FieldOfStudy> getFieldOfStudies() {
         return fieldOfStudies;
     }
 
-    public void setFieldOfStudies(Set<FieldOfStudyEntity> fieldOfStudies) {
+    public void setFieldOfStudies(Set<FieldOfStudy> fieldOfStudies) {
         this.fieldOfStudies = fieldOfStudies;
     }
 

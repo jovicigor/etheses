@@ -6,25 +6,25 @@ import rs.fon.pzr.guards.NullGuard;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class StudiesEntityBuilder {
+public class StudiesBuilder {
     private String name;
     private String nameShort;
-    private Collection<CourseEntity> courses = new HashSet<>();
+    private Collection<Course> courses = new HashSet<>();
 
-    public StudiesEntityBuilder withName(String name) {
+    public StudiesBuilder withName(String name) {
         this.name = name;
         return this;
     }
 
-    public StudiesEntityBuilder withNameShort(String nameShort) {
+    public StudiesBuilder withNameShort(String nameShort) {
         this.nameShort = nameShort;
         return this;
     }
 
-    public StudiesEntity build() {
+    public Studies build() {
         EmptyGuard.validateString("Studies name", name);
         EmptyGuard.validateString("Studies name short", nameShort);
         NullGuard.validate("Studies courses", courses);
-        return new StudiesEntity(name, nameShort, courses);
+        return new Studies(name, nameShort, courses);
     }
 }

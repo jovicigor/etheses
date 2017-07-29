@@ -2,13 +2,13 @@ package rs.fon.pzr.core.service;
 
 import java.util.Set;
 
-import rs.fon.pzr.model.thesis.TagEntity;
+import rs.fon.pzr.model.thesis.Tag;
 
 public interface TagService {
 
-    Set<TagEntity> getAllTags();
+    Set<Tag> getAllTags();
 
-    TagEntity addTag(String value);
+    Tag addTag(String value);
 
     void removeTag(Long tagId);
 

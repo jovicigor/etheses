@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "file")
-public class TFileEntity {
+public class TFile {
 
     @Id
     @Column(name = "file_id")
@@ -14,10 +14,10 @@ public class TFileEntity {
     @Column(name = "file_name")
     private String fileName;
 
-    protected TFileEntity() {
+    protected TFile() {
     }
 
-    public TFileEntity(String fileName) {
+    public TFile(String fileName) {
         this.fileName = fileName;
     }
 

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.model.thesis.TagEntity;
+import rs.fon.pzr.model.thesis.Tag;
 import rs.fon.pzr.persistence.repository.TagRepository;
 
-import static rs.fon.pzr.model.thesis.TagEntity.*;
+import static rs.fon.pzr.model.thesis.Tag.*;
 
 @Service
 public class TagServiceImpl implements TagService {
@@ -24,15 +24,15 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Set<TagEntity> getAllTags() {
+    public Set<Tag> getAllTags() {
         return tagRepository.findAll();
     }
 
     @Transactional
     @Override
-    public TagEntity addTag(String value) {
+    public Tag addTag(String value) {
         value = value.toLowerCase().replaceAll("\\s+", "");
-        Optional<TagEntity> tag = tagRepository.findByValue(value);
+        Optional<Tag> tag = tagRepository.findByValue(value);
         if (tag.isPresent()) {
             return tag.get();
         }
@@ -43,9 +43,9 @@ public class TagServiceImpl implements TagService {
     @Transactional
     @Override
     public void removeTag(Long id) {
-        TagEntity tag = tagRepository.findOne(id);
+        Tag tag = tagRepository.findOne(id);
         if (tag == null) {
-            throw new InvalidArgumentException("TagEntity sa id-em " + id
+            throw new InvalidArgumentException("Tag sa id-em " + id
                     + " ne postoji u bazi!");
         }
         tagRepository.delete(id);

@@ -9,7 +9,7 @@ import java.util.Date;
 public class ThesisCommentBuilder {
     private String message;
     private UserEntity author;
-    private ThesisEntity thesis;
+    private Thesis thesis;
 
     public ThesisCommentBuilder withMessage(String message) {
         this.message = message;
@@ -21,7 +21,7 @@ public class ThesisCommentBuilder {
         return this;
     }
 
-    public ThesisCommentBuilder withThesis(ThesisEntity thesis) {
+    public ThesisCommentBuilder withThesis(Thesis thesis) {
         this.thesis = thesis;
         return this;
     }

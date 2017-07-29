@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.model.studies.StudiesEntity;
+import rs.fon.pzr.model.studies.Studies;
 import rs.fon.pzr.persistence.repository.StudiesRepository;
 
 @Service
@@ -22,27 +22,27 @@ public class StudiesServiceImpl implements StudiesService {
     }
 
     @Override
-    public Optional<StudiesEntity> getStudies(Long id) {
-        StudiesEntity studies = studiesRepository.findOne(id);
+    public Optional<Studies> getStudies(Long id) {
+        Studies studies = studiesRepository.findOne(id);
 
         return Optional.ofNullable(studies);
     }
 
     @Override
-    public Optional<StudiesEntity> getStudiesByName(String name) {
-        StudiesEntity studies = studiesRepository.findByName(name);
+    public Optional<Studies> getStudiesByName(String name) {
+        Studies studies = studiesRepository.findByName(name);
         return Optional.ofNullable(studies);
     }
 
     @Override
-    public List<StudiesEntity> getAllStudies() {
+    public List<Studies> getAllStudies() {
         return studiesRepository.findAll();
     }
 
 
     @Transactional
     @Override
-    public StudiesEntity addStudies(StudiesEntity studies) {
+    public Studies addStudies(Studies studies) {
         if (studiesRepository.findByName(studies.getName()) != null) {
             throw new InvalidArgumentException("Nivo studija " + studies.getName()
                     + " već postoji u bazi!");
@@ -57,8 +57,8 @@ public class StudiesServiceImpl implements StudiesService {
 
     @Transactional
     @Override
-    public StudiesEntity updateStudies(StudiesEntity studies) {
-        StudiesEntity existingStudies = studiesRepository.findOne(studies.getId());
+    public Studies updateStudies(Studies studies) {
+        Studies existingStudies = studiesRepository.findOne(studies.getId());
         if (existingStudies == null) {
             throw new InvalidArgumentException("Nivo studija sa id-em "
                     + studies.getId() + " ne postoji u bazi!");
@@ -83,7 +83,7 @@ public class StudiesServiceImpl implements StudiesService {
     @Transactional
     @Override
     public void removeStudies(Long studiesID) {
-        StudiesEntity studies = studiesRepository.findOne(studiesID);
+        Studies studies = studiesRepository.findOne(studiesID);
         if (studies == null) {
             throw new InvalidArgumentException("Nivo studija sa id-em " + studiesID
                     + " ne postoji u bazi!");

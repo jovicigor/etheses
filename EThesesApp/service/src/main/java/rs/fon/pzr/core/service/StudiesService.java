@@ -3,19 +3,19 @@ package rs.fon.pzr.core.service;
 import java.util.List;
 import java.util.Optional;
 
-import rs.fon.pzr.model.studies.StudiesEntity;
+import rs.fon.pzr.model.studies.Studies;
 
 public interface StudiesService {
 
-    Optional<StudiesEntity> getStudies(Long id);
+    Optional<Studies> getStudies(Long id);
 
-    Optional<StudiesEntity> getStudiesByName(String name);
+    Optional<Studies> getStudiesByName(String name);
 
-    List<StudiesEntity> getAllStudies();
+    List<Studies> getAllStudies();
 
-    StudiesEntity addStudies(StudiesEntity studies);
+    Studies addStudies(Studies studies);
 
-    StudiesEntity updateStudies(StudiesEntity studies);
+    Studies updateStudies(Studies studies);
 
     void removeStudies(Long studiesID);
 

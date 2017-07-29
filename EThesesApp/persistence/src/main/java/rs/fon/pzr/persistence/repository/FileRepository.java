@@ -4,10 +4,10 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.model.thesis.TFileEntity;
+import rs.fon.pzr.model.thesis.TFile;
 
-public interface FileRepository extends CrudRepository<TFileEntity, Long>{
+public interface FileRepository extends CrudRepository<TFile, Long>{
 	
-	TFileEntity findByFileName(String fileName);
-	Set<TFileEntity> findAll();
+	TFile findByFileName(String fileName);
+	Set<TFile> findAll();
 }

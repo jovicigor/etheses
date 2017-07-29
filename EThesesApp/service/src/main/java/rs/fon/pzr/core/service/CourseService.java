@@ -3,20 +3,20 @@ package rs.fon.pzr.core.service;
 import java.util.List;
 import java.util.Optional;
 
-import rs.fon.pzr.model.studies.CourseEntity;
+import rs.fon.pzr.model.studies.Course;
 
 
 public interface CourseService {
 
-    Optional<CourseEntity> getCourse(Long id);
+    Optional<Course> getCourse(Long id);
 
-    Optional<CourseEntity> getCourseByName(String name);
+    Optional<Course> getCourseByName(String name);
 
-    List<CourseEntity> getAllCourses();
+    List<Course> getAllCourses();
 
-    CourseEntity addCourse(CourseEntity course);
+    Course addCourse(Course course);
 
-    CourseEntity updateCourse(CourseEntity course);
+    Course updateCourse(Course course);
 
     void removeCourse(Long courseID);
 

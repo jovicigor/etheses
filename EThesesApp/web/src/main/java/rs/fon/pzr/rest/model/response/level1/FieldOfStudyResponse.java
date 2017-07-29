@@ -1,13 +1,13 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.thesis.FieldOfStudyEntity;
+import rs.fon.pzr.model.thesis.FieldOfStudy;
 
 public class FieldOfStudyResponse {
 
     private final Long id;
     private final String name;
 
-    public FieldOfStudyResponse(FieldOfStudyEntity studiesField) {
+    public FieldOfStudyResponse(FieldOfStudy studiesField) {
         id = studiesField.getId();
         name = studiesField.getName();
     }

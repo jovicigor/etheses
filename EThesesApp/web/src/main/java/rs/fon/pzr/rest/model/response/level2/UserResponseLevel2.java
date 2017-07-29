@@ -1,6 +1,6 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import rs.fon.pzr.model.thesis.ThesisEntity;
+import rs.fon.pzr.model.thesis.Thesis;
 import rs.fon.pzr.model.user.UserEntity;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class UserResponseLevel2 {
             courseId = null;
         }
         thesisIDs = author.getTheses().stream()
-                .map(ThesisEntity::getId)
+                .map(Thesis::getId)
                 .collect(Collectors.toList());
         biography = author.getBiography();
         interests = author.getInterests();

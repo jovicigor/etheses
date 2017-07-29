@@ -1,10 +1,10 @@
 package rs.fon.pzr.rest.model.util;
 
 import org.springframework.data.domain.Page;
-import rs.fon.pzr.model.studies.CourseEntity;
-import rs.fon.pzr.model.studies.StudiesEntity;
+import rs.fon.pzr.model.studies.Course;
+import rs.fon.pzr.model.studies.Studies;
 import rs.fon.pzr.model.thesis.ThesisComment;
-import rs.fon.pzr.model.thesis.ThesisEntity;
+import rs.fon.pzr.model.thesis.Thesis;
 import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.rest.model.response.level1.*;
 import rs.fon.pzr.rest.model.response.level2.*;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class RestFactory {
 
-    public static ThesisPageResponse CreateThesisPageResponse(Page<ThesisEntity> thesisPage) {
+    public static ThesisPageResponse CreateThesisPageResponse(Page<Thesis> thesisPage) {
         ThesisPageResponse thesisPageResponse = new ThesisPageResponse();
         List<ThesisResponseLevel1> thesisResponseLevel1List = thesisPage.getContent().stream().map(RestFactory::createThesisResponseLevel1).collect(Collectors.toList());
         thesisPageResponse.setNumber(thesisPage.getNumber() + 1);
@@ -27,7 +27,7 @@ public class RestFactory {
         return thesisPageResponse;
     }
 
-    public static ThesisResponseLevel1 createThesisResponseLevel1(ThesisEntity thesis) {
+    public static ThesisResponseLevel1 createThesisResponseLevel1(Thesis thesis) {
         if (thesis == null) {
             return null;
         }
@@ -35,7 +35,7 @@ public class RestFactory {
         return new ThesisResponseLevel1(thesis);
     }
 
-    private static ThesisResponseLevel2 createThesisResponseLevel2(ThesisEntity thesis) {
+    private static ThesisResponseLevel2 createThesisResponseLevel2(Thesis thesis) {
         if (thesis == null) {
             return null;
         }
@@ -82,14 +82,14 @@ public class RestFactory {
     }
 
 
-    public static CourseResponseLevel1 createCourseResponseLevel1(CourseEntity course) {
+    public static CourseResponseLevel1 createCourseResponseLevel1(Course course) {
         if (course == null) {
             return null;
         }
         return new CourseResponseLevel1(course);
     }
 
-    private static CourseResponseLevel2 createCourseResponseLevel2(CourseEntity course) {
+    private static CourseResponseLevel2 createCourseResponseLevel2(Course course) {
         if (course == null) {
             return null;
         }
@@ -97,7 +97,7 @@ public class RestFactory {
 
     }
 
-    public static StudiesResponseLevel1 createStudiesResponseLevel1(StudiesEntity studies) {
+    public static StudiesResponseLevel1 createStudiesResponseLevel1(Studies studies) {
         if (studies == null) {
             return null;
         }

@@ -1,7 +1,5 @@
 package rs.fon.pzr.model.studies;
 
-import rs.fon.pzr.model.studies.CourseEntity;
-
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,10 +7,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "studies")
-public class StudiesEntity {
+@Table(name = "course")
+public class Course {
+
     @Id
-    @Column(name = "studies_id")
+    @Column(name = "course_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -23,16 +22,16 @@ public class StudiesEntity {
     private String nameShort;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "course_studies", joinColumns = {@JoinColumn(name = "studies_id")}, inverseJoinColumns = {@JoinColumn(name = "course_id")})
-    private Set<CourseEntity> courses = new HashSet<>();
+    @JoinTable(name = "course_studies", joinColumns = {@JoinColumn(name = "course_id")}, inverseJoinColumns = {@JoinColumn(name = "studies_id")})
+    private Set<Studies> studies = new HashSet<>();
 
-    protected StudiesEntity() {
+    protected Course() {
     }
 
-    StudiesEntity(String name, String nameShort, Collection<CourseEntity> courses) {
+    Course(String name, String nameShort, Collection<Studies> studies) {
         this.name = name;
         this.nameShort = nameShort;
-        this.courses = courses.stream().collect(Collectors.toSet());
+        this.studies = studies.stream().collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -59,7 +58,12 @@ public class StudiesEntity {
         this.nameShort = nameShort;
     }
 
-    public Collection<CourseEntity> getCourses() {
-        return new HashSet<>(courses);
+    public Collection<Studies> getStudies() {
+        return new HashSet<>(studies);
+    }
+
+    public void updateStudies(Collection<Studies> studies) {
+        this.studies = studies.stream()
+                .collect(Collectors.toSet());
     }
 }

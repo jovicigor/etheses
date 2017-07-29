@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.service.FieldOfStudyService;
-import rs.fon.pzr.model.thesis.FieldOfStudyEntity;
+import rs.fon.pzr.model.thesis.FieldOfStudy;
 import rs.fon.pzr.rest.model.request.FieldOfStudyRequest;
 
 import java.util.Set;
@@ -22,13 +22,13 @@ public class FieldOfStudyResource {
 
     @GetMapping
     @ResponseBody
-    public Set<FieldOfStudyEntity> getFieldOfStudies() {
+    public Set<FieldOfStudy> getFieldOfStudies() {
         return fieldOfStudyService.getAllFieldsOfStudy();
     }
 
     @PostMapping
     @ResponseBody
-    public FieldOfStudyEntity addFieldOfStudy(@RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
+    public FieldOfStudy addFieldOfStudy(@RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
         String fieldName = fieldOfStudyRequest.getName()
                 .orElseThrow(() -> new InvalidArgumentException("Naziv oblasti je obavezno polje!"));
 
@@ -37,9 +37,9 @@ public class FieldOfStudyResource {
 
     @PutMapping(value = "/{fieldOfStudyID}")
     @ResponseBody
-    public FieldOfStudyEntity updateFieldOfStudy(@PathVariable("fieldOfStudyID") Long fieldOfStudyID,
-                                                 @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
-        FieldOfStudyEntity fieldOfStudy = fieldOfStudyService.getFieldOfStudy(fieldOfStudyID)
+    public FieldOfStudy updateFieldOfStudy(@PathVariable("fieldOfStudyID") Long fieldOfStudyID,
+                                           @RequestBody FieldOfStudyRequest fieldOfStudyRequest) {
+        FieldOfStudy fieldOfStudy = fieldOfStudyService.getFieldOfStudy(fieldOfStudyID)
                 .orElseThrow(() -> new InvalidArgumentException("Oblast sa id-em " + fieldOfStudyID
                         + " ne postoji u bazi!"));
 

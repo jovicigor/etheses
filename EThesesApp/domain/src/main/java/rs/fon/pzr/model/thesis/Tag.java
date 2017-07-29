@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tag")
-public class TagEntity {
+public class Tag {
 
     @Id
     @Column(name = "tag_id")
@@ -17,16 +17,16 @@ public class TagEntity {
     @Column(name = "value")
     private String value;
 
-    protected TagEntity() {
+    protected Tag() {
     }
 
-    private TagEntity(String value) {
+    private Tag(String value) {
         this.value = value;
     }
 
-    public static TagEntity createTag(String value) {
+    public static Tag createTag(String value) {
         EmptyGuard.validateString("tag value", value);
-        return new TagEntity(value);
+        return new Tag(value);
     }
 
     public Long getId() {

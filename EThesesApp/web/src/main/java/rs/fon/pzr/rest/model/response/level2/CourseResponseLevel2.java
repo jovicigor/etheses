@@ -1,7 +1,7 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import rs.fon.pzr.model.studies.CourseEntity;
-import rs.fon.pzr.model.studies.StudiesEntity;
+import rs.fon.pzr.model.studies.Course;
+import rs.fon.pzr.model.studies.Studies;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,12 +13,12 @@ public class CourseResponseLevel2 {
     private final String nameShort;
     private final Set<Long> studiesIDs;
 
-    public CourseResponseLevel2(CourseEntity courseEntity) {
-        id = courseEntity.getId();
-        name = courseEntity.getName();
-        nameShort = courseEntity.getNameShort();
-        studiesIDs = courseEntity.getStudies().stream()
-                .map(StudiesEntity::getId)
+    public CourseResponseLevel2(Course course) {
+        id = course.getId();
+        name = course.getName();
+        nameShort = course.getNameShort();
+        studiesIDs = course.getStudies().stream()
+                .map(Studies::getId)
                 .collect(Collectors.toSet());
     }
 

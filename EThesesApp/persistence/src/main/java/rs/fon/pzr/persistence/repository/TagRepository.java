@@ -5,12 +5,12 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.model.thesis.TagEntity;
+import rs.fon.pzr.model.thesis.Tag;
 
-public interface TagRepository extends CrudRepository<TagEntity, Long> {
+public interface TagRepository extends CrudRepository<Tag, Long> {
 
-    Optional<TagEntity> findByValue(String value);
+    Optional<Tag> findByValue(String value);
 
-    Set<TagEntity> findAll();
+    Set<Tag> findAll();
 
 }

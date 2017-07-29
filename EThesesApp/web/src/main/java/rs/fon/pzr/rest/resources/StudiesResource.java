@@ -3,9 +3,9 @@ package rs.fon.pzr.rest.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.model.studies.StudiesEntity;
+import rs.fon.pzr.model.studies.Studies;
 import rs.fon.pzr.core.service.StudiesService;
-import rs.fon.pzr.model.studies.StudiesEntityBuilder;
+import rs.fon.pzr.model.studies.StudiesBuilder;
 import rs.fon.pzr.rest.model.request.StudiesRequest;
 import rs.fon.pzr.rest.model.response.level1.StudiesResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
@@ -29,7 +29,7 @@ public class StudiesResource {
     @ResponseBody
     public List<StudiesResponseLevel1> getStudies(@RequestParam(value = "studiesName", required = false)
                                                           String studiesName) {
-        List<StudiesEntity> studiesList = studiesService.getAllStudies();
+        List<Studies> studiesList = studiesService.getAllStudies();
         List<StudiesResponseLevel1> studiesResponseLevel1 = new ArrayList<>();
 
         if (studiesName != null) {
@@ -63,7 +63,7 @@ public class StudiesResource {
         String nameShort = studiesRequest.getNameShort()
                 .orElseThrow(() -> new InvalidArgumentException("Studies short name je obavezno polje!"));
 
-        StudiesEntity studies = new StudiesEntityBuilder()
+        Studies studies = new StudiesBuilder()
                 .withName(name)
                 .withNameShort(nameShort)
                 .build();
@@ -76,7 +76,7 @@ public class StudiesResource {
     @ResponseBody
     public StudiesResponseLevel1 updateStudies(@RequestBody StudiesRequest studiesRequest,
                                                @PathVariable("studiesID") Long studiesID) {
-        StudiesEntity studies = studiesService.getStudies(studiesID)
+        Studies studies = studiesService.getStudies(studiesID)
                 .orElseThrow(() ->
                         new InvalidArgumentException("Nivo studija sa id-em " + studiesID
                                 + " ne postoji u bazi!"));

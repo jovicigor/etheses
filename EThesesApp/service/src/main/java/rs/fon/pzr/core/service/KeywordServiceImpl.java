@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import rs.fon.pzr.model.thesis.KeywordEntity;
+import rs.fon.pzr.model.thesis.Keyword;
 import rs.fon.pzr.persistence.repository.KeywordRepository;
 
 @Service
@@ -24,8 +24,8 @@ public class KeywordServiceImpl implements KeywordService {
 
     @Override
     @Transactional
-    public KeywordEntity addKeyword(KeywordEntity keyword) {
-        KeywordEntity existingKeyword = keywordRepository.findByValue(keyword
+    public Keyword addKeyword(Keyword keyword) {
+        Keyword existingKeyword = keywordRepository.findByValue(keyword
                 .getValue());
         if (existingKeyword != null) {
             return existingKeyword;

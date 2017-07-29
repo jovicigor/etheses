@@ -7,11 +7,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "course")
-public class CourseEntity {
-
+@Table(name = "studies")
+public class Studies {
     @Id
-    @Column(name = "course_id")
+    @Column(name = "studies_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -22,16 +21,16 @@ public class CourseEntity {
     private String nameShort;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "course_studies", joinColumns = {@JoinColumn(name = "course_id")}, inverseJoinColumns = {@JoinColumn(name = "studies_id")})
-    private Set<StudiesEntity> studies = new HashSet<>();
+    @JoinTable(name = "course_studies", joinColumns = {@JoinColumn(name = "studies_id")}, inverseJoinColumns = {@JoinColumn(name = "course_id")})
+    private Set<Course> courses = new HashSet<>();
 
-    protected CourseEntity() {
+    protected Studies() {
     }
 
-    CourseEntity(String name, String nameShort, Collection<StudiesEntity> studies) {
+    Studies(String name, String nameShort, Collection<Course> courses) {
         this.name = name;
         this.nameShort = nameShort;
-        this.studies = studies.stream().collect(Collectors.toSet());
+        this.courses = courses.stream().collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -58,12 +57,7 @@ public class CourseEntity {
         this.nameShort = nameShort;
     }
 
-    public Collection<StudiesEntity> getStudies() {
-        return new HashSet<>(studies);
-    }
-
-    public void updateStudies(Collection<StudiesEntity> studies) {
-        this.studies = studies.stream()
-                .collect(Collectors.toSet());
+    public Collection<Course> getCourses() {
+        return new HashSet<>(courses);
     }
 }

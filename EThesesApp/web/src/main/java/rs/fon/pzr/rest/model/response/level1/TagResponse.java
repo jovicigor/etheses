@@ -1,6 +1,6 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.thesis.TagEntity;
+import rs.fon.pzr.model.thesis.Tag;
 
 public class TagResponse {
 
@@ -8,7 +8,7 @@ public class TagResponse {
 
     private final String value;
 
-    public TagResponse(TagEntity tag) {
+    public TagResponse(Tag tag) {
         id = tag.getId();
         value = tag.getValue();
     }

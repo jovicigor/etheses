@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "field_of_study")
-public class FieldOfStudyEntity {
+public class FieldOfStudy {
 
     @Id
     @Column(name = "field_of_study_id")
@@ -16,15 +16,15 @@ public class FieldOfStudyEntity {
     @Column(name = "name")
     private String name;
 
-    public static FieldOfStudyEntity createFieldOfStudy(String name) {
+    public static FieldOfStudy createFieldOfStudy(String name) {
         NullGuard.validate("field of study name", name);
-        return new FieldOfStudyEntity(name);
+        return new FieldOfStudy(name);
     }
 
-    protected FieldOfStudyEntity() {
+    protected FieldOfStudy() {
     }
 
-    private FieldOfStudyEntity(String name) {
+    private FieldOfStudy(String name) {
         this.name = name;
     }
 

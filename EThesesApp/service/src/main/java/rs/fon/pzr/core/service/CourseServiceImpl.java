@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.model.studies.CourseEntity;
+import rs.fon.pzr.model.studies.Course;
 import rs.fon.pzr.persistence.repository.CourseRepository;
 
 @Service
@@ -22,25 +22,25 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Optional<CourseEntity> getCourse(Long id) {
-        CourseEntity course = courseRepository.findOne(id);
+    public Optional<Course> getCourse(Long id) {
+        Course course = courseRepository.findOne(id);
         return Optional.ofNullable(course);
     }
 
     @Override
-    public Optional<CourseEntity> getCourseByName(String name) {
-        CourseEntity course = courseRepository.findByName(name);
+    public Optional<Course> getCourseByName(String name) {
+        Course course = courseRepository.findByName(name);
         return Optional.ofNullable(course);
     }
 
     @Override
-    public List<CourseEntity> getAllCourses() {
+    public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
     @Transactional
     @Override
-    public CourseEntity addCourse(CourseEntity course) {
+    public Course addCourse(Course course) {
         if (courseRepository.findByName(course.getName()) != null) {
             throw new InvalidArgumentException("Kurs " + course.getName()
                     + " već postoji u bazi!");
@@ -54,8 +54,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Transactional
     @Override
-    public CourseEntity updateCourse(CourseEntity course) {
-        CourseEntity existingCourse = courseRepository.findOne(course.getId());
+    public Course updateCourse(Course course) {
+        Course existingCourse = courseRepository.findOne(course.getId());
         if (existingCourse == null) {
             throw new InvalidArgumentException("Smer sa id-em "
                     + course.getId() + " ne postoji u bazi!");
@@ -80,7 +80,7 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     @Override
     public void removeCourse(Long courseID) {
-        CourseEntity course = courseRepository.findOne(courseID);
+        Course course = courseRepository.findOne(courseID);
         if (course == null) {
             throw new InvalidArgumentException("Smer sa id-em " + courseID
                     + " ne postoji u bazi!");

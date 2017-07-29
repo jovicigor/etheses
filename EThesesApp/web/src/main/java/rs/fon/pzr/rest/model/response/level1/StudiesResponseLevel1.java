@@ -1,6 +1,6 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.studies.StudiesEntity;
+import rs.fon.pzr.model.studies.Studies;
 import rs.fon.pzr.rest.model.response.level2.CourseResponseLevel2;
 
 import java.util.Set;
@@ -13,7 +13,7 @@ public class StudiesResponseLevel1 {
     private final String nameShort;
     private final Set<CourseResponseLevel2> courses;
 
-    public StudiesResponseLevel1(StudiesEntity studies) {
+    public StudiesResponseLevel1(Studies studies) {
         id = studies.getId();
         name = studies.getName();
         nameShort = studies.getNameShort();

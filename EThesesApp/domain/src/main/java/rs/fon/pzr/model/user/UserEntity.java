@@ -1,8 +1,8 @@
 package rs.fon.pzr.model.user;
 
 import rs.fon.pzr.guards.NullGuard;
-import rs.fon.pzr.model.thesis.ThesisEntity;
-import rs.fon.pzr.model.studies.CourseEntity;
+import rs.fon.pzr.model.thesis.Thesis;
+import rs.fon.pzr.model.studies.Course;
 import rs.fon.pzr.type.Email;
 
 import javax.persistence.*;
@@ -38,10 +38,10 @@ public class UserEntity {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    private CourseEntity course;
+    private Course course;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<ThesisEntity> theses;
+    private Set<Thesis> theses;
 
     protected UserEntity() {
     }
@@ -99,11 +99,11 @@ public class UserEntity {
         return studentsTranscript;
     }
 
-    public CourseEntity getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public Set<ThesisEntity> getTheses() {
+    public Set<Thesis> getTheses() {
         return theses;
     }
 
@@ -140,11 +140,11 @@ public class UserEntity {
         userCredentials.removeAdmin();
     }
 
-    public void setCourse(CourseEntity course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 
-    public void setTheses(Set<ThesisEntity> theses) {
+    public void setTheses(Set<Thesis> theses) {
         this.theses = theses;
     }
 }
