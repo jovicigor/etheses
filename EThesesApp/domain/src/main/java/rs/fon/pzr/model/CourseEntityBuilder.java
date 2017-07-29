@@ -1,5 +1,6 @@
 package rs.fon.pzr.model;
 
+import rs.fon.pzr.guards.EmptyGuard;
 import rs.fon.pzr.guards.NullGuard;
 
 import java.util.Collection;
@@ -26,8 +27,8 @@ public class CourseEntityBuilder {
     }
 
     public CourseEntity build() {
-        NullGuard.validate("course name", name);
-        NullGuard.validate("course short name", nameShort);
+        EmptyGuard.validateString("course name", name);
+        EmptyGuard.validateString("course short name", nameShort);
         NullGuard.validate("course studies", studies);
 
         return new CourseEntity(name, nameShort, studies);
