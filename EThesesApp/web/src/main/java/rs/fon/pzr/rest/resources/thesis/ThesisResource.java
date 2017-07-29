@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/theses")
 public class ThesisResource {
 
-    private final Logger logger = Logger.getLogger(ThesisResource.class);
     private final ThesisService thesisService;
     private final UserService userService;
 
@@ -170,39 +169,24 @@ public class ThesisResource {
     }
 
     @GetMapping(value = "/files/{fileID}/download")
-    public void downloadFileById(HttpServletResponse response,
-                                 @PathVariable("fileID") Long fileID) throws IOException {
-        File file = thesisService.getFileById(fileID);
+    public void downloadFileById(HttpServletResponse response, @PathVariable("fileID") Long fileID) {
+        try {
+            File file = thesisService.getFileById(fileID);
 
-        String mimeType = URLConnection
-                .guessContentTypeFromName(file.getName());
-        if (mimeType == null) {
-            logger.debug("mimetype is not detectable, will take default");
-            mimeType = "application/octet-stream";
+            addFileToResponse(response, file);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        logger.debug("mimetype : " + mimeType);
-        response.setContentType(mimeType);
+    }
 
-		/*
-         * "Content-Disposition : inline" will show viewable types [like
-		 * images/text/pdf/anything viewable by browser] right on browser while
-		 * others(zip e.g) will be directly downloaded [may provide save as
-		 * popup, based on your browser setting.]
-		 */
-        response.setHeader("Content-Disposition",
-                "inline; filename=\"" + file.getName() + "\"");
-        /*
-         * "Content-Disposition : attachment" will be directly download, may
-		 * provide save as popup, based on your browser setting
-		 */
-        // response.setHeader("Content-Disposition",
-        // String.format("attachment; filename=\"%s\"", file.getName()));
-        response.setContentLength((int) file.length());
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(
-                file));
-        // Copy bytes from source to destination(outputstream in this example),
-        // closes both streams.
-        FileCopyUtils.copy(inputStream, response.getOutputStream());
+    @GetMapping(value = "/{thesisID}/download")
+    public void downloadThesisFile(HttpServletResponse response, @PathVariable("thesisID") Long thesisID) {
+        try {
+            File file = thesisService.getThesisFile(thesisID);
+            addFileToResponse(response, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @DeleteMapping(value = "/files/{fileID}")
@@ -216,40 +200,17 @@ public class ThesisResource {
         return thesisService.addFile(thesisID, file);
     }
 
-    @GetMapping(value = "/{thesisID}/download")
-    public void downloadThesisFile(HttpServletResponse response,
-                                   @PathVariable("thesisID") Long thesisID) throws IOException {
 
-        File file = thesisService.getThesisFile(thesisID);
-
-        String mimeType = URLConnection
-                .guessContentTypeFromName(file.getName());
+    private void addFileToResponse(HttpServletResponse response, File file) throws IOException {
+        String mimeType = URLConnection.guessContentTypeFromName(file.getName());
         if (mimeType == null) {
-            logger.debug("mimetype is not detectable, will take default");
             mimeType = "application/octet-stream";
         }
-        logger.debug("mimetype : " + mimeType);
         response.setContentType(mimeType);
-
-		/*
-         * "Content-Disposition : inline" will show viewable types [like
-		 * images/text/pdf/anything viewable by browser] right on browser while
-		 * others(zip e.g) will be directly downloaded [may provide save as
-		 * popup, based on your browser setting.]
-		 */
-        response.setHeader("Content-Disposition",
-                "inline; filename=\"" + file.getName() + "\"");
-        /*
-         * "Content-Disposition : attachment" will be directly download, may
-		 * provide save as popup, based on your browser setting
-		 */
-        // response.setHeader("Content-Disposition",
-        // String.format("attachment; filename=\"%s\"", file.getName()));
+        response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
         response.setContentLength((int) file.length());
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(
-                file));
-        // Copy bytes from source to destination(outputstream in this example),
-        // closes both streams.
+
+        BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file));
         FileCopyUtils.copy(inputStream, response.getOutputStream());
     }
 }
