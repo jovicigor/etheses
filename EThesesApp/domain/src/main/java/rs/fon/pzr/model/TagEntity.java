@@ -1,5 +1,7 @@
 package rs.fon.pzr.model;
 
+import rs.fon.pzr.guards.EmptyGuard;
+
 import javax.persistence.*;
 
 
@@ -18,8 +20,13 @@ public class TagEntity {
     protected TagEntity() {
     }
 
-    public TagEntity(String value) {
+    private TagEntity(String value) {
         this.value = value;
+    }
+
+    public static TagEntity createTag(String value) {
+        EmptyGuard.validateString("tag value", value);
+        return new TagEntity(value);
     }
 
     public Long getId() {

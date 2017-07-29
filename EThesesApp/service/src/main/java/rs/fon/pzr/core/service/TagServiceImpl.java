@@ -11,6 +11,8 @@ import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.model.TagEntity;
 import rs.fon.pzr.persistence.repository.TagRepository;
 
+import static rs.fon.pzr.model.TagEntity.*;
+
 @Service
 public class TagServiceImpl implements TagService {
 
@@ -34,7 +36,8 @@ public class TagServiceImpl implements TagService {
         if (tag.isPresent()) {
             return tag.get();
         }
-        return tagRepository.save(new TagEntity(value));
+
+        return tagRepository.save(createTag(value));
     }
 
     @Transactional
