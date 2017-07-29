@@ -6,12 +6,15 @@ import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.UserService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
+import rs.fon.pzr.model.UserCredentials;
 import rs.fon.pzr.model.UserEntity;
 import rs.fon.pzr.rest.model.LoginData;
 import rs.fon.pzr.rest.model.request.AdminPrivilegeRequest;
 import rs.fon.pzr.rest.model.request.UserRequest;
 import rs.fon.pzr.rest.model.response.level1.UserResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
+import rs.fon.pzr.type.Email;
+import rs.fon.pzr.type.Password;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,14 +53,25 @@ public class UserResource {
     @PostMapping
     @ResponseBody
     public UserResponseLevel1 addUser(@RequestBody LoginData loginData) {
-        ParamaterCheck.mandatory("Email ", loginData.getEmail());
-        ParamaterCheck.mandatory("Password ", loginData.getPassword());
+        String userEmail = loginData.getEmail();
 
-        UserEntity user = new UserEntity(loginData.getEmail(), loginData.getPassword());
+        if (!Email.isValid(userEmail)) {
+            throw new InvalidArgumentException("Email koji ste uneli nije validan.");
+        }
+        if (!Password.isValid(loginData.getPassword())) {
+            throw new InvalidArgumentException(
+                    "Šifra ne sme sadržati razmake, mora imati barem jedno malo slovo, jedno veliko slovo, jednu cifru i sadržati između 6 i 13 karaktera.");
+        }
+
+        Email email = Email.fromString(userEmail);
+        Password password = Password.fromString(loginData.getPassword());
+        UserCredentials credentials = new UserCredentials(email, password);
+        UserEntity user = UserEntity.createUserWithCredentials(credentials);
+        
         user = userService.addUser(user);
         UserResponseLevel1 userResponse = new UserResponseLevel1();
         userResponse.setId(user.getId());
-        userResponse.setEmail(user.getEmail());
+        userResponse.setEmail(user.getEmail().asString());
 
         return userResponse;
     }
@@ -106,7 +120,10 @@ public class UserResource {
                 .orElseThrow(() -> new InvalidArgumentException("Korisnik sa id-em " + userID
                         + " ne postoji u bazi!"));
 
-        user.setAdmin(adminPrivilegeRequest.isAdmin());
+        if (adminPrivilegeRequest.isAdmin())
+            user.makeAdmin();
+        else
+            user.removeAdmin();
         return RestFactory.createUserResponseLevel1(
                 userService.updateUser(user));
     }

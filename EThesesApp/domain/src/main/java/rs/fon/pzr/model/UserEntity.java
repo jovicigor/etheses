@@ -1,5 +1,8 @@
 package rs.fon.pzr.model;
 
+import rs.fon.pzr.guards.NullGuard;
+import rs.fon.pzr.type.Email;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,10 +10,14 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class UserEntity {
+
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Embedded
+    private UserCredentials userCredentials;
 
     @Column(name = "first_name")
     private String firstName;
@@ -18,113 +25,121 @@ public class UserEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @Embedded
-    private UserLogin userLogin;
-
-    @Column(name = "students_transcript")
-    private String studentsTranscript;
-
-    @Column(name = "is_admin")
-    private boolean isAdmin;
-
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private CourseEntity course;
-
     @Column(name = "biography")
     private String biography;
 
     @Column(name = "interests")
     private String interests;
 
+    @Column(name = "students_transcript")
+    private String studentsTranscript;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private CourseEntity course;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<ThesisEntity> theses = new HashSet<>();
+    private Set<ThesisEntity> theses;
 
     protected UserEntity() {
     }
 
-    public UserEntity(String email, String password) {
-        this.userLogin = new UserLogin(email, password);
+    private UserEntity(UserCredentials userCredentials) {
+        String empty = "";
+        firstName = empty;
+        lastName = empty;
+        biography = empty;
+        studentsTranscript = empty;
+        interests = empty;
+        course = null;
+        theses = new HashSet<>();
+        this.userCredentials = userCredentials;
+    }
+
+    public static UserEntity createUserWithCredentials(UserCredentials userCredentials) {
+        NullGuard.validate("user credentials", userCredentials);
+        return new UserEntity(userCredentials);
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Email getEmail() {
+        return userCredentials.getEmail();
+    }
+
+    public String getPassword() {
+        return userCredentials.getPassword();
+    }
+
+    public boolean isAdmin() {
+        return userCredentials.isAdmin();
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return userLogin.getEmail();
-    }
-
-    public String getPassword() {
-        return userLogin.getPassword();
-    }
-
-    public void setPassword(String password) {
-        userLogin.setPassword(password);
-    }
-
-    public String getStudentsTranscript() {
-        return studentsTranscript;
-    }
-
-    public void setStudentsTranscript(String studentsTranscript) {
-        this.studentsTranscript = studentsTranscript;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
-    public CourseEntity getCourse() {
-        return course;
-    }
-
-    public void setCourse(CourseEntity course) {
-        this.course = course;
     }
 
     public String getBiography() {
         return biography;
     }
 
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
-
     public String getInterests() {
         return interests;
     }
 
-    public void setInterests(String interests) {
-        this.interests = interests;
+    public String getStudentsTranscript() {
+        return studentsTranscript;
+    }
+
+    public CourseEntity getCourse() {
+        return course;
     }
 
     public Set<ThesisEntity> getTheses() {
         return theses;
+    }
+
+    public void setFirstName(String firstName) {
+        NullGuard.validate("user first name", firstName);
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        NullGuard.validate("user last name", lastName);
+        this.lastName = lastName;
+    }
+
+    public void setInterests(String interests) {
+        NullGuard.validate("interests", interests);
+        this.interests = interests;
+    }
+
+    public void setBiography(String biography) {
+        NullGuard.validate("biography", biography);
+        this.biography = biography;
+    }
+
+    public void setStudentsTranscript(String studentsTranscript) {
+        NullGuard.validate("students transcript", studentsTranscript);
+        this.studentsTranscript = studentsTranscript;
+    }
+
+    public void makeAdmin() {
+        userCredentials.makeAdmin();
+    }
+
+    public void removeAdmin() {
+        userCredentials.removeAdmin();
+    }
+
+    public void setCourse(CourseEntity course) {
+        this.course = course;
     }
 
     public void setTheses(Set<ThesisEntity> theses) {

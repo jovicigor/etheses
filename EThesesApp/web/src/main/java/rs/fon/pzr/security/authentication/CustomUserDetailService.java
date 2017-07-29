@@ -37,6 +37,6 @@ public class CustomUserDetailService implements UserDetailsService {
             authList.add(new SimpleGrantedAuthority("ROLE_USER"));
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, authList);
+        return new org.springframework.security.core.userdetails.User(user.getEmail().asString(), user.getPassword(), true, true, true, true, authList);
     }
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserEntity> getUser(String email) {
-        UserEntity user = userRepository.findByUserLoginEmail(email);
+        UserEntity user = userRepository.findByUserCredentialsEmail(email);
         return Optional.ofNullable(user);
     }
 
@@ -50,23 +49,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserEntity addUser(UserEntity user) {
-        if (userRepository.findByUserLoginEmail(user.getEmail()) != null) {
+        if (userRepository.findByUserCredentialsEmail(user.getEmail().asString()) != null) {
             throw new InvalidArgumentException("Korisnik sa email-om "
                     + user.getEmail() + " je već registrovan!");
         }
-
-        EmailValidator validator = EmailValidator.getInstance();
-        if (!validator.isValid(user.getEmail())) {
-            throw new InvalidArgumentException("Email koji ste uneli nije validan.");
-        }
-
-        if (!user.getPassword().matches(
-                "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{6,13}$")) {
-            throw new InvalidArgumentException(
-                    "Šifra ne sme sadržati razmake, mora imati barem jedno malo slovo, jedno veliko slovo, jednu cifru i sadržati između 6 i 13 karaktera.");
-        }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

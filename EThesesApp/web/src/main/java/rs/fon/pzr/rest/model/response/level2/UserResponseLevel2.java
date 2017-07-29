@@ -23,7 +23,7 @@ public class UserResponseLevel2 {
         id = author.getId();
         firstName = author.getFirstName();
         lastName = author.getLastName();
-        email = author.getEmail();
+        email = author.getEmail().asString();
         studentsTranscript = author.getStudentsTranscript();
         isAdmin = author.isAdmin();
         if (author.getCourse() != null)

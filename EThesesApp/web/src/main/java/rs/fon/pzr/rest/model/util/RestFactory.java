@@ -54,7 +54,7 @@ public class RestFactory {
         userResponseLevel1.setBiography(user.getBiography());
         userResponseLevel1.setCourse(createCourseResponseLevel2(user
                 .getCourse()));
-        userResponseLevel1.setEmail(user.getEmail());
+        userResponseLevel1.setEmail(user.getEmail().asString());
         userResponseLevel1.setFirstName(user.getFirstName());
         userResponseLevel1.setId(user.getId());
         userResponseLevel1.setInterests(user.getInterests());

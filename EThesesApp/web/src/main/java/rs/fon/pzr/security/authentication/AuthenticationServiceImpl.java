@@ -50,7 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         ticketService.prolongTicket(ticket);
         UserEntity user = userService.getUser(userId)
                 .orElseThrow(() -> new InvalidTicketException("Must provide a valid ticket!"));
-        return user.getEmail();
+        return user.getEmail().asString();
 
     }
 
