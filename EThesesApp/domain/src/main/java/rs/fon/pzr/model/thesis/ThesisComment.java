@@ -1,4 +1,6 @@
-package rs.fon.pzr.model;
+package rs.fon.pzr.model.thesis;
+
+import rs.fon.pzr.model.user.UserEntity;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package rs.fon.pzr.model;
+package rs.fon.pzr.model.studies;
 
 import javax.persistence.*;
 import java.util.Collection;

@@ -1,15 +1,12 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.FieldOfStudyEntity;
-import rs.fon.pzr.model.TFileEntity;
-import rs.fon.pzr.model.TagEntity;
-import rs.fon.pzr.model.ThesisEntity;
+import rs.fon.pzr.model.thesis.TFileEntity;
+import rs.fon.pzr.model.thesis.ThesisEntity;
 import rs.fon.pzr.rest.model.response.level2.CourseResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.ThesisCommentResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.UserResponseLevel2;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 

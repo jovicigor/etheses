@@ -2,17 +2,14 @@ package rs.fon.pzr.core.service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.model.KeywordEntity;
+import rs.fon.pzr.model.thesis.KeywordEntity;
 import rs.fon.pzr.persistence.repository.KeywordRepository;
 
 @Service

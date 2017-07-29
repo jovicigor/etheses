@@ -1,9 +1,8 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import rs.fon.pzr.model.CourseEntity;
-import rs.fon.pzr.model.StudiesEntity;
+import rs.fon.pzr.model.studies.CourseEntity;
+import rs.fon.pzr.model.studies.StudiesEntity;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 

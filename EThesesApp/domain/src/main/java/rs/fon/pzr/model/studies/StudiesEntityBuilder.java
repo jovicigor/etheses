@@ -1,4 +1,4 @@
-package rs.fon.pzr.model;
+package rs.fon.pzr.model.studies;
 
 import rs.fon.pzr.guards.EmptyGuard;
 import rs.fon.pzr.guards.NullGuard;

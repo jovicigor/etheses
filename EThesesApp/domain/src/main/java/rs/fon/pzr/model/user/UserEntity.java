@@ -1,6 +1,8 @@
-package rs.fon.pzr.model;
+package rs.fon.pzr.model.user;
 
 import rs.fon.pzr.guards.NullGuard;
+import rs.fon.pzr.model.thesis.ThesisEntity;
+import rs.fon.pzr.model.studies.CourseEntity;
 import rs.fon.pzr.type.Email;
 
 import javax.persistence.*;

@@ -1,7 +1,7 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import rs.fon.pzr.model.ThesisEntity;
-import rs.fon.pzr.model.UserEntity;
+import rs.fon.pzr.model.thesis.ThesisEntity;
+import rs.fon.pzr.model.user.UserEntity;
 
 import java.util.List;
 import java.util.stream.Collectors;

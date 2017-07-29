@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.model.FieldOfStudyEntity;
+import rs.fon.pzr.model.thesis.FieldOfStudyEntity;
 
 public interface FieldOfStudyRepository extends CrudRepository<FieldOfStudyEntity, Long> {
 	

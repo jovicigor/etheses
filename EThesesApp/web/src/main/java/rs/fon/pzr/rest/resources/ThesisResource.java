@@ -12,7 +12,8 @@ import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.service.*;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
-import rs.fon.pzr.model.*;
+import rs.fon.pzr.model.thesis.*;
+import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.rest.model.request.ThesisCommentRequest;
 import rs.fon.pzr.rest.model.request.ThesisRequest;
 import rs.fon.pzr.rest.model.response.level1.ThesisCommentResponseLevel1;
@@ -26,7 +27,7 @@ import java.net.URLConnection;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static rs.fon.pzr.model.KeywordEntity.createNotBannedKeyword;
+import static rs.fon.pzr.model.thesis.KeywordEntity.createNotBannedKeyword;
 
 @RestController
 @RequestMapping(value = "/theses")

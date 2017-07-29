@@ -3,7 +3,7 @@ package rs.fon.pzr.core.service;
 import java.util.List;
 import java.util.Optional;
 
-import rs.fon.pzr.model.CourseEntity;
+import rs.fon.pzr.model.studies.CourseEntity;
 
 
 public interface CourseService {

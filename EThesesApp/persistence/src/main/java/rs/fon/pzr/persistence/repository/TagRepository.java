@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.model.TagEntity;
+import rs.fon.pzr.model.thesis.TagEntity;
 
 public interface TagRepository extends CrudRepository<TagEntity, Long> {
 

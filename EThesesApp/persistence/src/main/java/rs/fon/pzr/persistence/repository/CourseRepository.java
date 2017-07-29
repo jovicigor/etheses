@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.model.CourseEntity;
+import rs.fon.pzr.model.studies.CourseEntity;
 
 public interface CourseRepository extends CrudRepository<CourseEntity, Long> {
 	

@@ -8,9 +8,9 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
-import rs.fon.pzr.model.TFileEntity;
-import rs.fon.pzr.model.ThesisEntity;
-import rs.fon.pzr.model.ThesisComment;
+import rs.fon.pzr.model.thesis.TFileEntity;
+import rs.fon.pzr.model.thesis.ThesisEntity;
+import rs.fon.pzr.model.thesis.ThesisComment;
 
 public interface ThesisService {
 

@@ -1,4 +1,6 @@
-package rs.fon.pzr.model;
+package rs.fon.pzr.model.studies;
+
+import rs.fon.pzr.model.studies.CourseEntity;
 
 import javax.persistence.*;
 import java.util.Collection;

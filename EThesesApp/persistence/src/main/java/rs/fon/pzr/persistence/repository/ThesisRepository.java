@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import rs.fon.pzr.model.ThesisEntity;
-import rs.fon.pzr.model.UserEntity;
+import rs.fon.pzr.model.thesis.ThesisEntity;
+import rs.fon.pzr.model.user.UserEntity;
 
 public interface ThesisRepository extends PagingAndSortingRepository<ThesisEntity, Long>  {
 	

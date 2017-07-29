@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import rs.fon.pzr.model.UserEntity;
+import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.core.service.UserService;
 
 import java.util.ArrayList;

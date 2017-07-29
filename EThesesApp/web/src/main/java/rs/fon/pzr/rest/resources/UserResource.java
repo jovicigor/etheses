@@ -6,8 +6,8 @@ import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.UserService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
-import rs.fon.pzr.model.UserCredentials;
-import rs.fon.pzr.model.UserEntity;
+import rs.fon.pzr.model.user.UserCredentials;
+import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.rest.model.LoginData;
 import rs.fon.pzr.rest.model.request.AdminPrivilegeRequest;
 import rs.fon.pzr.rest.model.request.UserRequest;
@@ -67,7 +67,7 @@ public class UserResource {
         Password password = Password.fromString(loginData.getPassword());
         UserCredentials credentials = new UserCredentials(email, password);
         UserEntity user = UserEntity.createUserWithCredentials(credentials);
-        
+
         user = userService.addUser(user);
         UserResponseLevel1 userResponse = new UserResponseLevel1();
         userResponse.setId(user.getId());

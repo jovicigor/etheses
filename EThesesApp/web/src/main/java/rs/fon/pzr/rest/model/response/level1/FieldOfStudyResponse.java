@@ -1,6 +1,6 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.FieldOfStudyEntity;
+import rs.fon.pzr.model.thesis.FieldOfStudyEntity;
 
 public class FieldOfStudyResponse {
 

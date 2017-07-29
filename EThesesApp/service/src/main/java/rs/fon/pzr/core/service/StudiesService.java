@@ -3,7 +3,7 @@ package rs.fon.pzr.core.service;
 import java.util.List;
 import java.util.Optional;
 
-import rs.fon.pzr.model.StudiesEntity;
+import rs.fon.pzr.model.studies.StudiesEntity;
 
 public interface StudiesService {
 

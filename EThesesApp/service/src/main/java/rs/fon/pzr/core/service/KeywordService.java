@@ -1,9 +1,8 @@
 package rs.fon.pzr.core.service;
 
 import java.util.Map;
-import java.util.Set;
 
-import rs.fon.pzr.model.KeywordEntity;
+import rs.fon.pzr.model.thesis.KeywordEntity;
 
 public interface KeywordService {
 

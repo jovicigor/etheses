@@ -1,7 +1,11 @@
 package rs.fon.pzr.rest.model.util;
 
 import org.springframework.data.domain.Page;
-import rs.fon.pzr.model.*;
+import rs.fon.pzr.model.studies.CourseEntity;
+import rs.fon.pzr.model.studies.StudiesEntity;
+import rs.fon.pzr.model.thesis.ThesisComment;
+import rs.fon.pzr.model.thesis.ThesisEntity;
+import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.rest.model.response.level1.*;
 import rs.fon.pzr.rest.model.response.level2.*;
 

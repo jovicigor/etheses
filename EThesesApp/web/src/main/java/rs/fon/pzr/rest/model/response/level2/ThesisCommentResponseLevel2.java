@@ -1,6 +1,6 @@
 package rs.fon.pzr.rest.model.response.level2;
 
-import rs.fon.pzr.model.ThesisComment;
+import rs.fon.pzr.model.thesis.ThesisComment;
 
 import java.util.Date;
 

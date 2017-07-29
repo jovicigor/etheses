@@ -1,4 +1,4 @@
-package rs.fon.pzr.model;
+package rs.fon.pzr.model.user;
 
 import rs.fon.pzr.type.Email;
 import rs.fon.pzr.type.Password;

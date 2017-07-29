@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
-import rs.fon.pzr.model.UserEntity;
+import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.persistence.repository.UserRepository;
 
 @Service
