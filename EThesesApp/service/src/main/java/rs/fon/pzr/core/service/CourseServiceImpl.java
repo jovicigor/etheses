@@ -41,11 +41,11 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     @Override
     public Course addCourse(Course course) {
-        if (courseRepository.findByName(course.getName()) != null) {
+        if (courseRepository.existsByName(course.getName())) {
             throw new InvalidArgumentException("Kurs " + course.getName()
                     + " već postoji u bazi!");
         }
-        if (courseRepository.findByNameShort(course.getNameShort()) != null) {
+        if (courseRepository.existsByNameShort(course.getNameShort())) {
             throw new InvalidArgumentException("Kurs " + course.getNameShort()
                     + " već postoji u bazi!");
         }
