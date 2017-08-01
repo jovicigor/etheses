@@ -3,7 +3,9 @@ package rs.fon.pzr.persistence.repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import rs.fon.pzr.core.page.ThesisPage;
 import rs.fon.pzr.core.repository.ThesisRepository;
 import rs.fon.pzr.model.thesis.Thesis;
 import rs.fon.pzr.model.user.UserEntity;
@@ -42,33 +44,47 @@ public class ThesisRepositoryImpl implements ThesisRepository {
     }
 
     @Override
-    public Page<Thesis> findByNameLikeTagsFieldsAndCoursePagable(PageRequest pageRequest, String thesisName, List<String> tagValues, Long tagsMatchLimit, String courseName, List<String> fieldValues, Long fieldsMatchLimit) {
-        return jpaRepository.findByNameLikeTagsFieldsAndCoursePagable(pageRequest, thesisName, tagValues, fieldsMatchLimit, courseName, fieldValues, fieldsMatchLimit);
+    public ThesisPage findByNameTagsFieldsAndCourse(Integer pageNumber, Integer pageSize, String sortField, String thesisName, List<String> tagValues, Long tagsMatchLimit, String courseName, List<String> fieldValues, Long fieldsMatchLimit) {
+        PageRequest pageRequest = createPageRequest(sortField, pageNumber, pageSize);
+        Page<Thesis> page = jpaRepository.findByNameLikeTagsFieldsAndCoursePagable(pageRequest, thesisName, tagValues, fieldsMatchLimit, courseName, fieldValues, fieldsMatchLimit);
+
+        return createThesisPage(page);
     }
 
     @Override
-    public Page<Thesis> findByNameLikeTagsFieldsCourseAndDescriptioinPagable(PageRequest pageRequest, String thesisName, List<String> tagValues, Long tagsMatchLimit, String courseName, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit) {
-        return jpaRepository.findByNameLikeTagsFieldsCourseAndDescriptioinPagable(pageRequest, thesisName, tagValues, fieldsMatchLimit, courseName, fieldValues, fieldsMatchLimit, descriptionKeys, descriptionKeyLimit);
+    public ThesisPage findByNameTagsFieldsCourseAndDescription(Integer pageNumber, Integer pageSize, String sortField, String thesisName, List<String> tagValues, Long tagsMatchLimit, String courseName, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit) {
+        PageRequest pageRequest = createPageRequest(sortField, pageNumber, pageSize);
+        Page<Thesis> page = jpaRepository.findByNameLikeTagsFieldsCourseAndDescriptioinPagable(pageRequest, thesisName, tagValues, fieldsMatchLimit, courseName, fieldValues, fieldsMatchLimit, descriptionKeys, descriptionKeyLimit);
+        return createThesisPage(page);
     }
 
     @Override
-    public Page<Thesis> findByNameLikeTagsFieldsAndStudiesPagable(PageRequest pageRequest, String thesisName, List<String> tagValues, Long tagsMatchLimit, String studiesName, List<String> fieldValues, Long fieldsMatchLimit) {
-        return jpaRepository.findByNameLikeTagsFieldsAndStudiesPagable(pageRequest, thesisName, tagValues, fieldsMatchLimit, studiesName, fieldValues, fieldsMatchLimit);
+    public ThesisPage findByNameTagsFieldsAndStudies(Integer pageNumber, Integer pageSize, String sortField, String thesisName, List<String> tagValues, Long tagsMatchLimit, String studiesName, List<String> fieldValues, Long fieldsMatchLimit) {
+        PageRequest pageRequest = createPageRequest(sortField, pageNumber, pageSize);
+        Page<Thesis> page = jpaRepository.findByNameLikeTagsFieldsAndStudiesPagable(pageRequest, thesisName, tagValues, fieldsMatchLimit, studiesName, fieldValues, fieldsMatchLimit);
+
+        return createThesisPage(page);
     }
 
     @Override
-    public Page<Thesis> findByNameLikeTagsFieldsStudiesAndDescriptionPagable(PageRequest pageRequest, String thesisName, List<String> tagValues, Long tagsMatchLimit, String studiesName, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit) {
-        return jpaRepository.findByNameLikeTagsFieldsStudiesAndDescriptionPagable(pageRequest, thesisName, tagValues, fieldsMatchLimit, studiesName, fieldValues, fieldsMatchLimit, descriptionKeys, descriptionKeyLimit);
+    public ThesisPage findByNameTagsFieldsStudiesAndDescription(Integer pageNumber, Integer pageSize, String sortField, String thesisName, List<String> tagValues, Long tagsMatchLimit, String studiesName, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit) {
+        PageRequest pageRequest = createPageRequest(sortField, pageNumber, pageSize);
+        Page<Thesis> page = jpaRepository.findByNameLikeTagsFieldsStudiesAndDescriptionPagable(pageRequest, thesisName, tagValues, fieldsMatchLimit, studiesName, fieldValues, fieldsMatchLimit, descriptionKeys, descriptionKeyLimit);
+        return createThesisPage(page);
     }
 
     @Override
-    public Page<Thesis> findByNameLikeTagsAndFieldsPagable(PageRequest pageRequest, String thesisName, List<String> tagValues, Long tagsMatchLimit, List<String> fieldValues, Long fieldsMatchLimit) {
-        return jpaRepository.findByNameLikeTagsAndFieldsPagable(pageRequest, thesisName, tagValues, tagsMatchLimit, fieldValues, fieldsMatchLimit);
+    public ThesisPage findByNameTagsAndFields(Integer pageNumber, Integer pageSize, String sortField, String thesisName, List<String> tagValues, Long tagsMatchLimit, List<String> fieldValues, Long fieldsMatchLimit) {
+        PageRequest pageRequest = createPageRequest(sortField, pageNumber, pageSize);
+        Page<Thesis> page = jpaRepository.findByNameLikeTagsAndFieldsPagable(pageRequest, thesisName, tagValues, tagsMatchLimit, fieldValues, fieldsMatchLimit);
+        return createThesisPage(page);
     }
 
     @Override
-    public Page<Thesis> findByNameLikeTagsFieldsAndDescriptionPagable(PageRequest pageRequest, String thesisName, List<String> tagValues, Long tagsMatchLimit, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit) {
-        return jpaRepository.findByNameLikeTagsFieldsAndDescriptionPagable(pageRequest, thesisName, tagValues, tagsMatchLimit, fieldValues, fieldsMatchLimit, descriptionKeys, descriptionKeyLimit);
+    public ThesisPage findByNameTagsFieldsAndDescription(Integer pageNumber, Integer pageSize, String sortField, String thesisName, List<String> tagValues, Long tagsMatchLimit, List<String> fieldValues, Long fieldsMatchLimit, List<String> descriptionKeys, Long descriptionKeyLimit) {
+        PageRequest pageRequest = createPageRequest(sortField, pageNumber, pageSize);
+        Page<Thesis> page = jpaRepository.findByNameLikeTagsFieldsAndDescriptionPagable(pageRequest, thesisName, tagValues, tagsMatchLimit, fieldValues, fieldsMatchLimit, descriptionKeys, descriptionKeyLimit);
+        return createThesisPage(page);
     }
 
     @Override
@@ -79,5 +95,25 @@ public class ThesisRepositoryImpl implements ThesisRepository {
     @Override
     public void delete(Thesis thesis) {
         jpaRepository.delete(thesis);
+    }
+
+    private static PageRequest createPageRequest(String sortField, int pageNumber, int pageSize) {
+        PageRequest pageRequest;
+        if (sortField == null || sortField.equals("")) {
+            pageRequest = new PageRequest(pageNumber, pageSize, new Sort(
+                    Sort.Direction.DESC, "datePosted"));
+        } else {
+            pageRequest = new PageRequest(pageNumber, pageSize, new Sort(
+                    Sort.Direction.DESC, sortField).and(new Sort(
+                    Sort.Direction.DESC, "datePosted")));
+        }
+        return pageRequest;
+    }
+
+    private static ThesisPage createThesisPage(Page<Thesis> page) {
+        return new ThesisPage(
+                page.getContent(), page.getNumber(), page.getNumberOfElements(),
+                page.getSize(), page.getTotalElements(), page.getTotalPages()
+        );
     }
 }

@@ -1,31 +1,13 @@
 package rs.fon.pzr.rest.model.util;
 
-import org.springframework.data.domain.Page;
 import rs.fon.pzr.model.studies.Course;
 import rs.fon.pzr.model.studies.Studies;
-import rs.fon.pzr.model.thesis.ThesisComment;
 import rs.fon.pzr.model.thesis.Thesis;
+import rs.fon.pzr.model.thesis.ThesisComment;
 import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.rest.model.response.level1.*;
-import rs.fon.pzr.rest.model.response.level2.*;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class RestFactory {
-
-    public static ThesisPageResponse CreateThesisPageResponse(Page<Thesis> thesisPage) {
-        ThesisPageResponse thesisPageResponse = new ThesisPageResponse();
-        List<ThesisResponseLevel1> thesisResponseLevel1List = thesisPage.getContent().stream().map(RestFactory::createThesisResponseLevel1).collect(Collectors.toList());
-        thesisPageResponse.setNumber(thesisPage.getNumber() + 1);
-        thesisPageResponse.setNumberOfElements(thesisPage.getNumberOfElements());
-        thesisPageResponse.setSize(thesisPage.getSize());
-        thesisPageResponse.setTotalElements(thesisPage.getTotalElements());
-        thesisPageResponse.setTotalPages(thesisPage.getTotalPages());
-        thesisPageResponse.setContent(thesisResponseLevel1List);
-
-        return thesisPageResponse;
-    }
 
     public static ThesisResponseLevel1 createThesisResponseLevel1(Thesis thesis) {
         if (thesis == null) {

@@ -2,9 +2,6 @@ package rs.fon.pzr.core.service;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.exception.PzrRuntimeException;
+import rs.fon.pzr.core.page.ThesisPage;
 import rs.fon.pzr.core.repository.CommentRepository;
 import rs.fon.pzr.core.repository.FileRepository;
 import rs.fon.pzr.core.repository.ThesisRepository;
@@ -79,11 +77,11 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public Page<Thesis> advancedSearch(Integer pageNumber, Integer pageSize,
-                                       String thesisName, List<String> tagValues, Long tagsMatchLimit,
-                                       String courseName, String studiesName, String sortField,
-                                       List<String> fieldValues, Long fieldsMatchLimit,
-                                       List<String> descriptionKeys, Long descriptionKeyLimit) {
+    public ThesisPage advancedSearch(Integer pageNumber, Integer pageSize,
+                                     String thesisName, List<String> tagValues, Long tagsMatchLimit,
+                                     String courseName, String studiesName, String sortField,
+                                     List<String> fieldValues, Long fieldsMatchLimit,
+                                     List<String> descriptionKeys, Long descriptionKeyLimit) {
         if (pageSize == null) {
             if (pageNumber == null) {
                 pageSize = thesisRepository.findAll().size();
@@ -119,22 +117,12 @@ public class ThesisServiceImpl implements ThesisService {
             }
         }
 
-        PageRequest pageRequest;
-        if (sortField == null || sortField.equals("")) {
-            pageRequest = new PageRequest(pageNumber, pageSize, new Sort(
-                    Sort.Direction.DESC, "datePosted"));
-        } else {
-            pageRequest = new PageRequest(pageNumber, pageSize, new Sort(
-                    Sort.Direction.DESC, sortField).and(new Sort(
-                    Sort.Direction.DESC, "datePosted")));
-        }
-
         try {
             if (courseName != null && !Objects.equals(courseName, "")) {
                 if (descriptionKeys == null || descriptionKeys.isEmpty()) {
                     return thesisRepository
-                            .findByNameLikeTagsFieldsAndCoursePagable(
-                                    pageRequest, thesisName, tagValues,
+                            .findByNameTagsFieldsAndCourse(pageNumber, pageSize, sortField,
+                                    thesisName, tagValues,
                                     tagsMatchLimit, courseName, fieldValues,
                                     fieldsMatchLimit);
                 }
@@ -142,16 +130,16 @@ public class ThesisServiceImpl implements ThesisService {
                     descriptionKeyLimit = (long) descriptionKeys.size();
                 }
                 return thesisRepository
-                        .findByNameLikeTagsFieldsCourseAndDescriptioinPagable(
-                                pageRequest, thesisName, tagValues,
+                        .findByNameTagsFieldsCourseAndDescription(pageNumber, pageSize, sortField,
+                                thesisName, tagValues,
                                 tagsMatchLimit, courseName, fieldValues,
                                 fieldsMatchLimit, descriptionKeys,
                                 descriptionKeyLimit);
             } else if (studiesName != null && !Objects.equals(studiesName, "")) {
                 if (descriptionKeys == null || descriptionKeys.isEmpty()) {
                     return thesisRepository
-                            .findByNameLikeTagsFieldsAndStudiesPagable(
-                                    pageRequest, thesisName, tagValues,
+                            .findByNameTagsFieldsAndStudies(
+                                    pageNumber, pageSize, sortField, thesisName, tagValues,
                                     tagsMatchLimit, studiesName, fieldValues,
                                     fieldsMatchLimit);
                 }
@@ -159,23 +147,23 @@ public class ThesisServiceImpl implements ThesisService {
                     descriptionKeyLimit = (long) descriptionKeys.size();
                 }
                 return thesisRepository
-                        .findByNameLikeTagsFieldsStudiesAndDescriptionPagable(
-                                pageRequest, thesisName, tagValues,
+                        .findByNameTagsFieldsStudiesAndDescription(
+                                pageNumber, pageSize, sortField, thesisName, tagValues,
                                 tagsMatchLimit, studiesName, fieldValues,
                                 fieldsMatchLimit, descriptionKeys,
                                 descriptionKeyLimit);
             } else {
                 if (descriptionKeys == null || descriptionKeys.isEmpty()) {
-                    return thesisRepository.findByNameLikeTagsAndFieldsPagable(
-                            pageRequest, thesisName, tagValues, tagsMatchLimit,
+                    return thesisRepository.findByNameTagsAndFields(
+                            pageNumber, pageSize, sortField, thesisName, tagValues, tagsMatchLimit,
                             fieldValues, fieldsMatchLimit);
                 }
                 if (descriptionKeyLimit == null) {
                     descriptionKeyLimit = (long) descriptionKeys.size();
                 }
                 return thesisRepository
-                        .findByNameLikeTagsFieldsAndDescriptionPagable(
-                                pageRequest, thesisName, tagValues,
+                        .findByNameTagsFieldsAndDescription(
+                                pageNumber, pageSize, sortField, thesisName, tagValues,
                                 tagsMatchLimit, fieldValues, fieldsMatchLimit,
                                 descriptionKeys, descriptionKeyLimit);
 
@@ -363,6 +351,7 @@ public class ThesisServiceImpl implements ThesisService {
             throw new InvalidArgumentException("Komentar sa id-em " + commentId
                     + " ne postoji u bazi!");
         }
+//        TODO move to WEB
         try {
             org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
                     .getContext().getAuthentication().getPrincipal();

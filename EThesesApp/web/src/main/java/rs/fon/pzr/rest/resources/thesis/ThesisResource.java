@@ -1,8 +1,6 @@
 package rs.fon.pzr.rest.resources.thesis;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.util.FileCopyUtils;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
+import rs.fon.pzr.core.page.ThesisPage;
 import rs.fon.pzr.core.service.*;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
 import rs.fon.pzr.model.thesis.*;
@@ -79,12 +78,12 @@ public class ThesisResource {
             @RequestParam(value = "fieldMatchLimit", required = false) Long fieldMatchLimit,
             @RequestParam(value = "descriptionKeys", required = false) List<String> descriptioinKeys,
             @RequestParam(value = "descriptionMatchLimit", required = false) Long descriptionMatchLimit) {
-        Page<Thesis> thesisPage = thesisService.advancedSearch(pageNumber,
+        ThesisPage thesisPage = thesisService.advancedSearch(pageNumber,
                 pageSize, thesisName, tagValues,
                 matchLimit, courseName, studiesName,
                 sortField, fieldValues, fieldMatchLimit, descriptioinKeys, descriptionMatchLimit);
 
-        return RestFactory.CreateThesisPageResponse(thesisPage);
+        return new ThesisPageResponse(thesisPage);
     }
 
     @GetMapping(value = "/{thesisID}")

@@ -1,61 +1,51 @@
 package rs.fon.pzr.rest.model.response.level1;
 
+import rs.fon.pzr.core.page.ThesisPage;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ThesisPageResponse {
-	private Integer number;
-	private Integer numberOfElements;
-	private Integer size;
-	private Long totalElements;
-	private Integer totalPages;
-	private List<ThesisResponseLevel1> content = new ArrayList<>();
+    private final int number;
+    private final int numberOfElements;
+    private final int size;
+    private final long totalElements;
+    private final int totalPages;
+    private final List<ThesisResponseLevel1> content;
 
-	public Integer getNumber() {
-		return number;
-	}
+    public ThesisPageResponse(ThesisPage thesisPage) {
+        number = thesisPage.getNumber();
+        numberOfElements = thesisPage.getNumberOfElements();
+        size = thesisPage.getSize();
+        totalElements = thesisPage.getTotalElements();
+        content = thesisPage.getContent()
+                .stream().map(ThesisResponseLevel1::new)
+                .collect(Collectors.toList());
+        totalPages = thesisPage.getTotalPages();
+    }
 
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
+    public int getNumber() {
+        return number;
+    }
 
-	public Integer getNumberOfElements() {
-		return numberOfElements;
-	}
+    public int getNumberOfElements() {
+        return numberOfElements;
+    }
 
-	public void setNumberOfElements(Integer numberOfElements) {
-		this.numberOfElements = numberOfElements;
-	}
+    public int getSize() {
+        return size;
+    }
 
-	public Integer getSize() {
-		return size;
-	}
+    public long getTotalElements() {
+        return totalElements;
+    }
 
-	public void setSize(Integer size) {
-		this.size = size;
-	}
+    public int getTotalPages() {
+        return totalPages;
+    }
 
-	public Long getTotalElements() {
-		return totalElements;
-	}
-
-	public void setTotalElements(Long totalElements) {
-		this.totalElements = totalElements;
-	}
-
-	public Integer getTotalPages() {
-		return totalPages;
-	}
-
-	public void setTotalPages(Integer totalPages) {
-		this.totalPages = totalPages;
-	}
-
-	public List<ThesisResponseLevel1> getContent() {
-		return content;
-	}
-
-	public void setContent(List<ThesisResponseLevel1> content) {
-		this.content = content;
-	}
+    public List<ThesisResponseLevel1> getContent() {
+        return content;
+    }
 }
