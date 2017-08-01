@@ -5,6 +5,7 @@ import rs.fon.pzr.model.thesis.Thesis;
 import rs.fon.pzr.rest.model.response.level2.CourseResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.ThesisCommentResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.UserResponseLevel2;
+import rs.fon.pzr.type.Email;
 
 import java.util.Date;
 import java.util.Set;
@@ -47,14 +48,14 @@ public class ThesisResponseLevel1 {
         else
             user = null;
         userName = thesis.getUserName();
-        userEmail = thesis.getUserEmail().asString();
+        userEmail = thesis.getUserEmail().map(Email::asString).orElse("");
         viewCount = thesis.getViewCount();
         if (thesis.getMentor() != null)
             mentor = new UserResponseLevel2(thesis.getMentor());
         else
             mentor = null;
         mentorName = thesis.getName();
-        mentorEmail = thesis.getMentorEmail().asString();
+        mentorEmail = thesis.getMentorEmail().map(Email::asString).orElse("");
         tags = thesis.getTags().stream()
                 .map(TagResponse::new)
                 .collect(Collectors.toSet());

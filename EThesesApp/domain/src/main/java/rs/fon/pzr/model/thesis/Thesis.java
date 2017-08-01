@@ -5,10 +5,7 @@ import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.type.Email;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -98,7 +95,9 @@ public class Thesis {
         this.viewCount = 0;
         this.mentor = mentor;
         this.mentorName = mentorName;
-        this.mentorEmail = mentorEmail.asString();
+        if (userEmail != null) {
+            this.mentorEmail = mentorEmail.asString();
+        }
         this.comments = comments.stream().collect(Collectors.toSet());
         this.tags = tags.stream().collect(Collectors.toSet());
         this.fieldOfStudies = fieldOfStudies.stream().collect(Collectors.toSet());
@@ -206,8 +205,11 @@ public class Thesis {
         this.userName = userName;
     }
 
-    public Email getUserEmail() {
-        return Email.fromString(userEmail);
+    public Optional<Email> getUserEmail() {
+        if (Email.isValid(userEmail))
+            return Optional.ofNullable(Email.fromString(userEmail));
+        else
+            return Optional.empty();
     }
 
     public void setUserEmail(String userEmail) {
@@ -238,8 +240,11 @@ public class Thesis {
         this.mentorName = mentorName;
     }
 
-    public Email getMentorEmail() {
-        return Email.fromString(mentorEmail);
+    public Optional<Email> getMentorEmail() {
+        if (Email.isValid(mentorEmail))
+            return Optional.ofNullable(Email.fromString(mentorEmail));
+        else
+            return Optional.empty();
     }
 
     public void setMentorEmail(String mentorEmail) {
