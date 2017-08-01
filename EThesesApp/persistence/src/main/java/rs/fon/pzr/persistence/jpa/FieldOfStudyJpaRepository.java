@@ -1,12 +1,11 @@
-package rs.fon.pzr.persistence.repository;
+package rs.fon.pzr.persistence.jpa;
+
+import org.springframework.data.repository.CrudRepository;
+import rs.fon.pzr.model.thesis.FieldOfStudy;
 
 import java.util.Set;
 
-import org.springframework.data.repository.CrudRepository;
-
-import rs.fon.pzr.model.thesis.FieldOfStudy;
-
-public interface FieldOfStudyRepository extends CrudRepository<FieldOfStudy, Long> {
+public interface FieldOfStudyJpaRepository extends CrudRepository<FieldOfStudy, Long> {
 	
 	FieldOfStudy findByName(String name);
 	Set<FieldOfStudy> findAll();

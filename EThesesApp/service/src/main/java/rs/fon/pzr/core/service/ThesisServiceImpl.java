@@ -1,14 +1,5 @@
 package rs.fon.pzr.core.service;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,18 +9,26 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.exception.PzrRuntimeException;
+import rs.fon.pzr.core.repository.CommentRepository;
+import rs.fon.pzr.core.repository.FileRepository;
+import rs.fon.pzr.core.repository.ThesisRepository;
+import rs.fon.pzr.core.repository.UserRepository;
 import rs.fon.pzr.model.thesis.TFile;
 import rs.fon.pzr.model.thesis.Thesis;
 import rs.fon.pzr.model.thesis.ThesisComment;
 import rs.fon.pzr.model.user.UserEntity;
-import rs.fon.pzr.persistence.repository.CommentRepository;
-import rs.fon.pzr.persistence.repository.FileRepository;
-import rs.fon.pzr.persistence.repository.ThesisRepository;
-import rs.fon.pzr.persistence.repository.UserRepository;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ThesisServiceImpl implements ThesisService {

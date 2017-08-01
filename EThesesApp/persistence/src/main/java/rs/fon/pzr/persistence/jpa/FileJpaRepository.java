@@ -1,4 +1,4 @@
-package rs.fon.pzr.persistence.repository;
+package rs.fon.pzr.persistence.jpa;
 
 import java.util.Set;
 
@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import rs.fon.pzr.model.thesis.TFile;
 
-public interface FileRepository extends CrudRepository<TFile, Long>{
+public interface FileJpaRepository extends CrudRepository<TFile, Long>{
 	
 	TFile findByFileName(String fileName);
 	Set<TFile> findAll();

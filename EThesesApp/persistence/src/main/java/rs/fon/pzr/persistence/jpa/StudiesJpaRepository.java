@@ -1,4 +1,4 @@
-package rs.fon.pzr.persistence.repository;
+package rs.fon.pzr.persistence.jpa;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import rs.fon.pzr.model.studies.Studies;
 
-public interface StudiesRepository extends CrudRepository<Studies, Long> {
+public interface StudiesJpaRepository extends CrudRepository<Studies, Long> {
 	
 	List<Studies> findAll();
 	Studies findByName(String name);

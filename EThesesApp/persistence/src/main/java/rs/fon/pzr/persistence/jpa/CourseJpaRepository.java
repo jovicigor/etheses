@@ -1,12 +1,11 @@
-package rs.fon.pzr.persistence.repository;
+package rs.fon.pzr.persistence.jpa;
+
+import org.springframework.data.repository.CrudRepository;
+import rs.fon.pzr.model.studies.Course;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
-
-import rs.fon.pzr.model.studies.Course;
-
-public interface CourseRepository extends CrudRepository<Course, Long> {
+public interface CourseJpaRepository extends CrudRepository<Course, Long> {
 
     List<Course> findAll();
 

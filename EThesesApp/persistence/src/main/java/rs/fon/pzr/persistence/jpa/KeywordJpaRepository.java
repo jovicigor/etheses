@@ -1,4 +1,4 @@
-package rs.fon.pzr.persistence.repository;
+package rs.fon.pzr.persistence.jpa;
 
 import java.util.Set;
 
@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.model.thesis.Keyword;
 
-public interface KeywordRepository extends CrudRepository<Keyword, Long> {
+public interface KeywordJpaRepository extends CrudRepository<Keyword, Long> {
     Keyword findByValue(String value);
 
     Set<Keyword> findAll();

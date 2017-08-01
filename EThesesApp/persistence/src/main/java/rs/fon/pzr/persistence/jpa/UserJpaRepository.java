@@ -1,4 +1,4 @@
-package rs.fon.pzr.persistence.repository;
+package rs.fon.pzr.persistence.jpa;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import rs.fon.pzr.model.user.UserEntity;
 
-public interface UserRepository extends CrudRepository<UserEntity, Long> {
+public interface UserJpaRepository extends CrudRepository<UserEntity, Long> {
 
     List<UserEntity> findAll();
 

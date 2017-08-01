@@ -1,19 +1,17 @@
 package rs.fon.pzr.core.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import rs.fon.pzr.core.exception.InvalidArgumentException;
+import rs.fon.pzr.core.exception.InvalidTicketException;
+import rs.fon.pzr.core.repository.UserRepository;
+import rs.fon.pzr.model.user.UserEntity;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.exception.InvalidTicketException;
-import rs.fon.pzr.model.user.UserEntity;
-import rs.fon.pzr.persistence.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {

@@ -1,4 +1,4 @@
-package rs.fon.pzr.persistence.repository;
+package rs.fon.pzr.persistence.jpa;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +9,7 @@ import rs.fon.pzr.model.user.UserEntity;
 
 import java.util.List;
 
-public interface ThesisRepository extends PagingAndSortingRepository<Thesis, Long> {
+public interface ThesisJpaRepository extends PagingAndSortingRepository<Thesis, Long> {
 
     List<Thesis> findAll();
 
