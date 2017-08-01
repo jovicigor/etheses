@@ -92,7 +92,9 @@ public class Thesis {
         this.course = course;
         this.user = user;
         this.userName = userName;
-        this.userEmail = userEmail.asString();
+        if (userEmail != null) {
+            this.userEmail = userEmail.asString();
+        }
         this.viewCount = 0;
         this.mentor = mentor;
         this.mentorName = mentorName;
