@@ -1,8 +1,12 @@
 package rs.fon.pzr.rest.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
+import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.UserService;
 import rs.fon.pzr.core.service.util.ParamaterCheck;
@@ -17,6 +21,7 @@ import rs.fon.pzr.type.Email;
 import rs.fon.pzr.type.Password;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,6 +30,7 @@ public class UserResource {
 
     private final UserService userService;
     private final CourseService courseService;
+    private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserResource(UserService userService, CourseService courseService) {
@@ -58,13 +64,14 @@ public class UserResource {
         if (!Email.isValid(userEmail)) {
             throw new InvalidArgumentException("Email koji ste uneli nije validan.");
         }
-        if (!Password.isValid(loginData.getPassword())) {
+        String pass = loginData.getPassword();
+        if (!Password.isValid(pass)) {
             throw new InvalidArgumentException(
                     "Šifra ne sme sadržati razmake, mora imati barem jedno malo slovo, jedno veliko slovo, jednu cifru i sadržati između 6 i 13 karaktera.");
         }
 
         Email email = Email.fromString(userEmail);
-        Password password = Password.fromString(loginData.getPassword());
+        Password password = Password.fromString(passwordEncoder.encode(pass));
         UserCredentials credentials = new UserCredentials(email, password);
         UserEntity user = UserEntity.createUserWithCredentials(credentials);
 
@@ -76,6 +83,15 @@ public class UserResource {
     @ResponseBody
     public UserResponseLevel1 updateUser(@RequestBody UserRequest userRequest,
                                          @PathVariable("userID") Long userID) {
+
+        User springUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = springUser.getUsername();
+        UserEntity loggedInUser = userService.getUser(email)
+                .orElseThrow(() -> new InvalidTicketException("not logged in"));
+        if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), userID)) {
+            throw new InvalidTicketException(
+                    "Morate biti ulogovani kako bi menjali profil.");
+        }
 
         UserEntity user = userService.getUser(userID)
                 .orElseThrow(() -> new InvalidArgumentException("Korisnik sa id-em " + userID
@@ -126,6 +142,14 @@ public class UserResource {
 
     @DeleteMapping(value = "/{userID}")
     public void deleteUser(@PathVariable("userID") Long userID) {
+        User springUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = springUser.getUsername();
+        UserEntity loggedInUser = userService.getUser(email)
+                .orElseThrow(() -> new InvalidTicketException("not logged in"));
+        if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), userID)) {
+            throw new InvalidTicketException(
+                    "Morate biti ulogovani kako bi menjali profil.");
+        }
         userService.deleteUser(userID);
     }
 }

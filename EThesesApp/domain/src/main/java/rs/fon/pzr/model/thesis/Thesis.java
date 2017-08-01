@@ -95,7 +95,7 @@ public class Thesis {
         this.viewCount = 0;
         this.mentor = mentor;
         this.mentorName = mentorName;
-        if (userEmail != null) {
+        if (mentorEmail != null) {
             this.mentorEmail = mentorEmail.asString();
         }
         this.comments = comments.stream().collect(Collectors.toSet());

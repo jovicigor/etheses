@@ -2,12 +2,10 @@ package rs.fon.pzr.core.service;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.exception.PzrRuntimeException;
 import rs.fon.pzr.core.page.ThesisPage;
 import rs.fon.pzr.core.repository.CommentRepository;
@@ -351,22 +349,11 @@ public class ThesisServiceImpl implements ThesisService {
             throw new InvalidArgumentException("Komentar sa id-em " + commentId
                     + " ne postoji u bazi!");
         }
-//        TODO move to WEB
-        try {
-            org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-                    .getContext().getAuthentication().getPrincipal();
-            String email = user.getUsername();
-            UserEntity loggedInUser = userService.getUser(email).orElseThrow(() -> new InvalidTicketException("not logged in"));
-            ThesisComment thesisComment = commentRepository.findOne(commentId);
-            if (!loggedInUser.isAdmin()
-                    && !Objects.equals(thesisComment.getAuthor().getId(), loggedInUser
-                    .getId())) {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            throw new InvalidArgumentException(
-                    "Morate biti ulogovani da bi ste mogli obrisati komentar!");
-        }
         commentRepository.delete(commentRepository.findOne(commentId));
+    }
+
+    @Override
+    public ThesisComment getComment(long commentId) {
+        return commentRepository.findOne(commentId);
     }
 }

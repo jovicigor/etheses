@@ -40,7 +40,7 @@ public class UpdateThesisOperation {
         Thesis thesis = thesisService.getThesis(thesisID)
                 .orElseThrow(() -> new InvalidArgumentException("Predmet sa id-em " + thesisID
                         + " ne postoji u bazi!"));
-
+        thesis.setName(thesisRequest.getName());
         thesisRequest.getGrade()
                 .ifPresent(thesis::setGrade);
         thesisRequest.getDefenseDate()

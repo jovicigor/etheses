@@ -1,6 +1,5 @@
 package rs.fon.pzr.type;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import rs.fon.pzr.guards.EmptyGuard;
 
 public class Password {
@@ -10,7 +9,6 @@ public class Password {
             + "jedno veliko slovo, jednu cifru i sadržati između 6 i 13 karaktera.";
 
     private final String password;
-    private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private Password(String password) {
         this.password = password;
@@ -21,10 +19,6 @@ public class Password {
     }
 
     public static Password fromString(String password) {
-        EmptyGuard.validateString("password", password);
-        if (!isValid(password))
-            throw new IllegalStateException(EXCEPTION_MESSAGE);
-        password = passwordEncoder.encode(password);
         return new Password(password);
     }
 

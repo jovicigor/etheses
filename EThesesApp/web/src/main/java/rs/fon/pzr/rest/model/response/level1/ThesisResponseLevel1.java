@@ -54,7 +54,7 @@ public class ThesisResponseLevel1 {
             mentor = new UserResponseLevel2(thesis.getMentor());
         else
             mentor = null;
-        mentorName = thesis.getName();
+        mentorName = thesis.getMentorName();
         mentorEmail = thesis.getMentorEmail().map(Email::asString).orElse("");
         tags = thesis.getTags().stream()
                 .map(TagResponse::new)

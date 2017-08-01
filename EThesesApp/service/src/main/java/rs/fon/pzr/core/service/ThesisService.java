@@ -37,13 +37,11 @@ public interface ThesisService {
 
     void removeFile(Long fileId);
 
-    //chiled record services
-
     Set<ThesisComment> getAllComments(Long thesisId);
 
     ThesisComment addComment(ThesisComment thesisComment);
 
     void removeComment(Long commentId);
 
-
+    ThesisComment getComment(long commentId);
 }

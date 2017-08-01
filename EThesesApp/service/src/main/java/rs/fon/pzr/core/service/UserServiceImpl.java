@@ -1,16 +1,13 @@
 package rs.fon.pzr.core.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.repository.UserRepository;
 import rs.fon.pzr.model.user.UserEntity;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -57,18 +54,6 @@ public class UserServiceImpl implements UserService {
             throw new InvalidArgumentException("Korisnik sa id-em "
                     + user.getId() + " ne postoji u bazi!");
         }
-        try {
-            org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-                    .getContext().getAuthentication().getPrincipal();
-            String email = springUser.getUsername();
-            UserEntity loggedInUser = getUser(email).orElseThrow(() -> new InvalidTicketException("not logged in"));
-            if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), user.getId())) {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            throw new InvalidTicketException(
-                    "Morate biti ulogovani kako bi menjali profil!");
-        }
         return userRepository.save(user);
     }
 
@@ -79,18 +64,6 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new InvalidArgumentException("Korisnik sa id-em " + userId
                     + " ne postoji u bazi!");
-        }
-        try {
-            org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-                    .getContext().getAuthentication().getPrincipal();
-            String email = springUser.getUsername();
-            UserEntity loggedInUser = getUser(email).orElseThrow(() -> new InvalidTicketException("not logged in"));
-            if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), user.getId())) {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            throw new InvalidTicketException(
-                    "Morate biti ulogovani kako bi menjali profil.");
         }
         userRepository.delete(user);
 

@@ -101,7 +101,7 @@ public class ThesisResource {
 
         Thesis thesis = createThesisOperation.execute(thesisRequest);
 
-        return RestFactory.createThesisResponseLevel1(thesisService.addThesis(thesis));
+        return RestFactory.createThesisResponseLevel1(thesis);
     }
 
 
@@ -158,6 +158,16 @@ public class ThesisResource {
 
     @DeleteMapping(value = "/comments/{commentID}")
     public void removeComment(@PathVariable("commentID") Long commentID) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = user.getUsername();
+        UserEntity loggedInUser = userService.getUser(email)
+                .orElseThrow(() -> new InvalidTicketException("not logged in"));
+        ThesisComment thesisComment = thesisService.getComment(commentID);
+        if (!loggedInUser.isAdmin() && !Objects.equals(thesisComment.getAuthor().getId(), loggedInUser.getId())) {
+            throw new InvalidArgumentException(
+                    "Morate biti ulogovani da bi ste mogli obrisati komentar!");
+
+        }
         thesisService.removeComment(commentID);
     }
 
