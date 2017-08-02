@@ -5,8 +5,8 @@ import rs.fon.pzr.core.domain.model.studies.Course;
 import java.util.List;
 
 public interface CourseRepository {
-    Course findOne(Long id);
 
+    Course findOne(Long id);
 
     Course findByName(String name);
 
