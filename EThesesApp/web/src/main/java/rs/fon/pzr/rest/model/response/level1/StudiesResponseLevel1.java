@@ -1,6 +1,6 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.studies.Studies;
+import rs.fon.pzr.core.domain.model.studies.Studies;
 import rs.fon.pzr.rest.model.response.level2.CourseResponseLevel2;
 
 import java.util.Set;

@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import rs.fon.pzr.model.thesis.Thesis;
-import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.user.UserEntity;
 
 import java.util.List;
 

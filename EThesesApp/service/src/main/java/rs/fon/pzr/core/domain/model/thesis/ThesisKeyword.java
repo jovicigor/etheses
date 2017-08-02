@@ -1,4 +1,4 @@
-package rs.fon.pzr.model.thesis;
+package rs.fon.pzr.core.domain.model.thesis;
 
 import javax.persistence.*;
 

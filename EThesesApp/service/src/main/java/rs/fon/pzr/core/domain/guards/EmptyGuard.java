@@ -1,4 +1,4 @@
-package rs.fon.pzr.guards;
+package rs.fon.pzr.core.domain.guards;
 
 import org.springframework.util.StringUtils;
 

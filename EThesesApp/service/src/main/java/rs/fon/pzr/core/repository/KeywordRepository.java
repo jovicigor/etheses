@@ -1,6 +1,6 @@
 package rs.fon.pzr.core.repository;
 
-import rs.fon.pzr.model.thesis.Keyword;
+import rs.fon.pzr.core.domain.model.thesis.Keyword;
 
 public interface KeywordRepository {
 

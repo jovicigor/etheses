@@ -11,10 +11,10 @@ import rs.fon.pzr.core.page.ThesisPage;
 import rs.fon.pzr.core.repository.CommentRepository;
 import rs.fon.pzr.core.repository.FileRepository;
 import rs.fon.pzr.core.repository.ThesisRepository;
-import rs.fon.pzr.model.thesis.TFile;
-import rs.fon.pzr.model.thesis.Thesis;
-import rs.fon.pzr.model.thesis.ThesisComment;
-import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.core.domain.model.thesis.TFile;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.thesis.ThesisComment;
+import rs.fon.pzr.core.domain.model.user.UserEntity;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

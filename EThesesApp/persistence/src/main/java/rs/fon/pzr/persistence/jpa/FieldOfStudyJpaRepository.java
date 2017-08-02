@@ -1,7 +1,7 @@
 package rs.fon.pzr.persistence.jpa;
 
 import org.springframework.data.repository.CrudRepository;
-import rs.fon.pzr.model.thesis.FieldOfStudy;
+import rs.fon.pzr.core.domain.model.thesis.FieldOfStudy;
 
 import java.util.Set;
 

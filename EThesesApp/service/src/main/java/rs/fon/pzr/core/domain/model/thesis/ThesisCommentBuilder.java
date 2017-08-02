@@ -1,8 +1,8 @@
-package rs.fon.pzr.model.thesis;
+package rs.fon.pzr.core.domain.model.thesis;
 
-import rs.fon.pzr.guards.EmptyGuard;
-import rs.fon.pzr.guards.NullGuard;
-import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.core.domain.guards.EmptyGuard;
+import rs.fon.pzr.core.domain.guards.NullGuard;
+import rs.fon.pzr.core.domain.model.user.UserEntity;
 
 import java.util.Date;
 

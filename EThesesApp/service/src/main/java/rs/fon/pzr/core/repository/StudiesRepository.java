@@ -1,7 +1,6 @@
 package rs.fon.pzr.core.repository;
 
-import rs.fon.pzr.model.studies.Course;
-import rs.fon.pzr.model.studies.Studies;
+import rs.fon.pzr.core.domain.model.studies.Studies;
 
 import java.util.List;
 

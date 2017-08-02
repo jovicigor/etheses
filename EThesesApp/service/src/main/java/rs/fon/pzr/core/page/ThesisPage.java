@@ -1,6 +1,6 @@
 package rs.fon.pzr.core.page;
 
-import rs.fon.pzr.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
 
 import java.util.Collection;
 

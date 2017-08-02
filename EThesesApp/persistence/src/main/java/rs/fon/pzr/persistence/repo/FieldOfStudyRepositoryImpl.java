@@ -3,7 +3,7 @@ package rs.fon.pzr.persistence.repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rs.fon.pzr.core.repository.FieldOfStudyRepository;
-import rs.fon.pzr.model.thesis.FieldOfStudy;
+import rs.fon.pzr.core.domain.model.thesis.FieldOfStudy;
 import rs.fon.pzr.persistence.jpa.FieldOfStudyJpaRepository;
 
 import java.util.Set;

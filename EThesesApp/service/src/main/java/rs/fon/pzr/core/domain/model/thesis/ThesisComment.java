@@ -1,6 +1,6 @@
-package rs.fon.pzr.model.thesis;
+package rs.fon.pzr.core.domain.model.thesis;
 
-import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.core.domain.model.user.UserEntity;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.service.FieldOfStudyService;
-import rs.fon.pzr.model.thesis.FieldOfStudy;
+import rs.fon.pzr.core.domain.model.thesis.FieldOfStudy;
 import rs.fon.pzr.rest.model.request.FieldOfStudyRequest;
 
 import java.util.Set;

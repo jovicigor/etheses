@@ -1,10 +1,10 @@
 package rs.fon.pzr.rest.model.util;
 
-import rs.fon.pzr.model.studies.Course;
-import rs.fon.pzr.model.studies.Studies;
-import rs.fon.pzr.model.thesis.Thesis;
-import rs.fon.pzr.model.thesis.ThesisComment;
-import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.core.domain.model.studies.Course;
+import rs.fon.pzr.core.domain.model.studies.Studies;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.thesis.ThesisComment;
+import rs.fon.pzr.core.domain.model.user.UserEntity;
 import rs.fon.pzr.rest.model.response.level1.*;
 
 public class RestFactory {

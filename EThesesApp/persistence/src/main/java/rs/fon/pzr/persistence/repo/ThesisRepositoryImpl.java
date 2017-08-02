@@ -7,8 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import rs.fon.pzr.core.page.ThesisPage;
 import rs.fon.pzr.core.repository.ThesisRepository;
-import rs.fon.pzr.model.thesis.Thesis;
-import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.user.UserEntity;
 import rs.fon.pzr.persistence.jpa.ThesisJpaRepository;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package rs.fon.pzr.model.thesis;
+package rs.fon.pzr.core.domain.model.thesis;
 
-import rs.fon.pzr.guards.EmptyGuard;
+import rs.fon.pzr.core.domain.guards.EmptyGuard;
 
 import javax.persistence.*;
 

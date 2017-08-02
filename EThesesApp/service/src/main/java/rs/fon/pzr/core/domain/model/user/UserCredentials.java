@@ -1,7 +1,7 @@
-package rs.fon.pzr.model.user;
+package rs.fon.pzr.core.domain.model.user;
 
-import rs.fon.pzr.type.Email;
-import rs.fon.pzr.type.Password;
+import rs.fon.pzr.core.domain.type.Email;
+import rs.fon.pzr.core.domain.type.Password;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

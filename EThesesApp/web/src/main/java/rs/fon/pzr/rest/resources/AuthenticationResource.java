@@ -2,7 +2,7 @@ package rs.fon.pzr.rest.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import rs.fon.pzr.model.user.UserEntity;
+import rs.fon.pzr.core.domain.model.user.UserEntity;
 import rs.fon.pzr.rest.model.LoginData;
 import rs.fon.pzr.rest.model.response.level1.UserResponseLevel1;
 import rs.fon.pzr.rest.model.response.ticket.TicketResponse;

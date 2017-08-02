@@ -1,6 +1,6 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.thesis.Tag;
+import rs.fon.pzr.core.domain.model.thesis.Tag;
 
 public class TagResponse {
 

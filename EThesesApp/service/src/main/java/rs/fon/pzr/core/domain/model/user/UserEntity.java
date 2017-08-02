@@ -1,9 +1,9 @@
-package rs.fon.pzr.model.user;
+package rs.fon.pzr.core.domain.model.user;
 
-import rs.fon.pzr.guards.NullGuard;
-import rs.fon.pzr.model.thesis.Thesis;
-import rs.fon.pzr.model.studies.Course;
-import rs.fon.pzr.type.Email;
+import rs.fon.pzr.core.domain.guards.NullGuard;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.studies.Course;
+import rs.fon.pzr.core.domain.type.Email;
 
 import javax.persistence.*;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package rs.fon.pzr.type;
+package rs.fon.pzr.core.domain.type;
 
 class EmailParseException extends IllegalArgumentException {
 

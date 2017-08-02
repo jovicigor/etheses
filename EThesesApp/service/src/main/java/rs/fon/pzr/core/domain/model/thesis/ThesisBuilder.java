@@ -1,8 +1,8 @@
-package rs.fon.pzr.model.thesis;
+package rs.fon.pzr.core.domain.model.thesis;
 
-import rs.fon.pzr.model.studies.Course;
-import rs.fon.pzr.model.user.UserEntity;
-import rs.fon.pzr.type.Email;
+import rs.fon.pzr.core.domain.model.studies.Course;
+import rs.fon.pzr.core.domain.model.user.UserEntity;
+import rs.fon.pzr.core.domain.type.Email;
 
 import java.util.Collection;
 import java.util.Collections;

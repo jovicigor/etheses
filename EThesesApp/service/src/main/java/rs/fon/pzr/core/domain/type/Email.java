@@ -1,7 +1,7 @@
-package rs.fon.pzr.type;
+package rs.fon.pzr.core.domain.type;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import rs.fon.pzr.guards.EmptyGuard;
+import rs.fon.pzr.core.domain.guards.EmptyGuard;
 
 public class Email {
     private final String email;

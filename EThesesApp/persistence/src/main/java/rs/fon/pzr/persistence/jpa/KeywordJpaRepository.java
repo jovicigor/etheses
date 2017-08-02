@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import rs.fon.pzr.model.thesis.Keyword;
+import rs.fon.pzr.core.domain.model.thesis.Keyword;
 
 public interface KeywordJpaRepository extends CrudRepository<Keyword, Long> {
     Keyword findByValue(String value);

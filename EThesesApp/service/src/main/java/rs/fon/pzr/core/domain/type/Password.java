@@ -1,6 +1,4 @@
-package rs.fon.pzr.type;
-
-import rs.fon.pzr.guards.EmptyGuard;
+package rs.fon.pzr.core.domain.type;
 
 public class Password {
 

@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.service.*;
-import rs.fon.pzr.model.thesis.FieldOfStudy;
-import rs.fon.pzr.model.thesis.Keyword;
-import rs.fon.pzr.model.thesis.Tag;
-import rs.fon.pzr.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.thesis.FieldOfStudy;
+import rs.fon.pzr.core.domain.model.thesis.Keyword;
+import rs.fon.pzr.core.domain.model.thesis.Tag;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
 import rs.fon.pzr.rest.model.request.ThesisRequest;
 
 import java.util.HashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static rs.fon.pzr.model.thesis.Keyword.createNotBannedKeyword;
+import static rs.fon.pzr.core.domain.model.thesis.Keyword.createNotBannedKeyword;
 
 @Service
 public class UpdateThesisOperation {

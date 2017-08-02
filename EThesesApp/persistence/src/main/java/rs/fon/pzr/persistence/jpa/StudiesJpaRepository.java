@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import rs.fon.pzr.model.studies.Studies;
+import rs.fon.pzr.core.domain.model.studies.Studies;
 
 public interface StudiesJpaRepository extends CrudRepository<Studies, Long> {
 	

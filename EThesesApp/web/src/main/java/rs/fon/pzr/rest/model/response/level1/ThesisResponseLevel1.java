@@ -1,11 +1,11 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.thesis.TFile;
-import rs.fon.pzr.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.thesis.TFile;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
 import rs.fon.pzr.rest.model.response.level2.CourseResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.ThesisCommentResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.UserResponseLevel2;
-import rs.fon.pzr.type.Email;
+import rs.fon.pzr.core.domain.type.Email;
 
 import java.util.Date;
 import java.util.Set;

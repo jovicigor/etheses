@@ -1,6 +1,6 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.model.thesis.ThesisComment;
+import rs.fon.pzr.core.domain.model.thesis.ThesisComment;
 import rs.fon.pzr.rest.model.response.level2.ThesisResponseLevel2;
 import rs.fon.pzr.rest.model.response.level2.UserResponseLevel2;
 

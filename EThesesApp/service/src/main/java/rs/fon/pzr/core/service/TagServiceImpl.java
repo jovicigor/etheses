@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.repository.TagRepository;
-import rs.fon.pzr.model.thesis.Tag;
+import rs.fon.pzr.core.domain.model.thesis.Tag;
 
-import static rs.fon.pzr.model.thesis.Tag.*;
+import static rs.fon.pzr.core.domain.model.thesis.Tag.*;
 
 @Service
 public class TagServiceImpl implements TagService {

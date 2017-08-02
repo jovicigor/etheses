@@ -3,7 +3,7 @@ package rs.fon.pzr.persistence.repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rs.fon.pzr.core.repository.FileRepository;
-import rs.fon.pzr.model.thesis.TFile;
+import rs.fon.pzr.core.domain.model.thesis.TFile;
 import rs.fon.pzr.persistence.jpa.FileJpaRepository;
 
 import java.util.Set;

@@ -2,7 +2,7 @@ package rs.fon.pzr.core.service;
 
 import java.util.Map;
 
-import rs.fon.pzr.model.thesis.Keyword;
+import rs.fon.pzr.core.domain.model.thesis.Keyword;
 
 public interface KeywordService {
 

@@ -1,6 +1,6 @@
 package rs.fon.pzr.core.repository;
 
-import rs.fon.pzr.model.thesis.Tag;
+import rs.fon.pzr.core.domain.model.thesis.Tag;
 
 import java.util.Optional;
 import java.util.Set;

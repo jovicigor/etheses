@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.repository.CourseRepository;
-import rs.fon.pzr.model.studies.Course;
+import rs.fon.pzr.core.domain.model.studies.Course;
 
 @Service
 public class CourseServiceImpl implements CourseService {

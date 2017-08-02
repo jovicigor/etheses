@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.repository.KeywordRepository;
-import rs.fon.pzr.model.thesis.Keyword;
+import rs.fon.pzr.core.domain.model.thesis.Keyword;
 
 @Service
 public class KeywordServiceImpl implements KeywordService {

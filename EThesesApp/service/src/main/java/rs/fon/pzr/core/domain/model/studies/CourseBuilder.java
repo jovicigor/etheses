@@ -1,7 +1,7 @@
-package rs.fon.pzr.model.studies;
+package rs.fon.pzr.core.domain.model.studies;
 
-import rs.fon.pzr.guards.EmptyGuard;
-import rs.fon.pzr.guards.NullGuard;
+import rs.fon.pzr.core.domain.guards.EmptyGuard;
+import rs.fon.pzr.core.domain.guards.NullGuard;
 
 import java.util.Collection;
 import java.util.HashSet;

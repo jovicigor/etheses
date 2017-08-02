@@ -3,16 +3,16 @@ package rs.fon.pzr.rest.resources.thesis.operations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.fon.pzr.core.service.*;
-import rs.fon.pzr.model.thesis.*;
+import rs.fon.pzr.core.domain.model.thesis.*;
 import rs.fon.pzr.rest.model.request.ThesisRequest;
-import rs.fon.pzr.type.Email;
+import rs.fon.pzr.core.domain.type.Email;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static rs.fon.pzr.model.thesis.Keyword.createNotBannedKeyword;
+import static rs.fon.pzr.core.domain.model.thesis.Keyword.createNotBannedKeyword;
 
 @Service
 public class CreateThesisOperation {
