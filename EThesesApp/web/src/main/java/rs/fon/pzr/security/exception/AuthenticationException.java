@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.exception;
+package rs.fon.pzr.security.exception;
 
 public class AuthenticationException extends RuntimeException {
 

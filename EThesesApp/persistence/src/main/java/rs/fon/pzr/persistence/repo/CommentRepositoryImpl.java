@@ -2,7 +2,7 @@ package rs.fon.pzr.persistence.repo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import rs.fon.pzr.core.repository.CommentRepository;
+import rs.fon.pzr.core.service.repository.CommentRepository;
 import rs.fon.pzr.core.domain.model.thesis.ThesisComment;
 import rs.fon.pzr.persistence.jpa.CommentJpaRepository;
 

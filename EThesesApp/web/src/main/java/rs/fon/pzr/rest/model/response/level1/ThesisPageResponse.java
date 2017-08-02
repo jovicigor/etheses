@@ -1,8 +1,7 @@
 package rs.fon.pzr.rest.model.response.level1;
 
-import rs.fon.pzr.core.page.ThesisPage;
+import rs.fon.pzr.core.service.page.ThesisPage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import rs.fon.pzr.core.exception.AuthenticationException;
-import rs.fon.pzr.core.exception.InvalidTicketException;
+import rs.fon.pzr.security.exception.AuthenticationException;
+import rs.fon.pzr.rest.exception.InvalidTicketException;
 import rs.fon.pzr.rest.model.ErrorMessage;
 
 import javax.servlet.http.HttpServletRequest;

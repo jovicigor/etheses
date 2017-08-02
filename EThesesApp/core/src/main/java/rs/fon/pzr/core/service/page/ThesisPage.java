@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.page;
+package rs.fon.pzr.core.service.page;
 
 import rs.fon.pzr.core.domain.model.thesis.Thesis;
 

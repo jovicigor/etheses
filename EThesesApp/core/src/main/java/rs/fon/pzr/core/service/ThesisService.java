@@ -1,7 +1,7 @@
 package rs.fon.pzr.core.service;
 
 import org.springframework.web.multipart.MultipartFile;
-import rs.fon.pzr.core.page.ThesisPage;
+import rs.fon.pzr.core.service.page.ThesisPage;
 import rs.fon.pzr.core.domain.model.thesis.TFile;
 import rs.fon.pzr.core.domain.model.thesis.Thesis;
 import rs.fon.pzr.core.domain.model.thesis.ThesisComment;

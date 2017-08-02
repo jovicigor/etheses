@@ -2,7 +2,7 @@ package rs.fon.pzr.persistence.repo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import rs.fon.pzr.core.repository.CourseRepository;
+import rs.fon.pzr.core.service.repository.CourseRepository;
 import rs.fon.pzr.core.domain.model.studies.Course;
 import rs.fon.pzr.persistence.jpa.CourseJpaRepository;
 

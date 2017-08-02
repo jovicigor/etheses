@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.exception;
+package rs.fon.pzr.rest.exception;
 
 public class InvalidTicketException extends RuntimeException{
 	

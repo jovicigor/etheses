@@ -1,8 +1,8 @@
-package rs.fon.pzr.core.repository;
+package rs.fon.pzr.core.service.repository;
 
 import rs.fon.pzr.core.domain.model.thesis.Thesis;
 import rs.fon.pzr.core.domain.model.user.UserEntity;
-import rs.fon.pzr.core.page.ThesisPage;
+import rs.fon.pzr.core.service.page.ThesisPage;
 
 import java.util.List;
 

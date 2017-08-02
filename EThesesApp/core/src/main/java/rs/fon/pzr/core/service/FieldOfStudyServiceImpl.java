@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.repository.FieldOfStudyRepository;
+import rs.fon.pzr.core.service.repository.FieldOfStudyRepository;
 import rs.fon.pzr.core.domain.model.thesis.FieldOfStudy;
 
 import java.util.Optional;

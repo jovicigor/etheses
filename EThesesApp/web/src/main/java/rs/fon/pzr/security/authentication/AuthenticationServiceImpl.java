@@ -3,8 +3,8 @@ package rs.fon.pzr.security.authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import rs.fon.pzr.core.exception.AuthenticationException;
-import rs.fon.pzr.core.exception.InvalidTicketException;
+import rs.fon.pzr.security.exception.AuthenticationException;
+import rs.fon.pzr.rest.exception.InvalidTicketException;
 import rs.fon.pzr.core.domain.model.user.UserEntity;
 import rs.fon.pzr.core.service.UserService;
 

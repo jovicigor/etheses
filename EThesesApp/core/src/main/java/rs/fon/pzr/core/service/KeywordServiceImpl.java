@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import rs.fon.pzr.core.repository.KeywordRepository;
+import rs.fon.pzr.core.service.repository.KeywordRepository;
 import rs.fon.pzr.core.domain.model.thesis.Keyword;
 
 @Service

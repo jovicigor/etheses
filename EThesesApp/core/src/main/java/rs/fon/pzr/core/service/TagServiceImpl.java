@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.repository.TagRepository;
+import rs.fon.pzr.core.service.repository.TagRepository;
 import rs.fon.pzr.core.domain.model.thesis.Tag;
 
 import static rs.fon.pzr.core.domain.model.thesis.Tag.*;

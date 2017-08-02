@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.core.exception.InvalidTicketException;
+import rs.fon.pzr.rest.exception.InvalidTicketException;
 import rs.fon.pzr.core.service.CourseService;
 import rs.fon.pzr.core.service.UserService;
 import rs.fon.pzr.rest.util.ParamaterCheck;
