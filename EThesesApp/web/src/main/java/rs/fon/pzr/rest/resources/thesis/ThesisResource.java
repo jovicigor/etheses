@@ -10,7 +10,7 @@ import rs.fon.pzr.core.exception.InvalidArgumentException;
 import rs.fon.pzr.core.exception.InvalidTicketException;
 import rs.fon.pzr.core.page.ThesisPage;
 import rs.fon.pzr.core.service.*;
-import rs.fon.pzr.core.service.util.ParamaterCheck;
+import rs.fon.pzr.rest.util.ParamaterCheck;
 import rs.fon.pzr.model.thesis.*;
 import rs.fon.pzr.model.user.UserEntity;
 import rs.fon.pzr.rest.model.request.ThesisCommentRequest;

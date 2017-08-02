@@ -1,4 +1,4 @@
-package rs.fon.pzr.core.service.util;
+package rs.fon.pzr.rest.util;
 
 import rs.fon.pzr.core.exception.InvalidArgumentException;
 
