@@ -80,11 +80,11 @@ public class Thesis {
     protected Thesis() {
     }
 
-    public Thesis(String name, Integer grade, Date datePosted, String description, Course course, UserEntity user, String userName, Email userEmail, UserEntity mentor, String mentorName, Email mentorEmail, Collection<Tag> tags, Collection<FieldOfStudy> fieldOfStudies, Collection<ThesisKeyword> thesisKeywords) {
+    public Thesis(String name, Integer grade, Date defenseDate, String description, Course course, UserEntity user, String userName, Email userEmail, UserEntity mentor, String mentorName, Email mentorEmail, Collection<Tag> tags, Collection<FieldOfStudy> fieldOfStudies, Collection<ThesisKeyword> thesisKeywords) {
         this.name = name;
         this.grade = grade;
-        this.datePosted = datePosted;
-        this.defenseDate = new Date();
+        this.datePosted = new Date();
+        this.defenseDate = defenseDate;
         this.description = description;
         this.course = course;
         this.user = user;
