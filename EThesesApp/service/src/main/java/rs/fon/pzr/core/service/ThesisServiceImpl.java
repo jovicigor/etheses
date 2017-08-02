@@ -11,7 +11,6 @@ import rs.fon.pzr.core.page.ThesisPage;
 import rs.fon.pzr.core.repository.CommentRepository;
 import rs.fon.pzr.core.repository.FileRepository;
 import rs.fon.pzr.core.repository.ThesisRepository;
-import rs.fon.pzr.core.repository.UserRepository;
 import rs.fon.pzr.model.thesis.TFile;
 import rs.fon.pzr.model.thesis.Thesis;
 import rs.fon.pzr.model.thesis.ThesisComment;
@@ -34,21 +33,18 @@ public class ThesisServiceImpl implements ThesisService {
 
     private String thesisFilesFolder;
 
-    private final ThesisRepository thesisRepository;
-    private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
     private final UserService userService;
+    private final ThesisRepository thesisRepository;
     private final FileRepository fileRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
-    public ThesisServiceImpl(UserRepository userRepository, ThesisRepository thesisRepository,
-                             FileRepository fileRepository, CommentRepository commentRepository,
-                             UserService userService) {
-        this.userRepository = userRepository;
+    public ThesisServiceImpl(UserService userService, ThesisRepository thesisRepository,
+                             FileRepository fileRepository, CommentRepository commentRepository) {
+        this.userService = userService;
         this.thesisRepository = thesisRepository;
         this.fileRepository = fileRepository;
         this.commentRepository = commentRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -61,11 +57,9 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Override
     public List<Thesis> getThesisByUserId(Long userId) {
-        UserEntity user = userRepository.findOne(userId);
-        if (user == null) {
-            throw new InvalidArgumentException("Korisnik sa id-em " + userId
-                    + " ne postoji u bazi!.");
-        }
+        UserEntity user = userService.getUser(userId)
+                .orElseThrow(() -> new InvalidArgumentException("Korisnik sa id-em " + userId
+                        + " ne postoji u bazi!."));
         return thesisRepository.findByUser(user);
     }
 
