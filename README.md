@@ -15,9 +15,4 @@ In-depth documentation is placed at the root of the respository: documentation.p
 it was created as a part of a student project at the Faculty of Organizational Sciences.
 
 # Deployment
-Build script is placed in pom.xml file at the root of the project folder. Maven can be used to generate war file wich should be deployed to a Java application
-server(ex. Tomcat or JBoss). Before running application mysql database named "e_theses" must be created, and pzr.properties file should be modified
-to contains right database information. After deploying application to a Web server path to home page will be http://serverAddress:8080/e_theses.
-REST services are exposed relative to url: http://serverAddress:8080/e_theses/webapi. Detailed endpoint documentation can be found in documentation.pdf file
-at the root of the repository.
-
+https://github.com/jovicigor/EThesesConfigurationServer - configuration server 
