@@ -62,14 +62,13 @@ public class CourseServiceImpl implements CourseService {
         }
 
         if (!existingCourse.getName().equals(course.getName())) {
-            if (courseRepository.findByName(course.getName()) != null) {
+            if (courseRepository.existsByName(course.getName())) {
                 throw new InvalidArgumentException("Kurs " + course.getName()
                         + " već postoji u bazi!");
             }
         }
-
         if (!existingCourse.getNameShort().equals(course.getNameShort())) {
-            if (courseRepository.findByNameShort(course.getNameShort()) != null) {
+            if (courseRepository.existsByNameShort(course.getNameShort())) {
                 throw new InvalidArgumentException("Kurs "
                         + course.getNameShort() + " već postoji u bazi!");
             }
