@@ -19,8 +19,8 @@ public class FieldOfStudyServiceImplTest {
         FieldOfStudyRepository fieldOfStudyRepositoryMock = mock(FieldOfStudyRepository.class);
         when(fieldOfStudyRepositoryMock.findOne(anyLong())).thenReturn(fieldOfStudy);
 
-        FieldOfStudyServiceImpl fieldOfStudyService = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
-        Optional<FieldOfStudy> result = fieldOfStudyService.getFieldOfStudy(1L);
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
+        Optional<FieldOfStudy> result = testee.getFieldOfStudy(1L);
 
         assertTrue(result.isPresent());
     }
@@ -30,8 +30,8 @@ public class FieldOfStudyServiceImplTest {
         FieldOfStudyRepository fieldOfStudyRepositoryMock = mock(FieldOfStudyRepository.class);
         when(fieldOfStudyRepositoryMock.findOne(anyLong())).thenReturn(null);
 
-        FieldOfStudyServiceImpl fieldOfStudyService = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
-        Optional<FieldOfStudy> result = fieldOfStudyService.getFieldOfStudy(1L);
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
+        Optional<FieldOfStudy> result = testee.getFieldOfStudy(1L);
 
         assertFalse(result.isPresent());
     }
@@ -43,8 +43,8 @@ public class FieldOfStudyServiceImplTest {
         FieldOfStudyRepository fieldOfStudyRepositoryMock = mock(FieldOfStudyRepository.class);
         when(fieldOfStudyRepositoryMock.findByName(name)).thenReturn(fieldOfStudy);
 
-        FieldOfStudyServiceImpl fieldOfStudyService = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
-        FieldOfStudy same = fieldOfStudyService.addFieldOfStudy(name);
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
+        FieldOfStudy same = testee.addFieldOfStudy(name);
 
         assertSame(fieldOfStudy, same);
     }
@@ -54,8 +54,8 @@ public class FieldOfStudyServiceImplTest {
         FieldOfStudyRepository fieldOfStudyRepositoryMock = mock(FieldOfStudyRepository.class);
         when(fieldOfStudyRepositoryMock.findByName(any())).thenReturn(null);
 
-        FieldOfStudyServiceImpl fieldOfStudyService = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
-        fieldOfStudyService.addFieldOfStudy("not existing");
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
+        testee.addFieldOfStudy("not existing");
 
         verify(fieldOfStudyRepositoryMock, times(1)).save(any());
     }
@@ -67,9 +67,63 @@ public class FieldOfStudyServiceImplTest {
         FieldOfStudyRepository fieldOfStudyRepositoryMock = mock(FieldOfStudyRepository.class);
         when(fieldOfStudyRepositoryMock.findOne(any())).thenReturn(null);
 
-        FieldOfStudyServiceImpl fieldOfStudyService = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
-        fieldOfStudyService.updateFieldOfStudy(fieldOfStudy);
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
+        testee.updateFieldOfStudy(fieldOfStudy);
+
+        verify(fieldOfStudyRepositoryMock, times(0)).save(any());
     }
 
-//    TODO: more tests
+    @Test(expected = InvalidArgumentException.class)
+    public void updateFieldOfStudy_updatedFieldNameExists_throwsException() {
+        String name = "ISIT";
+        FieldOfStudy fieldOfStudy = FieldOfStudy.createFieldOfStudy(name);
+        FieldOfStudy existingFieldOfStudy = FieldOfStudy.createFieldOfStudy("existing field");
+        FieldOfStudyRepository fieldOfStudyRepositoryMock = mock(FieldOfStudyRepository.class);
+        when(fieldOfStudyRepositoryMock.findOne(any())).thenReturn(existingFieldOfStudy);
+        when(fieldOfStudyRepositoryMock.findByName(fieldOfStudy.getName())).thenReturn(fieldOfStudy);
+
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
+        testee.updateFieldOfStudy(fieldOfStudy);
+
+        verify(fieldOfStudyRepositoryMock, times(0)).save(any());
+    }
+
+    @Test
+    public void updateFieldOfStudy_updatedFieldCanBeSaved_save() {
+        String name = "ISIT";
+        FieldOfStudy fieldOfStudy = FieldOfStudy.createFieldOfStudy(name);
+        FieldOfStudy existingFieldOfStudy = FieldOfStudy.createFieldOfStudy("existing field");
+        FieldOfStudyRepository fieldOfStudyRepositoryMock = mock(FieldOfStudyRepository.class);
+        when(fieldOfStudyRepositoryMock.findOne(any())).thenReturn(existingFieldOfStudy);
+        when(fieldOfStudyRepositoryMock.findByName(fieldOfStudy.getName())).thenReturn(null);
+
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(fieldOfStudyRepositoryMock);
+        testee.updateFieldOfStudy(fieldOfStudy);
+        verify(fieldOfStudyRepositoryMock, times(1)).save(fieldOfStudy);
+    }
+
+    @Test(expected = InvalidArgumentException.class)
+    public void removeCourse_courseDoesntExist_throwException() {
+        FieldOfStudyRepository repositoryMock = mock(FieldOfStudyRepository.class);
+        when(repositoryMock.findOne(anyLong())).thenReturn(null);
+
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(repositoryMock);
+        testee.removeFieldOfStudy(1L);
+
+        verify(repositoryMock, times(0)).delete(anyLong());
+    }
+
+    @Test
+    public void removeCourse_courseExist_throwException() {
+        String name = "ISIT";
+        FieldOfStudy existingFieldOfStudy = FieldOfStudy.createFieldOfStudy(name);
+        FieldOfStudyRepository repositoryMock = mock(FieldOfStudyRepository.class);
+        when(repositoryMock.findOne(anyLong())).thenReturn(existingFieldOfStudy);
+
+        FieldOfStudyServiceImpl testee = new FieldOfStudyServiceImpl(repositoryMock);
+        testee.removeFieldOfStudy(1L);
+
+        verify(repositoryMock, times(1)).delete(1L);
+    }
+
 }
