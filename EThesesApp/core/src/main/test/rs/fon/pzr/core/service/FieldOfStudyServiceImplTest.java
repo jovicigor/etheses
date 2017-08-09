@@ -103,7 +103,7 @@ public class FieldOfStudyServiceImplTest {
     }
 
     @Test(expected = InvalidArgumentException.class)
-    public void removeCourse_courseDoesntExist_throwException() {
+    public void removeFieldOfStudy_fieldDoesntExist_throwException() {
         FieldOfStudyRepository repositoryMock = mock(FieldOfStudyRepository.class);
         when(repositoryMock.findOne(anyLong())).thenReturn(null);
 
@@ -114,7 +114,7 @@ public class FieldOfStudyServiceImplTest {
     }
 
     @Test
-    public void removeCourse_courseExist_throwException() {
+    public void removeFieldOfStudy_fieldOfStudyExist_delete() {
         String name = "ISIT";
         FieldOfStudy existingFieldOfStudy = FieldOfStudy.createFieldOfStudy(name);
         FieldOfStudyRepository repositoryMock = mock(FieldOfStudyRepository.class);
