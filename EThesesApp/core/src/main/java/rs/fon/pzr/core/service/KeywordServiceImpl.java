@@ -25,8 +25,7 @@ public class KeywordServiceImpl implements KeywordService {
     @Override
     @Transactional
     public Keyword addKeyword(Keyword keyword) {
-        Keyword existingKeyword = keywordRepository.findByValue(keyword
-                .getValue());
+        Keyword existingKeyword = keywordRepository.findByValue(keyword.getValue());
         if (existingKeyword != null) {
             return existingKeyword;
         }
@@ -35,6 +34,10 @@ public class KeywordServiceImpl implements KeywordService {
 
     public Map<String, Integer> extractWordsWithCount(String input) {
         Map<String, Integer> words = new HashMap<>();
+        if (input == null) {
+            return words;
+        }
+
         Pattern p = Pattern.compile("[\\w']+");
         Matcher m = p.matcher(input);
 
