@@ -11,9 +11,6 @@ app.config(['$routeProvider', '$httpProvider', '$mdThemingProvider',
         $routeProvider.when('/main', {
             templateUrl: 'app/partials/main.html',
             controller: 'MainController'
-        }).when('/about', {
-            templateUrl: 'app/partials/about.html',
-            controller: 'AboutController'
         }).when('/login', {
             templateUrl: 'app/partials/login.html',
             controller: 'LoginController'
