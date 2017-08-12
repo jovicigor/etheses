@@ -1,25 +1,24 @@
 package rs.fon.pzr.rest.resources;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.rest.exception.InvalidTicketException;
-import rs.fon.pzr.core.service.CourseService;
-import rs.fon.pzr.core.service.UserService;
-import rs.fon.pzr.rest.util.ParamaterCheck;
 import rs.fon.pzr.core.domain.model.user.UserCredentials;
 import rs.fon.pzr.core.domain.model.user.UserEntity;
+import rs.fon.pzr.core.domain.type.Email;
+import rs.fon.pzr.core.domain.type.Password;
+import rs.fon.pzr.core.exception.InvalidArgumentException;
+import rs.fon.pzr.core.service.CourseService;
+import rs.fon.pzr.core.service.UserService;
+import rs.fon.pzr.rest.exception.InvalidTicketException;
 import rs.fon.pzr.rest.model.LoginData;
 import rs.fon.pzr.rest.model.request.AdminPrivilegeRequest;
 import rs.fon.pzr.rest.model.request.UserRequest;
 import rs.fon.pzr.rest.model.response.level1.UserResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
-import rs.fon.pzr.core.domain.type.Email;
-import rs.fon.pzr.core.domain.type.Password;
+import rs.fon.pzr.rest.util.ParamaterCheck;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -82,10 +81,9 @@ public class UserResource {
     @PutMapping(value = "/{userID}")
     @ResponseBody
     public UserResponseLevel1 updateUser(@RequestBody UserRequest userRequest,
-                                         @PathVariable("userID") Long userID) {
+                                         @PathVariable("userID") Long userID, Principal principal) {
 
-        User springUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = springUser.getUsername();
+        String email = principal.getName();
         UserEntity loggedInUser = userService.getUser(email)
                 .orElseThrow(() -> new InvalidTicketException("not logged in"));
         if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), userID)) {
@@ -141,9 +139,8 @@ public class UserResource {
     }
 
     @DeleteMapping(value = "/{userID}")
-    public void deleteUser(@PathVariable("userID") Long userID) {
-        User springUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = springUser.getUsername();
+    public void deleteUser(@PathVariable("userID") Long userID, Principal principal) {
+        String email = principal.getName();
         UserEntity loggedInUser = userService.getUser(email)
                 .orElseThrow(() -> new InvalidTicketException("not logged in"));
         if (!loggedInUser.isAdmin() && !Objects.equals(loggedInUser.getId(), userID)) {

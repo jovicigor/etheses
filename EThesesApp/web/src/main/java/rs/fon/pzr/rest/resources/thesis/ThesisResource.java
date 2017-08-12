@@ -1,18 +1,19 @@
 package rs.fon.pzr.rest.resources.thesis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import rs.fon.pzr.core.exception.InvalidArgumentException;
-import rs.fon.pzr.rest.exception.InvalidTicketException;
-import rs.fon.pzr.core.service.page.ThesisPage;
-import rs.fon.pzr.core.service.*;
-import rs.fon.pzr.rest.util.ParamaterCheck;
-import rs.fon.pzr.core.domain.model.thesis.*;
+import rs.fon.pzr.core.domain.model.thesis.TFile;
+import rs.fon.pzr.core.domain.model.thesis.Thesis;
+import rs.fon.pzr.core.domain.model.thesis.ThesisComment;
+import rs.fon.pzr.core.domain.model.thesis.ThesisCommentBuilder;
 import rs.fon.pzr.core.domain.model.user.UserEntity;
+import rs.fon.pzr.core.exception.InvalidArgumentException;
+import rs.fon.pzr.core.service.ThesisService;
+import rs.fon.pzr.core.service.UserService;
+import rs.fon.pzr.core.service.page.ThesisPage;
+import rs.fon.pzr.rest.exception.InvalidTicketException;
 import rs.fon.pzr.rest.model.request.ThesisCommentRequest;
 import rs.fon.pzr.rest.model.request.ThesisRequest;
 import rs.fon.pzr.rest.model.response.level1.ThesisCommentResponseLevel1;
@@ -21,11 +22,19 @@ import rs.fon.pzr.rest.model.response.level1.ThesisResponseLevel1;
 import rs.fon.pzr.rest.model.util.RestFactory;
 import rs.fon.pzr.rest.resources.thesis.operations.CreateThesisOperation;
 import rs.fon.pzr.rest.resources.thesis.operations.UpdateThesisOperation;
+import rs.fon.pzr.rest.util.ParamaterCheck;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URLConnection;
-import java.util.*;
+import java.security.Principal;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -134,12 +143,12 @@ public class ThesisResource {
     @PostMapping(value = "/{thesisID}/comments")
     @ResponseBody
     public ThesisCommentResponseLevel1 createComment(@PathVariable("thesisID") Long thesisId,
-                                                     @RequestBody ThesisCommentRequest thesisCommentRequest) {
+                                                     @RequestBody ThesisCommentRequest thesisCommentRequest,
+                                                     Principal principal) {
         String message = thesisCommentRequest.getMessage()
                 .orElseThrow(() -> new InvalidArgumentException("message je obavezno polje!"));
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = user.getUsername();
+        String email = principal.getName();
         UserEntity loggedInUser = userService.getUser(email)
                 .orElseThrow(() -> new InvalidTicketException("Must provide a valid ticket!"));
 
@@ -157,9 +166,9 @@ public class ThesisResource {
     }
 
     @DeleteMapping(value = "/comments/{commentID}")
-    public void removeComment(@PathVariable("commentID") Long commentID) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = user.getUsername();
+    public void removeComment(@PathVariable("commentID") Long commentID,
+                              Principal principal) {
+        String email = principal.getName();
         UserEntity loggedInUser = userService.getUser(email)
                 .orElseThrow(() -> new InvalidTicketException("not logged in"));
         ThesisComment thesisComment = thesisService.getComment(commentID);
