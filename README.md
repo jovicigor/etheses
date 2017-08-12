@@ -15,4 +15,5 @@ In-depth documentation is placed at the root of the respository: documentation.p
 it was created as a part of a student project at the Faculty of Organizational Sciences.
 
 # Deployment
-https://github.com/jovicigor/EThesesConfigurationServer - configuration server 
+https://github.com/jovicigor/EThesesConfigurationServer - configuration server
+https://github.com/jovicigor/EThesesDiscoveryServer - discovery server
