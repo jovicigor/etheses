@@ -7,7 +7,7 @@ public class AdminPrivilegeRequest {
     private Boolean isAdmin;
 
     @JsonCreator
-    public AdminPrivilegeRequest(@JsonProperty("isAdmin") Boolean isAdmin) {
+    public AdminPrivilegeRequest(@JsonProperty("admin") boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
