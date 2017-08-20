@@ -10,19 +10,19 @@ import java.util.Set;
 
 public class ThesisRequest {
     @NotEmpty
-    private String name;
-    private Integer grade;
-    private Date defenseDate;
-    private String description;
-    private String courseName;
-    private Long userId;
-    private String userName;
-    private String userEmail;
-    private Long mentorId;
-    private String mentorName;
-    private String mentorEmail;
-    private Set<String> tags;
-    private Set<String> fieldsOfStudy;
+    private final String name;
+    private final Integer grade;
+    private final Date defenseDate;
+    private final String description;
+    private final String courseName;
+    private final Long userId;
+    private final String userName;
+    private final String userEmail;
+    private final Long mentorId;
+    private final String mentorName;
+    private final String mentorEmail;
+    private final Set<String> tags;
+    private final Set<String> fieldsOfStudy;
 
     @JsonCreator
     public ThesisRequest(@JsonProperty("name") String name,

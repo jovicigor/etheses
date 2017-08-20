@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class ThesisCommentRequest {
 
-    private String message;
+    private final String message;
 
     @JsonCreator
     public ThesisCommentRequest(@JsonProperty("message") String message) {

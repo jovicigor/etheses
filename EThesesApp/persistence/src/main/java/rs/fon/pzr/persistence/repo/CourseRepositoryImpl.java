@@ -20,7 +20,7 @@ public class CourseRepositoryImpl implements CourseRepository {
 
     @Override
     public Course findOne(Long id) {
-        return this.findOne(id);
+        return jpaRepository.findOne(id);
     }
 
     @Override

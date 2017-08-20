@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "thesis_keyword")
-public class ThesisKeyword {
+class ThesisKeyword {
 
 	@Id
 	@Column(name = "thesis_keyword_id")

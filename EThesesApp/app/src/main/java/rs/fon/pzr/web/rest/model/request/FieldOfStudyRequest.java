@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Optional;
 
 public class FieldOfStudyRequest {
-    private String name;
+    private final String name;
 
     @JsonCreator
     public FieldOfStudyRequest(@JsonProperty("name") String name) {

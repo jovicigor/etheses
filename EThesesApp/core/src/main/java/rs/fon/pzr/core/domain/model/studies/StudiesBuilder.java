@@ -9,7 +9,7 @@ import java.util.HashSet;
 public class StudiesBuilder {
     private String name;
     private String nameShort;
-    private Collection<Course> courses = new HashSet<>();
+    private final Collection<Course> courses = new HashSet<>();
 
     public StudiesBuilder withName(String name) {
         this.name = name;

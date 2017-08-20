@@ -29,7 +29,7 @@ public class UserResource {
 
     private final UserService userService;
     private final CourseService courseService;
-    private static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserResource(UserService userService, CourseService courseService) {

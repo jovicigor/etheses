@@ -24,7 +24,7 @@ public class ThesisBuilder {
     private Email mentorEmail;
     private Collection<Tag> tags = Collections.emptyList();
     private Collection<FieldOfStudy> fieldOfStudies = Collections.emptyList();
-    private Collection<ThesisKeyword> thesisKeywords = Collections.emptyList();
+    private final Collection<ThesisKeyword> thesisKeywords = Collections.emptyList();
 
     public ThesisBuilder withName(String name) {
         this.name = name;

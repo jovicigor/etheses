@@ -8,11 +8,11 @@ import java.util.Date;
 
 public class ThesisCommentResponseLevel1 {
 
-    private Long id;
-    private String message;
-    private Date datePosted;
-    private UserResponseLevel2 author;
-    private ThesisResponseLevel2 thesis;
+    private final Long id;
+    private final String message;
+    private final Date datePosted;
+    private final UserResponseLevel2 author;
+    private final ThesisResponseLevel2 thesis;
 
     public ThesisCommentResponseLevel1(ThesisComment comment) {
         id = comment.getId();

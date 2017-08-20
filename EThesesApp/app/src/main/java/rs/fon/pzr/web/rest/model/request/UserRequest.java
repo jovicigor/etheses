@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserRequest {
 
-    private String firstName;
-    private String lastName;
-    private String studentsTranscript;
-    private String courseName;
-    private String biography;
-    private String interests;
+    private final String firstName;
+    private final String lastName;
+    private final String studentsTranscript;
+    private final String courseName;
+    private final String biography;
+    private final String interests;
 
     @JsonCreator
     public UserRequest(@JsonProperty("firstName") String firstName,

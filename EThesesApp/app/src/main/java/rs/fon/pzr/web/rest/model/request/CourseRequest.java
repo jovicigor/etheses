@@ -8,9 +8,9 @@ import java.util.Set;
 
 public class CourseRequest {
 
-    private String name;
-    private String nameShort;
-    private Set<Long> studiesIDs;
+    private final String name;
+    private final String nameShort;
+    private final Set<Long> studiesIDs;
 
     @JsonCreator
     public CourseRequest(@JsonProperty("name") String name,
