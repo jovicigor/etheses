@@ -9,7 +9,6 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>core</module>
-        <module>web</module>
         <module>app</module>
         <module>persistence</module>
     </modules>
@@ -19,6 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <start-class>rs.fon.pzr.App</start-class>
     </properties>
 
     <parent>
@@ -35,17 +35,10 @@
             <version>1.5.4.RELEASE</version>
         </dependency>
 
-        <!-- Spring + Quartz need transaction -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>2.2.1</version>
         </dependency>
 
         <dependency>
@@ -72,13 +65,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
