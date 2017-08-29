@@ -8,9 +8,7 @@ import rs.fon.pzr.web.rest.model.LoginData;
 import java.io.IOException;
 
 import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.*;
 
 public class UserResourceTest extends ResourceTest {
 
