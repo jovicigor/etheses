@@ -25,20 +25,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .antMatchers("/webapi/**").permitAll()
-                .antMatchers("/webapi/authentication/**").permitAll()
-                .antMatchers("/webapi/courses/**").permitAll()
-                .antMatchers("/webapi/subjects/**").permitAll()
-                .antMatchers("/webapi/studies/**").permitAll()
-                .antMatchers("/webapi/theses/**").permitAll()
-                .antMatchers("/webapi/tags/**").permitAll()
-                .antMatchers("/webapi/fields-of-study/**").permitAll()
-                .antMatchers("/webapi/theses/{thesisID}/comments/**").hasRole("USER")
-                .antMatchers("/webapi/theses/comments/**").hasRole("USER")
-                .antMatchers("/webapi/theses/comments/**").hasRole("USER")
-                .antMatchers("/webapi/users").permitAll()
-                .antMatchers("/webapi/users/{userID}").hasRole("USER")
-                .antMatchers("/webapi/**").hasRole("ADMIN");
+                .antMatchers("/subjects/**").permitAll()
+                .antMatchers("/studies/**").permitAll()
+                .antMatchers("/theses/**").permitAll()
+                .antMatchers("/tags/**").permitAll()
+                .antMatchers("/users/**").permitAll()
+                .antMatchers("/courses/**").permitAll()
+                .antMatchers("/studies/**").hasRole("ADMIN")
+                .antMatchers("/fields-of-study/**").permitAll()
+                .antMatchers("/theses/{thesisID}/comments/**").authenticated()
+                .antMatchers("/theses/comments/**").hasRole("USER")
+                .antMatchers("/theses/comments/**").hasRole("USER")
+                .antMatchers("/users/{userID}").hasRole("USER")
+                .antMatchers("/**").permitAll();
 
         http.exceptionHandling();
 
